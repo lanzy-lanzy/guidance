@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block navigation %}
+    {% include 'includes/top_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="flex h-screen bg-gray-50">
+    {% include 'includes/counselor_sidebar.html' %}
+    
+    <div class="flex-1 ml-64 pt-2 overflow-y-auto">
+        <div class="p-8">
+            <!-- Header Section -->
+            <div class="bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-xl shadow-lg mb-8 p-6 text-white">
+                <div class="flex items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold">{{ title }}</h1>
+                        <p class="mt-2 text-emerald-100">Fill in the details for the counseling session certificate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <form method="post" class="p-6 space-y-6">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">Please correct the following errors:</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        {% for field in form %}
+                                            {% if field.errors %}
+                                                {% for error in field.errors %}
+                                                    <li>{{ field.label }}: {{ error }}</li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.student.id_for_label }}" class="block text-sm font-medium text-gray-700">Student</label>
+                            {{ form.student }}
+                        </div>
+                        <div>
+                            <label for="{{ form.date.id_for_label }}" class="block text-sm font-medium text-gray-700">Date</label>
+                            {{ form.date }}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.time_from.id_for_label }}" class="block text-sm font-medium text-gray-700">Time From</label>
+                            {{ form.time_from }}
+                        </div>
+                        <div>
+                            <label for="{{ form.time_to.id_for_label }}" class="block text-sm font-medium text-gray-700">Time To</label>
+                            {{ form.time_to }}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.session_type.id_for_label }}" class="block text-sm font-medium text-gray-700">Session Type</label>
+                            {{ form.session_type }}
+                        </div>
+                        <div id="other_session_type_container">
+                            <label for="{{ form.other_session_type.id_for_label }}" class="block text-sm font-medium text-gray-700">Other Session Type</label>
+                            {{ form.other_session_type }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.purpose.id_for_label }}" class="block text-sm font-medium text-gray-700">Purpose of Session</label>
+                        {{ form.purpose }}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.remarks.id_for_label }}" class="block text-sm font-medium text-gray-700">Remarks (Optional)</label>
+                        {{ form.remarks }}
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                        <a href="{% url 'session_certificate_list' %}" class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                            Cancel
+                        </a>
+                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                            Save Certificate
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sessionTypeSelect = document.getElementById('{{ form.session_type.id_for_label }}');
+        const otherSessionTypeContainer = document.getElementById('other_session_type_container');
+        
+        function toggleOtherSessionType() {
+            if (sessionTypeSelect.value === 'other') {
+                otherSessionTypeContainer.style.display = 'block';
+            } else {
+                otherSessionTypeContainer.style.display = 'none';
+            }
+        }
+        
+        // Initial state
+        toggleOtherSessionType();
+        
+        // Listen for changes
+        sessionTypeSelect.addEventListener('change', toggleOtherSessionType);
+    });
+</script>
+{% endblock %}

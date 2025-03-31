@@ -53,7 +53,7 @@
                                         </svg>
                                         Schedule New Appointment
                                     </button>
-                                    <p class="mt-2 text-sm text-red-600">Please complete your profile information before scheduling appointments. 
+                                    <p class="mt-2 text-sm text-red-600">Please complete your profile information before scheduling appointments.
                                         <a href="{% url 'student_profile' %}" class="font-medium text-red-700 hover:text-red-800">Update Profile</a>
                                     </p>
                                 </div>
@@ -254,7 +254,55 @@
                     </div>
                 </div>
 
-                    <!-- New Appointment Modal -->
+                    <!-- Terms and Conditions Modal -->
+                <div id="termsModal" class="fixed inset-0 z-10 hidden" aria-labelledby="terms-title" role="dialog" aria-modal="true">
+                    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[80vh] overflow-y-auto">
+                                <div>
+                                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="mt-3 text-center sm:mt-5">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="terms-title">
+                                            Terms and Conditions
+                                        </h3>
+                                        <div class="mt-4 text-sm text-gray-500 text-left h-64 overflow-y-auto border p-4">
+                                            <!-- Your terms and conditions content here -->
+                                            <h4 class="font-medium mb-2">1. Appointment Policy</h4>
+                                            <p class="mb-4">By scheduling an appointment, you agree to attend at the scheduled time. Cancellations must be made at least 24 hours in advance.</p>
+
+                                            <h4 class="font-medium mb-2">2. Confidentiality</h4>
+                                            <p class="mb-4">All sessions are confidential except in cases where there is risk of harm to yourself or others.</p>
+
+                                            <h4 class="font-medium mb-2">3. Session Conduct</h4>
+                                            <p class="mb-4">Students are expected to behave respectfully during counseling sessions. Inappropriate behavior may result in termination of services.</p>
+
+                                            <h4 class="font-medium mb-2">4. Data Privacy</h4>
+                                            <p>Your personal information will be protected according to our privacy policy and applicable laws.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 sm:mt-6 flex space-x-3">
+                                    <button type="button" onclick="acceptTerms()"
+                                            class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:text-sm">
+                                        I Accept
+                                    </button>
+                                    <button type="button" onclick="closeTermsModal()"
+                                            class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:text-sm">
+                                        Decline
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Appointment Modal -->
                 <div id="newAppointmentModal" class="fixed inset-0 z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
                         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -274,12 +322,55 @@
                                                 Schedule New Appointment
                                             </h3>
                                             <div class="mt-6 space-y-4">
-                                                <div>
-                                                    <label for="counseling_type" class="block text-sm font-medium text-gray-700 text-left">
+                                                <!-- Enhanced Counseling Type Selection with Icons -->
+                                                <div class="mb-4">
+                                                    <label for="counseling_type" class="block text-sm font-medium text-gray-700 text-left mb-2">
                                                         Counseling Type
                                                     </label>
-                                                    <select id="counseling_type" name="counseling_type" required
-                                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
+                                                    <div class="grid grid-cols-2 gap-3">
+                                                        <div class="counseling-type-card" data-type="ACADEMIC">
+                                                            <div class="p-4 border rounded-lg hover:shadow-md cursor-pointer transition-all duration-200 hover:border-emerald-300 flex flex-col items-center">
+                                                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                                                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                                    </svg>
+                                                                </div>
+                                                                <span class="text-sm font-medium">Academic</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="counseling-type-card" data-type="CAREER">
+                                                            <div class="p-4 border rounded-lg hover:shadow-md cursor-pointer transition-all duration-200 hover:border-emerald-300 flex flex-col items-center">
+                                                                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-2">
+                                                                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <span class="text-sm font-medium">Career</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="counseling-type-card" data-type="PERSONAL">
+                                                            <div class="p-4 border rounded-lg hover:shadow-md cursor-pointer transition-all duration-200 hover:border-emerald-300 flex flex-col items-center">
+                                                                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mb-2">
+                                                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <span class="text-sm font-medium">Personal</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="counseling-type-card" data-type="MENTAL">
+                                                            <div class="p-4 border rounded-lg hover:shadow-md cursor-pointer transition-all duration-200 hover:border-emerald-300 flex flex-col items-center">
+                                                                <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center mb-2">
+                                                                    <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <span class="text-sm font-medium">Mental Health</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Hidden select that will be updated by the card selection -->
+                                                    <select id="counseling_type" name="counseling_type" required class="hidden">
                                                         <option value="">Select Type</option>
                                                         <option value="ACADEMIC">Academic Counseling</option>
                                                         <option value="CAREER">Career Counseling</option>
@@ -288,33 +379,72 @@
                                                     </select>
                                                 </div>
 
-                                                <div>
-                                                    <label for="counselor" class="block text-sm font-medium text-gray-700 text-left">
-                                                        Counselor
+                                                <!-- Enhanced Counselor Selection -->
+                                                <div class="mb-4">
+                                                    <label for="counselor" class="block text-sm font-medium text-gray-700 text-left mb-2">
+                                                        Select Counselor
                                                     </label>
-                                                    <select id="counselor" name="counselor" required
-                                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
-                                                        <option value="">Select Counselor</option>
-                                                        {% for counselor in counselors %}
-                                                            <option value="{{ counselor.id }}">{{ counselor.user.get_full_name }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                    <div class="relative">
+                                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                            <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                            </svg>
+                                                        </div>
+                                                        <select id="counselor" name="counselor" required
+                                                                class="mt-1 block w-full pl-10 pr-10 py-2.5 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-lg shadow-sm transition-all duration-200 hover:border-emerald-400">
+                                                            <option value="">Select a Counselor</option>
+                                                            {% for counselor in counselors %}
+                                                                <option value="{{ counselor.id }}">{{ counselor.user.get_full_name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <p class="mt-1 text-xs text-gray-500">Choose a counselor specializing in your selected counseling type</p>
                                                 </div>
 
-                                                <div>
-                                                    <label for="date" class="block text-sm font-medium text-gray-700 text-left">
+                                                <!-- Enhanced Date Selection -->
+                                                <div class="mb-2">
+                                                    <label for="date" class="block text-sm font-medium text-gray-700 text-left mb-1">
                                                         Preferred Date
                                                     </label>
-                                                    <input type="date" name="date" id="date" required
-                                                           class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
+                                                    <div class="relative">
+                                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                            <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                            </svg>
+                                                        </div>
+                                                        <input type="date" name="date" id="date" required
+                                                               class="mt-1 block w-full pl-10 pr-10 py-2.5 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-lg shadow-sm transition-all duration-200 hover:border-emerald-400">
+                                                    </div>
+                                                    <p class="mt-1 text-xs text-gray-500">Select a weekday (Monday-Friday) for your appointment</p>
                                                 </div>
 
+                                                <!-- Date Availability Calendar Preview -->
+                                                <div class="mb-4 bg-gray-50 p-3 rounded-lg">
+                                                    <div class="flex justify-between items-center mb-2">
+                                                        <h4 class="text-xs font-medium text-gray-500">AVAILABILITY PREVIEW</h4>
+                                                        <span class="text-xs text-emerald-600">Next 7 days</span>
+                                                    </div>
+                                                    <div class="grid grid-cols-7 gap-1 text-center" id="availability-preview">
+                                                        <!-- Calendar days will be populated by JavaScript -->
+                                                    </div>
+                                                </div>
+
+                                                <!-- Enhanced Time Selection -->
                                                 <div>
-                                                    <label for="time" class="block text-sm font-medium text-gray-700 text-left">
+                                                    <label for="time" class="block text-sm font-medium text-gray-700 text-left mb-1">
                                                         Preferred Time
                                                     </label>
-                                                    <select name="time" id="time" required
-                                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md">
+                                                    <div class="grid grid-cols-2 gap-2 mb-2" id="time-slot-buttons">
+                                                        <button type="button" data-time="09:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">9:00 AM</button>
+                                                        <button type="button" data-time="10:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">10:00 AM</button>
+                                                        <button type="button" data-time="11:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">11:00 AM</button>
+                                                        <button type="button" data-time="13:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">1:00 PM</button>
+                                                        <button type="button" data-time="14:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">2:00 PM</button>
+                                                        <button type="button" data-time="15:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">3:00 PM</button>
+                                                        <button type="button" data-time="16:00" class="time-slot-btn py-2 px-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">4:00 PM</button>
+                                                    </div>
+                                                    <!-- Hidden select field that will be updated by the buttons -->
+                                                    <select name="time" id="time" required class="hidden">
                                                         <option value="">Select Time</option>
                                                         <option value="09:00">9:00 AM</option>
                                                         <option value="10:00">10:00 AM</option>
@@ -326,13 +456,25 @@
                                                     </select>
                                                 </div>
 
-                                                <div>
-                                                    <label for="reason" class="block text-sm font-medium text-gray-700 text-left">
+                                                <!-- Enhanced Reason Input -->
+                                                <div class="mb-4">
+                                                    <label for="reason" class="block text-sm font-medium text-gray-700 text-left mb-1">
                                                         Reason for Appointment
                                                     </label>
-                                                    <textarea id="reason" name="reason" rows="3" required
-                                                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
-                                                              placeholder="Please briefly describe your reason for the appointment"></textarea>
+                                                    <div class="relative">
+                                                        <div class="absolute top-3 left-3 text-emerald-500">
+                                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                            </svg>
+                                                        </div>
+                                                        <textarea id="reason" name="reason" rows="4" required
+                                                                  class="mt-1 block w-full pl-10 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-lg shadow-sm transition-all duration-200 hover:border-emerald-400"
+                                                                  placeholder="Please briefly describe your reason for the appointment"></textarea>
+                                                    </div>
+                                                    <div class="flex justify-between mt-1">
+                                                        <p class="text-xs text-gray-500">Be specific about what you'd like to discuss</p>
+                                                        <p class="text-xs text-gray-500"><span id="reasonCharCount">0</span>/500 characters</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -362,8 +504,63 @@
                         </div>
                     </div>
 
+                    <!-- Profile Completion Modal -->
+                    <div id="profileCompletionModal" class="fixed inset-0 z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                                Complete Your Profile
+                                            </h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500">
+                                                    Dear Student:<br><br>
+                                                    The purpose of this form is to gather important information that will allow us to better understand and meet your individual needs. Be assured that all information collected will be kept confidential and used solely for school-related purposes. We appreciate your cooperation in completing this form accurately and promptly.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                    <a href="{% url 'student_profile' %}" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                        Complete Profile
+                                    </a>
+                                    <button type="button" onclick="closeProfileCompletionModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <script>
                         function openNewAppointmentModal() {
+                            {% if not user.student_profile.is_profile_complete %}
+                                document.getElementById('profileCompletionModal').classList.remove('hidden');
+                            {% else %}
+                                document.getElementById('termsModal').classList.remove('hidden');
+                            {% endif %}
+                        }
+
+                        function closeProfileCompletionModal() {
+                            document.getElementById('profileCompletionModal').classList.add('hidden');
+                        }
+
+                        function closeTermsModal() {
+                            document.getElementById('termsModal').classList.add('hidden');
+                        }
+
+                        function acceptTerms() {
+                            closeTermsModal();
                             document.getElementById('newAppointmentModal').classList.remove('hidden');
                         }
 
@@ -371,32 +568,236 @@
                             document.getElementById('newAppointmentModal').classList.add('hidden');
                         }
 
-                            // Date restrictions and validations
+                        window.onclick = function(event) {
+                            const profileModal = document.getElementById('profileCompletionModal');
+                            const termsModal = document.getElementById('termsModal');
+                            const appointmentModal = document.getElementById('newAppointmentModal');
+                            
+                            if (event.target == profileModal) {
+                                closeProfileCompletionModal();
+                            } else if (event.target == termsModal) {
+                                closeTermsModal();
+                            } else if (event.target == appointmentModal) {
+                                closeNewAppointmentModal();
+                            }
+                        }
+
+                        // Enhanced date and time selection functionality
                         document.addEventListener('DOMContentLoaded', function() {
                             const dateInput = document.getElementById('date');
+                            const timeSelect = document.getElementById('time');
+                            const timeSlotButtons = document.querySelectorAll('.time-slot-btn');
+                            const availabilityPreview = document.getElementById('availability-preview');
+
                             const today = new Date();
                             const tomorrow = new Date(today);
                             tomorrow.setDate(tomorrow.getDate() + 1);
 
-                                // Set minimum date to tomorrow
+                            // Set minimum date to tomorrow
                             dateInput.min = tomorrow.toISOString().split('T')[0];
 
-                                // Disable weekends
+                            // Generate the availability calendar preview
+                            generateAvailabilityCalendar();
+
+                            // Disable weekends with improved feedback
                             dateInput.addEventListener('input', function() {
                                 const selectedDate = new Date(this.value);
                                 const day = selectedDate.getDay();
 
                                 if (day === 0 || day === 6) { // 0 is Sunday, 6 is Saturday
                                     this.value = ''; // Clear the date
-                                    alert('Appointments cannot be scheduled on weekends. Please select a weekday.');
+                                    // Show a more user-friendly notification
+                                    const notification = document.createElement('div');
+                                    notification.className = 'fixed top-4 right-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md transition-opacity duration-500';
+                                    notification.innerHTML = `
+                                        <div class="flex items-center">
+                                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                            </svg>
+                                            <p>Appointments cannot be scheduled on weekends. Please select a weekday.</p>
+                                        </div>
+                                    `;
+                                    document.body.appendChild(notification);
+
+                                    // Remove the notification after 3 seconds
+                                    setTimeout(() => {
+                                        notification.style.opacity = '0';
+                                        setTimeout(() => {
+                                            document.body.removeChild(notification);
+                                        }, 500);
+                                    }, 3000);
+                                } else {
+                                    // Highlight the selected date in the calendar
+                                    updateCalendarSelection(selectedDate);
                                 }
                             });
+
+                            // Handle time slot button selection
+                            timeSlotButtons.forEach(button => {
+                                button.addEventListener('click', function() {
+                                    // Remove active class from all buttons
+                                    timeSlotButtons.forEach(btn => {
+                                        btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'text-emerald-700');
+                                        btn.classList.add('bg-white', 'border-gray-300', 'text-gray-700');
+                                    });
+
+                                    // Add active class to clicked button
+                                    this.classList.remove('bg-white', 'border-gray-300', 'text-gray-700');
+                                    this.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-700');
+
+                                    // Update the hidden select field
+                                    const timeValue = this.getAttribute('data-time');
+                                    timeSelect.value = timeValue;
+                                });
+                            });
+
+                            // Function to generate the availability calendar
+                            function generateAvailabilityCalendar() {
+                                const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+                                const startDate = new Date(today);
+
+                                // Add day headers
+                                dayNames.forEach(day => {
+                                    const dayHeader = document.createElement('div');
+                                    dayHeader.className = 'text-xs font-medium text-gray-500';
+                                    dayHeader.textContent = day;
+                                    availabilityPreview.appendChild(dayHeader);
+                                });
+
+                                // Add calendar days
+                                for (let i = 0; i < 7; i++) {
+                                    const date = new Date(startDate);
+                                    date.setDate(date.getDate() + i);
+
+                                    const day = date.getDay();
+                                    const dateNum = date.getDate();
+
+                                    const dateCell = document.createElement('div');
+                                    dateCell.className = 'text-xs py-1 rounded-full w-6 h-6 flex items-center justify-center mx-auto';
+                                    dateCell.textContent = dateNum;
+                                    dateCell.setAttribute('data-date', date.toISOString().split('T')[0]);
+
+                                    // Style weekends differently
+                                    if (day === 0 || day === 6) {
+                                        dateCell.classList.add('bg-gray-200', 'text-gray-400');
+                                        dateCell.title = 'Weekend - Not Available';
+                                    } else {
+                                        dateCell.classList.add('bg-emerald-50', 'text-emerald-700', 'cursor-pointer', 'hover:bg-emerald-100');
+                                        dateCell.title = 'Available';
+
+                                        // Add click event to select this date
+                                        dateCell.addEventListener('click', function() {
+                                            const selectedDate = this.getAttribute('data-date');
+                                            dateInput.value = selectedDate;
+                                            updateCalendarSelection(new Date(selectedDate));
+                                        });
+                                    }
+
+                                    availabilityPreview.appendChild(dateCell);
+                                }
+                            }
+
+                            // Function to update calendar selection
+                            function updateCalendarSelection(selectedDate) {
+                                const dateCells = availabilityPreview.querySelectorAll('[data-date]');
+                                const selectedDateStr = selectedDate.toISOString().split('T')[0];
+
+                                dateCells.forEach(cell => {
+                                    const cellDate = cell.getAttribute('data-date');
+                                    if (cellDate === selectedDateStr) {
+                                        cell.classList.add('bg-emerald-500', 'text-white');
+                                        cell.classList.remove('bg-emerald-50', 'text-emerald-700');
+                                    } else if (!cell.classList.contains('bg-gray-200')) {
+                                        cell.classList.remove('bg-emerald-500', 'text-white');
+                                        cell.classList.add('bg-emerald-50', 'text-emerald-700');
+                                    }
+                                });
+                            }
+                        });
+
+                        // Handle counseling type card selection
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const counselingTypeCards = document.querySelectorAll('.counseling-type-card');
+                            const counselingTypeSelect = document.getElementById('counseling_type');
+                            const reasonTextarea = document.getElementById('reason');
+                            const reasonCharCount = document.getElementById('reasonCharCount');
+
+                            // Handle counseling type card selection
+                            counselingTypeCards.forEach(card => {
+                                card.addEventListener('click', function() {
+                                    // Remove active class from all cards
+                                    counselingTypeCards.forEach(c => {
+                                        c.querySelector('div').classList.remove('border-emerald-500', 'bg-emerald-50');
+                                    });
+
+                                    // Add active class to clicked card
+                                    this.querySelector('div').classList.add('border-emerald-500', 'bg-emerald-50');
+
+                                    // Update the hidden select field
+                                    const typeValue = this.getAttribute('data-type');
+                                    counselingTypeSelect.value = typeValue;
+                                });
+                            });
+
+                            // Character counter for reason textarea
+                            if (reasonTextarea && reasonCharCount) {
+                                reasonTextarea.addEventListener('input', function() {
+                                    const count = this.value.length;
+                                    reasonCharCount.textContent = count;
+
+                                    // Change color when approaching limit
+                                    if (count > 450) {
+                                        reasonCharCount.classList.add('text-amber-600');
+                                        if (count > 500) {
+                                            reasonCharCount.classList.remove('text-amber-600');
+                                            reasonCharCount.classList.add('text-red-600');
+                                        }
+                                    } else {
+                                        reasonCharCount.classList.remove('text-amber-600', 'text-red-600');
+                                    }
+                                });
+                            }
                         });
 
                         function cancelAppointment(appointmentId) {
-                            if (confirm('Are you sure you want to cancel this appointment?')) {
+                            // Enhanced confirmation dialog
+                            const confirmDialog = document.createElement('div');
+                            confirmDialog.className = 'fixed inset-0 z-50 flex items-center justify-center';
+                            confirmDialog.innerHTML = `
+                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                                <div class="relative bg-white rounded-lg max-w-md w-full mx-auto shadow-xl overflow-hidden">
+                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                        <div class="sm:flex sm:items-start">
+                                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                <h3 class="text-lg leading-6 font-medium text-gray-900">Cancel Appointment</h3>
+                                                <div class="mt-2">
+                                                    <p class="text-sm text-gray-500">Are you sure you want to cancel this appointment? This action cannot be undone.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                        <button type="button" id="confirmCancel" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">Cancel Appointment</button>
+                                        <button type="button" id="cancelDialog" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Keep Appointment</button>
+                                    </div>
+                                </div>
+                            `;
+
+                            document.body.appendChild(confirmDialog);
+
+                            // Add event listeners to the buttons
+                            document.getElementById('confirmCancel').addEventListener('click', function() {
                                 window.location.href = `/student/appointments/${appointmentId}/cancel/`;
-                            }
+                            });
+
+                            document.getElementById('cancelDialog').addEventListener('click', function() {
+                                document.body.removeChild(confirmDialog);
+                            });
                         }
                     </script>
                 </div>
@@ -405,3 +806,4 @@
     </div>
     </div>
 {% endblock %}
+

@@ -1,0 +1,155 @@
+{% extends 'base_print.html' %}
+{% load static %}
+
+{% block title %}Psychological Report{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        body {
+            font-size: 12pt;
+        }
+        .print-header {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .no-print {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="print-container min-h-screen bg-gray-50 flex justify-center py-8">
+    <div class="w-[210mm] bg-white shadow-sm">
+        <div class="overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white p-4 relative overflow-hidden print-header">
+                <div class="absolute inset-0 bg-black opacity-10 pattern-dots"></div>
+                <div class="relative">
+                    <div class="flex items-center justify-between">
+                        <div class="w-20">
+                            <img src="{% static 'images/jhcsc_logo.png' %}" alt="JHCSC Logo" class="w-full">
+                        </div>
+                        <div class="text-center flex-1 px-4">
+                            <h4 class="text-lg font-semibold">J.H. CERILLES STATE COLLEGE</h4>
+                            <h5 class="text-md">DUMINGAG CAMPUS</h5>
+                            <p class="text-sm">Dumingag, Zamboanga del Sur, 7028</p>
+                            <p class="text-sm">Email: gco.dumingag@jhcsc.edu.ph</p>
+                        </div>
+                        <div class="w-20">
+                            <img src="{% static 'images/counseling_logo.png' %}" alt="Guidance Logo" class="w-full">
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <span class="text-xs opacity-75">JHCSC-DUM-GCO-003/01July2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="text-center my-6">
+                <h1 class="text-2xl font-bold text-gray-900">PSYCHOLOGICAL REPORT FORM</h1>
+                <p class="text-right mr-8 mt-2">{{ report.date|date:"F d, Y" }}</p>
+            </div>
+
+            <!-- Content -->
+            <div class="px-8 space-y-6">
+                <!-- Student Info -->
+                <div class="flex justify-between">
+                    <div class="w-1/2">
+                        <p class="text-sm font-medium text-gray-600">Name:</p>
+                        <p class="text-lg border-b border-gray-300">{{ report.student.user.get_full_name|title }}</p>
+                    </div>
+                    <div class="w-1/3">
+                        <p class="text-sm font-medium text-gray-600">Course/Year:</p>
+                        <p class="text-lg border-b border-gray-300">{{ report.student.course }} - {{ report.student.year }}</p>
+                    </div>
+                </div>
+
+                <!-- Mental Ability Section -->
+                <div class="mt-8">
+                    <p class="text-sm font-medium text-gray-600">MENTAL ABILITY</p>
+                    <p class="text-lg border-b border-gray-300">{{ report.mental_ability|default:"" }}</p>
+                    
+                    <div class="flex justify-between mt-4">
+                        <div class="w-1/4">
+                            <p class="text-sm font-medium text-gray-600">Raw Score:</p>
+                            <p class="text-lg border-b border-gray-300">{{ report.raw_score|default:"" }}</p>
+                        </div>
+                        <div class="w-1/4">
+                            <p class="text-sm font-medium text-gray-600">%tile Rank:</p>
+                            <p class="text-lg border-b border-gray-300">{{ report.percentile_rank|default:"" }}</p>
+                        </div>
+                        <div class="w-1/3">
+                            <p class="text-sm font-medium text-gray-600">Description:</p>
+                            <p class="text-lg border-b border-gray-300">{{ report.get_ability_description_display|default:"" }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personality Section -->
+                <div class="mt-8">
+                    <p class="text-sm font-medium text-gray-600">PERSONALITY</p>
+                    <div class="mt-2 border-b border-gray-300 pb-4">
+                        <p class="whitespace-pre-line">{{ report.personality_assessment|default:"" }}</p>
+                    </div>
+
+                    <div class="mt-6">
+                        <p class="text-sm font-medium text-gray-600">Scale/s:</p>
+                        <div class="mt-2 border-b border-gray-300 pb-4">
+                            <p class="whitespace-pre-line">{{ report.personality_scales|default:"" }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Remarks -->
+                <div class="mt-8">
+                    <p class="text-sm font-medium text-gray-600">Remarks:</p>
+                    <p class="mt-2">{{ report.remarks }}</p>
+                </div>
+
+                <!-- Signature -->
+                <div class="mt-16">
+                    <p class="text-sm font-medium text-gray-600">Prepared by:</p>
+                    <div class="mt-8 border-t border-gray-400 w-64">
+                        <p class="text-center font-medium">{{ report.counselor.user.get_full_name|title }}</p>
+                        <p class="text-center text-sm">Guidance Counselor</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="print-footer text-center text-xs text-gray-500 py-2 mt-8">
+                <div class="border-t border-gray-200 mt-8 pt-2">
+                    <p>J.H. Cerilles State College - Guidance & Counseling Office</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Controls -->
+<div class="fixed bottom-4 right-4 no-print">
+    <div class="flex space-x-2">
+        <a href="{% url 'psychological_report_list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition-colors">
+            Back to List
+        </a>
+        <a href="{% url 'edit_psychological_report' report.id %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors">
+            Edit
+        </a>
+        <button onclick="window.print()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg shadow hover:bg-emerald-700 transition-colors">
+            Print
+        </button>
+    </div>
+</div>
+
+{% if print_mode %}
+<script>
+    window.onload = function() {
+        window.print();
+    }
+</script>
+{% endif %}
+{% endblock %}

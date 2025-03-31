@@ -1,10 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from .models import User, Student, Counselor, Appointment, Interview
+from .models import User, Student, Counselor, Appointment, Interview, PsychologicalReport, CounselingReferral, CounselingSessionCertificate
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -18,7 +17,7 @@ class UserRegistrationForm(UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-input mt-1 block w-full rounded-md border-gray-300'})
     )
-    
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'role', 'profile_picture']
@@ -153,3 +152,142 @@ class InterviewForm(forms.ModelForm):
             'recommendations': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'follow_up_needed': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
+
+
+class PsychologicalReportForm(forms.ModelForm):
+    class Meta:
+        model = PsychologicalReport
+        fields = [
+            'student', 'date', 'mental_ability', 'raw_score', 'percentile_rank',
+            'ability_description', 'personality_assessment', 'personality_scales', 'remarks'
+        ]
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'student': forms.Select(attrs={'class': 'form-control'}),
+            'mental_ability': forms.TextInput(attrs={'class': 'form-control'}),
+            'raw_score': forms.TextInput(attrs={'class': 'form-control'}),
+            'percentile_rank': forms.TextInput(attrs={'class': 'form-control'}),
+            'ability_description': forms.Select(attrs={'class': 'form-control'}),
+            'personality_assessment': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'personality_scales': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'remarks': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        counselor = kwargs.pop('counselor', None)
+        super().__init__(*args, **kwargs)
+
+        # Set the counselor field to the current counselor
+        if counselor:
+            self.instance.counselor = counselor
+
+        # Apply Tailwind CSS classes to all form fields
+        for field in self.fields.values():
+            if isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+            elif not isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+
+
+class CounselingReferralForm(forms.ModelForm):
+    class Meta:
+        model = CounselingReferral
+        fields = [
+            'to_counselor_name', 'student', 'contact_number', 'date',
+            'reason_aggression', 'reason_dramatic_change', 'reason_bullying_victim', 'reason_bullying_bully',
+            'reason_self_injury', 'reason_daydreams', 'reason_anger_management', 'reason_fighting',
+            'reason_stealing', 'reason_sexual_acting_out', 'reason_peer_relationships', 'reason_social_skills',
+            'reason_family_concerns', 'reason_cries_easily', 'reason_self_image', 'reason_personal_hygiene',
+            'reason_lying', 'reason_grief_loss',
+            'reason_impulsive', 'reason_always_tired', 'reason_worried', 'reason_sadness',
+            'reason_scared', 'reason_absenteeism', 'reason_inattentive', 'reason_disruptive',
+            'reason_withdrawn', 'reason_anxious', 'reason_motivation', 'reason_academics',
+            'reason_study_skills', 'reason_homework_completion', 'reason_organization_skills',
+            'reason_early_pregnancy', 'reason_public_display_affection', 'reason_other',
+            'recommendation', 'referred_by_name', 'subject'
+        ]
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'to_counselor_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'student': forms.Select(attrs={'class': 'form-control'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'reason_other': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Specify other reason'}),
+            'recommendation': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'referred_by_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'subject': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Apply Tailwind CSS classes to all form fields
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({
+                    'class': 'h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500'
+                })
+            elif isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+            elif not isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+
+class CounselingSessionCertificateForm(forms.ModelForm):
+    class Meta:
+        model = CounselingSessionCertificate
+        fields = [
+            'student', 'date', 'time_from', 'time_to', 'session_type',
+            'other_session_type', 'purpose', 'remarks'
+        ]
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'time_from': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
+            'time_to': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
+            'student': forms.Select(attrs={'class': 'form-control'}),
+            'session_type': forms.Select(attrs={'class': 'form-control'}),
+            'other_session_type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Specify if Other is selected'}),
+            'purpose': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'remarks': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        counselor = kwargs.pop('counselor', None)
+        super().__init__(*args, **kwargs)
+
+        # Set the counselor field to the current counselor
+        if counselor:
+            self.instance.counselor = counselor
+
+        # Apply Tailwind CSS classes to all form fields
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+            elif not isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({
+                    'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
+                })
+
+        # Show/hide other_session_type field based on session_type
+        self.fields['other_session_type'].widget.attrs['class'] += ' hidden'
+        self.fields['other_session_type'].widget.attrs['data-show-if-session-type'] = 'other'

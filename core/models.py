@@ -64,7 +64,7 @@ class Student(models.Model):
         ('F', 'Female'),
         ('O', 'Other')
     ]
-    
+
     YEAR_LEVEL_CHOICES = [
         ('1', 'First Year'),
         ('2', 'Second Year'),
@@ -85,7 +85,7 @@ class Student(models.Model):
         ('Divorced', 'Divorced'),
         ('Widowed', 'Widowed')
     ]
-    
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     course = models.CharField(max_length=100)
     year = models.CharField(max_length=1, choices=YEAR_LEVEL_CHOICES)
@@ -96,7 +96,7 @@ class Student(models.Model):
     birth_place = models.CharField(max_length=255, blank=True, null=True)
     civil_status = models.CharField(max_length=20, choices=CIVIL_STATUS_CHOICES, default='Single')
     religion = models.CharField(max_length=100, blank=True, null=True)
-    
+
     # Family Background
     father_name = models.CharField(max_length=255, blank=True, null=True)
     father_occupation = models.CharField(max_length=255, blank=True, null=True)
@@ -105,18 +105,18 @@ class Student(models.Model):
     mother_occupation = models.CharField(max_length=255, blank=True, null=True)
     mother_education = models.CharField(max_length=255, blank=True, null=True)
     parents_marital_status = models.CharField(max_length=20, choices=PARENTS_MARITAL_STATUS_CHOICES, blank=True, null=True)
-    
+
     # Educational Background
     elementary_school = models.CharField(max_length=255, blank=True, null=True)
     elementary_year_graduated = models.CharField(max_length=4, blank=True, null=True)
     high_school = models.CharField(max_length=255, blank=True, null=True)
     high_school_year_graduated = models.CharField(max_length=4, blank=True, null=True)
-    
+
     reason_for_referral = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.get_full_name()} ({self.course}, Year {self.year})"
-    
+
     def get_age(self):
         if self.birth_date:
             today = timezone.now().date()
@@ -148,7 +148,7 @@ class Student(models.Model):
             self.high_school,
             self.high_school_year_graduated,
         ]
-        
+
         return all(field for field in required_fields)
 
 class Counselor(models.Model):
@@ -172,7 +172,7 @@ class GuidanceSession(models.Model):
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     ]
-    
+
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="sessions")
     counselor = models.ForeignKey(Counselor, on_delete=models.CASCADE, related_name="sessions")
     session_type = models.CharField(max_length=20, choices=SESSION_TYPE_CHOICES)
@@ -253,7 +253,7 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment for {self.student.user.username} with {self.counselor.user.username}"
-    
+
     def check_conflicts(self):
         return Appointment.objects.filter(
             counselor=self.counselor,
@@ -277,7 +277,7 @@ class Interview(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='interview_forms')
     counselor = models.ForeignKey(Counselor, on_delete=models.CASCADE, related_name='conducted_interviews')
     date = models.DateField(auto_now_add=True)
-    
+
     # Personal Information
     address = models.CharField(max_length=255)
     contact_number = models.CharField(max_length=20)
@@ -286,7 +286,7 @@ class Interview(models.Model):
     age = models.IntegerField()
     civil_status = models.CharField(max_length=50)
     religion = models.CharField(max_length=100)
-    
+
     # Family Background
     father_name = models.CharField(max_length=255, blank=True, null=True)
     father_occupation = models.CharField(max_length=255, blank=True, null=True)
@@ -295,7 +295,7 @@ class Interview(models.Model):
     mother_occupation = models.CharField(max_length=255, blank=True, null=True)
     mother_education = models.CharField(max_length=255, blank=True, null=True)
     parents_marital_status = models.CharField(max_length=100)
-    
+
     # Educational Background
     elementary_school = models.CharField(max_length=255)
     elementary_year_graduated = models.CharField(max_length=50)
@@ -303,7 +303,7 @@ class Interview(models.Model):
     high_school_year_graduated = models.CharField(max_length=50)
     college_school = models.CharField(max_length=255, blank=True, null=True)
     college_course = models.CharField(max_length=255, blank=True, null=True)
-    
+
     # Interview Details
     reason_for_interview = models.TextField()
     presenting_problem = models.TextField()
@@ -311,12 +311,161 @@ class Interview(models.Model):
     counselor_notes = models.TextField(blank=True, null=True)
     recommendations = models.TextField(blank=True, null=True)
     follow_up_needed = models.BooleanField(default=False)
-    
+
     class Meta:
         ordering = ['-date']
-    
+
     def __str__(self):
         return f"Interview Form - {self.student.user.username} - {self.date}"
+
+class PsychologicalReport(models.Model):
+    ABILITY_DESCRIPTION_CHOICES = [
+        ('Very Superior', 'Very Superior'),
+        ('Superior', 'Superior'),
+        ('Above Average', 'Above Average'),
+        ('Average', 'Average'),
+        ('Below Average', 'Below Average'),
+        ('Borderline', 'Borderline'),
+        ('Intellectually Deficient', 'Intellectually Deficient'),
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='psychological_reports')
+    counselor = models.ForeignKey(Counselor, on_delete=models.CASCADE, related_name='conducted_psychological_reports')
+    date = models.DateField(default=timezone.now)
+
+    # Mental Ability Section
+    mental_ability = models.CharField(max_length=255, blank=True, null=True)
+    raw_score = models.CharField(max_length=10, blank=True, null=True)
+    percentile_rank = models.CharField(max_length=10, blank=True, null=True)
+    ability_description = models.CharField(max_length=50, choices=ABILITY_DESCRIPTION_CHOICES, blank=True, null=True)
+
+    # Personality Section
+    personality_assessment = models.TextField(blank=True, null=True)
+    personality_scales = models.TextField(blank=True, null=True)
+
+    # Remarks
+    remarks = models.TextField(default="The results reflect the student's performance at the time of the assessment.")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"Psychological Report - {self.student.user.get_full_name()} - {self.date}"
+
+class CounselingReferral(models.Model):
+    # Referral information
+    to_counselor_name = models.CharField(max_length=255, verbose_name='To Guidance Counselor', default='Guidance Counselor')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='referrals')
+    contact_number = models.CharField(max_length=20, blank=True, null=True)
+    date = models.DateField(default=timezone.now)
+
+    # Referral reasons - each as a boolean field
+    reason_aggression = models.BooleanField(default=False)
+    reason_dramatic_change = models.BooleanField(default=False)
+    reason_bullying_victim = models.BooleanField(default=False)
+    reason_bullying_bully = models.BooleanField(default=False)
+    reason_self_injury = models.BooleanField(default=False)
+    reason_daydreams = models.BooleanField(default=False)
+    reason_anger_management = models.BooleanField(default=False)
+    reason_fighting = models.BooleanField(default=False)
+    reason_stealing = models.BooleanField(default=False)
+    reason_sexual_acting_out = models.BooleanField(default=False)
+    reason_peer_relationships = models.BooleanField(default=False)
+    reason_social_skills = models.BooleanField(default=False)
+    reason_family_concerns = models.BooleanField(default=False)
+    reason_cries_easily = models.BooleanField(default=False)
+    reason_self_image = models.BooleanField(default=False)
+    reason_personal_hygiene = models.BooleanField(default=False)
+    reason_lying = models.BooleanField(default=False)
+    reason_grief_loss = models.BooleanField(default=False)
+
+    reason_impulsive = models.BooleanField(default=False)
+    reason_always_tired = models.BooleanField(default=False)
+    reason_worried = models.BooleanField(default=False)
+    reason_sadness = models.BooleanField(default=False)
+    reason_scared = models.BooleanField(default=False)
+    reason_absenteeism = models.BooleanField(default=False)
+    reason_inattentive = models.BooleanField(default=False)
+    reason_disruptive = models.BooleanField(default=False)
+    reason_withdrawn = models.BooleanField(default=False)
+    reason_anxious = models.BooleanField(default=False)
+    reason_motivation = models.BooleanField(default=False)
+    reason_academics = models.BooleanField(default=False)
+    reason_study_skills = models.BooleanField(default=False)
+    reason_homework_completion = models.BooleanField(default=False)
+    reason_organization_skills = models.BooleanField(default=False)
+    reason_early_pregnancy = models.BooleanField(default=False)
+    reason_public_display_affection = models.BooleanField(default=False)
+    reason_other = models.CharField(max_length=255, blank=True, null=True)
+
+    # Recommendation
+    recommendation = models.TextField(blank=True, null=True)
+
+    # Referrer information
+    referred_by_name = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-date']
+        verbose_name = 'Counseling Referral'
+        verbose_name_plural = 'Counseling Referrals'
+
+    def __str__(self):
+        return f"Referral for {self.student.user.get_full_name()} - {self.date}"
+
+class CounselingSessionCertificate(models.Model):
+    SESSION_TYPE_CHOICES = [
+        ('individual', 'Individual Counseling'),
+        ('group', 'Group Counseling'),
+        ('career', 'Career Counseling'),
+        ('academic', 'Academic Counseling'),
+        ('crisis', 'Crisis Intervention'),
+        ('other', 'Other')
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='session_certificates')
+    counselor = models.ForeignKey(Counselor, on_delete=models.CASCADE, related_name='issued_certificates')
+    date = models.DateField(default=timezone.now)
+    time_from = models.TimeField(verbose_name='Time From')
+    time_to = models.TimeField(verbose_name='Time To')
+    session_type = models.CharField(max_length=20, choices=SESSION_TYPE_CHOICES, default='individual')
+    other_session_type = models.CharField(max_length=100, blank=True, null=True, verbose_name='Other Session Type')
+    purpose = models.TextField(verbose_name='Purpose of Session')
+    remarks = models.TextField(blank=True, null=True)
+    reference_number = models.CharField(max_length=50, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-date']
+        verbose_name = 'Counseling Session Certificate'
+        verbose_name_plural = 'Counseling Session Certificates'
+
+    def __str__(self):
+        return f"Certificate for {self.student.user.get_full_name()} - {self.date}"
+
+    def save(self, *args, **kwargs):
+        # Generate reference number if not provided
+        if not self.reference_number:
+            # Format: CSC-YYYYMMDD-XXX where XXX is a sequential number
+            today = timezone.now().date()
+            date_str = today.strftime('%Y%m%d')
+
+            # Count certificates created today and add 1
+            count = CounselingSessionCertificate.objects.filter(
+                created_at__date=today
+            ).count() + 1
+
+            self.reference_number = f"CSC-{date_str}-{count:03d}"
+
+        super().save(*args, **kwargs)
 
 class Report(models.Model):
     REPORT_TYPES = [

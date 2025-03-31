@@ -1,0 +1,279 @@
+{% extends 'base_print.html' %}
+{% load static %}
+
+{% block title %}Counseling Session Certificate{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        body {
+            font-size: 12pt;
+        }
+        .print-header {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .no-print {
+            display: none !important;
+        }
+        .certificate-border {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .certificate-seal {
+            position: absolute;
+            bottom: 80px;
+            right: 50px;
+            width: 180px;
+            height: 180px;
+            opacity: 0.07;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .certificate-background {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .gold-text {
+            color: #b7791f !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .certificate-ribbon {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    }
+
+    .certificate-border {
+        border: 8px double #047857;
+        padding: 20px;
+        position: relative;
+        background-color: #ffffff;
+        box-shadow: 0 0 40px rgba(4, 120, 87, 0.1);
+    }
+
+    .certificate-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23047857' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .certificate-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .certificate-seal {
+        position: absolute;
+        bottom: 80px;
+        right: 50px;
+        width: 180px;
+        height: 180px;
+        opacity: 0.07;
+    }
+
+    .gold-text {
+        color: #b7791f;
+    }
+
+    .certificate-ribbon {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 40px;
+        background-color: #047857;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .certificate-header {
+        border-bottom: 2px solid #047857;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .certificate-title {
+        font-family: 'Times New Roman', Times, serif;
+        letter-spacing: 2px;
+        position: relative;
+    }
+
+    .certificate-title::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background-color: #b7791f;
+    }
+
+    .signature-line {
+        border-bottom: 2px solid #047857;
+        position: relative;
+    }
+
+    .signature-line::after {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: #b7791f;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="print-container min-h-screen bg-gray-50 flex justify-center py-8">
+    <div class="w-[210mm] bg-white shadow-sm">
+        <div class="overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white p-4 relative overflow-hidden print-header">
+                <div class="absolute inset-0 bg-black opacity-10 pattern-dots"></div>
+                <div class="relative">
+                    <div class="flex items-center justify-between">
+                        <div class="w-20">
+                            <img src="{% static 'images/jhcsc_logo.png' %}" alt="JHCSC Logo" class="w-full">
+                        </div>
+                        <div class="text-center flex-1 px-4">
+                            <h4 class="text-lg font-semibold">J.H. CERILLES STATE COLLEGE</h4>
+                            <h5 class="text-md">DUMINGAG CAMPUS</h5>
+                            <p class="text-sm">Dumingag, Zamboanga del Sur, 7028</p>
+                            <p class="text-sm">Email: gco.dumingag@jhcsc.edu.ph</p>
+                        </div>
+                        <div class="w-20">
+                            <img src="{% static 'images/counseling_logo.png' %}" alt="Guidance Logo" class="w-full">
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <span class="text-xs opacity-75">JHCSC-DUM-GCO-003/01July2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificate Content -->
+            <div class="px-8 py-6">
+                <div class="certificate-border relative">
+                    <div class="certificate-background"></div>
+                    <div class="certificate-content p-4">
+                        <div class="certificate-ribbon">OFFICIAL DOCUMENT</div>
+
+                        <div class="certificate-header text-center py-4">
+                            <h1 class="certificate-title text-4xl font-bold text-emerald-800 mb-2">COUNSELING SESSION CERTIFICATE</h1>
+                            <p class="text-lg gold-text font-semibold">Counseling Session</p>
+                            <p class="text-sm text-gray-600 mt-2">Reference No: <span class="font-bold text-emerald-700">{{ certificate.reference_number }}</span></p>
+                        </div>
+
+                        <div class="text-center mb-8">
+                            <p class="text-lg">This is to certify that</p>
+                            <h2 class="text-3xl font-bold text-emerald-800 my-4 gold-text">{{ certificate.student.user.get_full_name|title }}</h2>
+                            <p class="text-lg">a student of <span class="font-semibold">{{ certificate.student.course }}</span>, Year <span class="font-semibold">{{ certificate.student.year }}</span></p>
+                        </div>
+
+                        <div class="text-center mb-8">
+                            <p class="text-lg">has attended a</p>
+                            <p class="text-2xl font-bold text-emerald-700 my-3">
+                                {% if certificate.session_type == 'other' %}
+                                    {{ certificate.other_session_type }}
+                                {% else %}
+                                    {{ certificate.get_session_type_display }}
+                                {% endif %}
+                            </p>
+
+                            <div class="flex justify-center items-center space-x-8 my-6">
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-600 uppercase">DATE</p>
+                                    <p class="font-semibold text-lg gold-text">{{ certificate.date|date:"F d, Y" }}</p>
+                                </div>
+                                <div class="h-10 w-px bg-emerald-200"></div>
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-600 uppercase">TIME</p>
+                                    <p class="font-semibold text-lg gold-text">{{ certificate.time_from|time:"g:i A" }} - {{ certificate.time_to|time:"g:i A" }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-8 px-8">
+                            <h3 class="text-lg font-semibold text-emerald-700 mb-2 border-b border-emerald-200 pb-1">Purpose</h3>
+                            <p class="text-lg text-gray-700 italic px-4 py-2">{{ certificate.purpose }}</p>
+                        </div>
+
+                        {% if certificate.remarks %}
+                        <div class="mb-8 px-8">
+                            <h3 class="text-lg font-semibold text-emerald-700 mb-2 border-b border-emerald-200 pb-1">Remarks</h3>
+                            <p class="text-lg text-gray-700 italic px-4 py-2">{{ certificate.remarks }}</p>
+                        </div>
+                        {% endif %}
+
+                        <div class="mt-12 mb-4 flex justify-between px-12">
+                            <div class="text-center w-64">
+                                <div class="signature-line pb-1">
+                                    <p class="text-center font-medium mt-1">{{ certificate.student.user.get_full_name|title }}</p>
+                                </div>
+                                <p class="text-center text-sm text-gray-600 mt-2">Student's Signature</p>
+                            </div>
+                            <div class="text-center w-64">
+                                <div class="signature-line pb-1">
+                                    <p class="text-center font-medium mt-1">{{ certificate.counselor.user.get_full_name|title }}</p>
+                                </div>
+                                <p class="text-center text-sm text-gray-600 mt-2">Guidance Counselor</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 text-center">
+                            <p class="text-sm text-gray-600 italic">This certificate is issued on <span class="font-semibold">{{ now|date:"F d, Y" }}</span></p>
+                        </div>
+
+                        <img src="{% static 'images/counseling_logo.png' %}" alt="Seal" class="certificate-seal">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="print-footer text-center text-xs text-gray-500 py-2 mt-4">
+                <div class="border-t border-gray-200 mt-4 pt-2">
+                    <p>J.H. Cerilles State College - Guidance & Counseling Office</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Controls -->
+<div class="fixed bottom-4 right-4 no-print">
+    <div class="flex space-x-2">
+        <a href="{% url 'session_certificate_list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition-colors">
+            Back to List
+        </a>
+        <a href="{% url 'edit_session_certificate' certificate.id %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors">
+            Edit
+        </a>
+        <button onclick="window.print()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg shadow hover:bg-emerald-700 transition-colors">
+            Print
+        </button>
+    </div>
+</div>
+
+{% if print_mode %}
+<script>
+    window.onload = function() {
+        window.print();
+    }
+</script>
+{% endif %}
+{% endblock %}

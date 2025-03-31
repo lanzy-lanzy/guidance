@@ -2512,3 +2512,676 @@ INFO 2025-03-31 19:47:57,915 basehttp "GET /counselor/sessions/38/ HTTP/1.1" 200
 INFO 2025-03-31 19:47:57,942 basehttp "GET /static/images/counseling_logo.png HTTP/1.1" 200 545692
 INFO 2025-03-31 19:47:57,944 basehttp "GET /static/images/jhcsc_logo.png HTTP/1.1" 200 856181
 INFO 2025-03-31 19:48:00,577 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 29820
+INFO 2025-03-31 21:25:17,849 basehttp "GET /counselor/appointments/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:25:17,857 basehttp "GET /login/?next=/counselor/appointments/ HTTP/1.1" 200 6112
+INFO 2025-03-31 21:25:25,640 basehttp "POST /login/?next=/counselor/appointments/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:25:25,657 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 20510
+INFO 2025-03-31 21:25:39,703 basehttp "GET /counselor/reports/ HTTP/1.1" 200 17998
+INFO 2025-03-31 21:25:46,246 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 30371
+INFO 2025-03-31 21:25:53,340 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 29819
+INFO 2025-03-31 21:27:12,293 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:27:12,297 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 21:27:22,565 basehttp "POST /login/ HTTP/1.1" 200 7610
+INFO 2025-03-31 21:27:27,688 basehttp "GET /register/ HTTP/1.1" 200 11952
+INFO 2025-03-31 21:27:59,027 basehttp "POST /register/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:27:59,030 basehttp "GET /login/ HTTP/1.1" 200 7614
+INFO 2025-03-31 21:28:04,940 basehttp "POST /login/ HTTP/1.1" 200 7610
+INFO 2025-03-31 21:28:10,720 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:28:10,738 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 31761
+INFO 2025-03-31 21:28:17,755 basehttp "GET /admin-panel/users/13/approve/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:28:17,770 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 31885
+INFO 2025-03-31 21:28:24,946 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:28:24,949 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 21:28:32,403 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:28:32,421 basehttp "GET /student/dashboard/ HTTP/1.1" 200 15504
+INFO 2025-03-31 21:28:34,984 basehttp "GET /student/appointments/ HTTP/1.1" 200 26968
+INFO 2025-03-31 21:31:00,889 basehttp "GET /student/profile/ HTTP/1.1" 200 26626
+ERROR 2025-03-31 21:31:31,882 log Internal Server Error: /student/profile/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\student_views.py", line 206, in student_profile
+    student.save()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 891, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 997, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 1129, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 1194, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1278, in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 2003, in execute_sql
+    cursor = super().execute_sql(result_type)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1561, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1966, in as_sql
+    val = field.get_db_prep_save(val, connection=self.connection)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1008, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1536, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1531, in get_prep_value
+    return self.to_python(value)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1497, in to_python
+    raise exceptions.ValidationError(
+    ...<3 lines>...
+    )
+django.core.exceptions.ValidationError: ['“” value has an invalid date format. It must be in YYYY-MM-DD format.']
+ERROR 2025-03-31 21:31:31,888 basehttp "POST /student/profile/ HTTP/1.1" 500 150172
+INFO 2025-03-31 21:31:54,701 basehttp "POST /student/profile/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:31:54,715 basehttp "GET /student/profile/ HTTP/1.1" 200 27739
+INFO 2025-03-31 21:31:59,204 basehttp "GET /student/appointments/ HTTP/1.1" 200 26511
+INFO 2025-03-31 21:45:24,463 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 21:45:29,294 basehttp "GET /student/appointments/ HTTP/1.1" 200 31480
+INFO 2025-03-31 21:48:24,833 basehttp "GET /student/appointments/ HTTP/1.1" 200 34506
+INFO 2025-03-31 21:49:23,972 basehttp "GET /student/appointments/ HTTP/1.1" 200 31480
+INFO 2025-03-31 21:49:56,876 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 21:50:00,172 basehttp "GET /student/appointments/ HTTP/1.1" 200 31480
+INFO 2025-03-31 21:56:09,291 basehttp "GET /student/appointments/ HTTP/1.1" 200 57494
+INFO 2025-03-31 21:57:04,908 basehttp "POST /student/appointments/request/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:57:04,932 basehttp "GET /student/appointments/ HTTP/1.1" 200 62134
+INFO 2025-03-31 21:57:31,274 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:57:31,280 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 21:57:39,148 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:57:39,169 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 23527
+INFO 2025-03-31 21:57:44,911 basehttp "GET /counselor/appointments/24/approve/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:57:44,945 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 35808
+INFO 2025-03-31 21:57:48,511 basehttp "GET /counselor/student/9/interview/ HTTP/1.1" 200 15361
+INFO 2025-03-31 21:57:58,193 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 34708
+INFO 2025-03-31 21:58:05,179 basehttp "GET /counselor/students/ HTTP/1.1" 200 36540
+INFO 2025-03-31 21:58:05,946 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 34708
+INFO 2025-03-31 21:59:22,241 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:59:22,244 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 21:59:27,890 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:59:27,945 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 32180
+INFO 2025-03-31 21:59:31,655 basehttp "GET /admin-panel/users/13/delete/ HTTP/1.1" 200 14510
+INFO 2025-03-31 21:59:34,498 basehttp "POST /admin-panel/users/13/delete/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:59:34,512 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 29506
+INFO 2025-03-31 21:59:36,690 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 21:59:36,693 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 21:59:40,431 basehttp "GET /register/ HTTP/1.1" 200 11952
+INFO 2025-03-31 22:00:04,634 basehttp "POST /register/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:00:04,638 basehttp "GET /login/ HTTP/1.1" 200 7614
+INFO 2025-03-31 22:00:09,556 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:00:09,574 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 31761
+INFO 2025-03-31 22:00:12,971 basehttp "GET /admin-panel/users/14/approve/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:00:12,991 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 31885
+INFO 2025-03-31 22:00:14,223 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:00:14,228 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 22:00:19,562 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:00:19,579 basehttp "GET /student/dashboard/ HTTP/1.1" 200 15501
+INFO 2025-03-31 22:00:26,973 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:00:34,710 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+INFO 2025-03-31 22:00:38,796 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:00:40,337 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:01:45,294 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:01:48,562 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+INFO 2025-03-31 22:01:54,009 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:03:15,391 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:03:17,757 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+INFO 2025-03-31 22:03:23,703 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:03:26,044 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:03:27,487 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+INFO 2025-03-31 22:03:34,557 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:03:35,505 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:03:35,889 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:05:11,416 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:05:11,726 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:05:15,808 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:05:17,357 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+INFO 2025-03-31 22:05:44,896 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:05:47,169 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+INFO 2025-03-31 22:05:49,043 basehttp "GET /student/appointments/ HTTP/1.1" 200 57947
+INFO 2025-03-31 22:09:15,850 basehttp "GET /student/appointments/ HTTP/1.1" 200 62708
+INFO 2025-03-31 22:09:20,200 basehttp "GET /student/profile/ HTTP/1.1" 200 26623
+ERROR 2025-03-31 22:09:25,533 log Internal Server Error: /student/profile/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\student_views.py", line 206, in student_profile
+    student.save()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 891, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 997, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 1129, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\base.py", line 1194, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1278, in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 2003, in execute_sql
+    cursor = super().execute_sql(result_type)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1561, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1966, in as_sql
+    val = field.get_db_prep_save(val, connection=self.connection)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1008, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1536, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1531, in get_prep_value
+    return self.to_python(value)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1497, in to_python
+    raise exceptions.ValidationError(
+    ...<3 lines>...
+    )
+django.core.exceptions.ValidationError: ['“” value has an invalid date format. It must be in YYYY-MM-DD format.']
+ERROR 2025-03-31 22:09:25,540 basehttp "POST /student/profile/ HTTP/1.1" 500 142949
+INFO 2025-03-31 22:09:39,732 basehttp "POST /student/profile/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:09:39,745 basehttp "GET /student/profile/ HTTP/1.1" 200 27736
+INFO 2025-03-31 22:09:41,824 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:09:43,653 basehttp "GET /student/appointments/ HTTP/1.1" 200 62240
+INFO 2025-03-31 22:10:16,740 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:10:18,088 basehttp "GET /student/profile/ HTTP/1.1" 200 26641
+INFO 2025-03-31 22:10:38,975 basehttp "GET /student/dashboard/ HTTP/1.1" 200 14409
+INFO 2025-03-31 22:10:48,849 basehttp "GET /student/sessions/history/ HTTP/1.1" 200 12092
+INFO 2025-03-31 22:10:51,578 basehttp "GET /student/appointments/ HTTP/1.1" 200 62240
+INFO 2025-03-31 22:11:11,431 basehttp "GET /student/sessions/history/ HTTP/1.1" 200 12092
+INFO 2025-03-31 22:11:15,022 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:11:15,025 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 22:11:23,273 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:11:23,291 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 20510
+INFO 2025-03-31 22:11:31,921 basehttp "GET /counselor/students/ HTTP/1.1" 200 36542
+INFO 2025-03-31 22:11:35,251 basehttp "GET /counselor/student/10/ HTTP/1.1" 200 23997
+INFO 2025-03-31 22:15:41,956 autoreload C:\Users\gerla\devlabs\counseling\core\models.py changed, reloading.
+INFO 2025-03-31 22:15:43,649 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:15:56,556 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 22:15:57,158 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:16:14,968 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 22:16:15,788 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:16:28,881 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:16:29,913 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:16:46,585 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:16:47,172 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:17:03,785 autoreload C:\Users\gerla\devlabs\counseling\core\urls.py changed, reloading.
+INFO 2025-03-31 22:17:04,495 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:20:26,269 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:20:31,505 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 13716
+INFO 2025-03-31 22:20:36,741 basehttp "GET /counselor/psychological-reports/create/ HTTP/1.1" 200 18184
+INFO 2025-03-31 22:20:42,022 basehttp "GET /counselor/psychological-reports/create/ HTTP/1.1" 200 18184
+INFO 2025-03-31 22:20:58,531 basehttp "GET /counselor/reports/ HTTP/1.1" 200 18602
+INFO 2025-03-31 22:21:05,768 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 13716
+INFO 2025-03-31 22:21:08,660 basehttp "GET /counselor/psychological-reports/create/ HTTP/1.1" 200 18184
+INFO 2025-03-31 22:21:37,829 basehttp "POST /counselor/psychological-reports/create/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:21:37,845 basehttp "GET /counselor/psychological-reports/1/print/ HTTP/1.1" 200 7337
+INFO 2025-03-31 22:22:11,341 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 15780
+INFO 2025-03-31 22:22:15,514 basehttp "GET /counselor/psychological-reports/1/edit/ HTTP/1.1" 200 18208
+INFO 2025-03-31 22:22:18,927 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 14672
+INFO 2025-03-31 22:23:42,975 autoreload C:\Users\gerla\devlabs\counseling\core\models.py changed, reloading.
+INFO 2025-03-31 22:23:43,725 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:23:52,237 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 22:23:52,805 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:24:32,868 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 22:24:33,448 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:24:46,009 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:24:46,679 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:25:11,455 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:25:12,134 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:25:29,807 autoreload C:\Users\gerla\devlabs\counseling\core\urls.py changed, reloading.
+INFO 2025-03-31 22:25:30,484 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:29:03,589 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:29:12,226 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 14270
+INFO 2025-03-31 22:29:15,716 basehttp "GET /counselor/counseling-referrals/create/ HTTP/1.1" 200 33514
+INFO 2025-03-31 22:30:24,632 basehttp "POST /counselor/counseling-referrals/create/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:30:24,651 basehttp "GET /counselor/counseling-referrals/1/print/ HTTP/1.1" 200 13935
+INFO 2025-03-31 22:31:51,001 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 16351
+INFO 2025-03-31 22:31:54,231 basehttp "GET /counselor/counseling-referrals/create/ HTTP/1.1" 200 33514
+INFO 2025-03-31 22:32:54,595 autoreload C:\Users\gerla\devlabs\counseling\core\models.py changed, reloading.
+INFO 2025-03-31 22:32:55,376 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:35:16,137 autoreload C:\Users\gerla\devlabs\counseling\core\models.py changed, reloading.
+INFO 2025-03-31 22:35:16,639 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:35:42,093 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:35:49,462 basehttp "GET /counselor/counseling-referrals/create/ HTTP/1.1" 200 33312
+INFO 2025-03-31 22:36:02,932 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:36:25,108 basehttp "POST /counselor/counseling-referrals/create/ HTTP/1.1" 302 0
+ERROR 2025-03-31 22:36:25,190 log Internal Server Error: /counselor/counseling-referrals/2/print/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\counselor_views.py", line 420, in print_counseling_referral
+    referral = get_object_or_404(CounselingReferral, id=referral_id, to_counselor=counselor)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\shortcuts.py", line 86, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'to_counselor' into field. Choices are: contact_number, created_at, date, id, reason_absenteeism, reason_academics, reason_aggression, reason_always_tired, reason_anger_management, reason_anxious, reason_bullying_bully, reason_bullying_victim, reason_cries_easily, reason_daydreams, reason_disruptive, reason_dramatic_change, reason_early_pregnancy, reason_family_concerns, reason_fighting, reason_grief_loss, reason_homework_completion, reason_impulsive, reason_inattentive, reason_lying, reason_motivation, reason_organization_skills, reason_other, reason_peer_relationships, reason_personal_hygiene, reason_public_display_affection, reason_sadness, reason_scared, reason_self_image, reason_self_injury, reason_sexual_acting_out, reason_social_skills, reason_stealing, reason_study_skills, reason_withdrawn, reason_worried, recommendation, referred_by_name, student, student_id, subject, to_counselor_name, updated_at
+ERROR 2025-03-31 22:36:25,196 basehttp "GET /counselor/counseling-referrals/2/print/ HTTP/1.1" 500 135307
+INFO 2025-03-31 22:36:44,005 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:36:44,226 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:36:44,639 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:36:44,846 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:36:59,357 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:36:59,523 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:37:00,043 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:37:00,198 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:41:52,407 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:42:04,686 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 17692
+INFO 2025-03-31 22:42:12,904 basehttp "GET /counselor/counseling-referrals/create/ HTTP/1.1" 200 33312
+INFO 2025-03-31 22:42:35,772 basehttp "POST /counselor/counseling-referrals/create/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:42:35,789 basehttp "GET /counselor/counseling-referrals/3/print/ HTTP/1.1" 200 15557
+INFO 2025-03-31 22:43:52,085 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 16355
+INFO 2025-03-31 22:43:52,731 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 17924
+ERROR 2025-03-31 22:44:08,026 log Internal Server Error: /counselor/counseling-referrals/1/edit/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\counselor_views.py", line 398, in edit_counseling_referral
+    referral = get_object_or_404(CounselingReferral, id=referral_id, to_counselor=counselor)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\shortcuts.py", line 86, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'to_counselor' into field. Choices are: contact_number, created_at, date, id, reason_absenteeism, reason_academics, reason_aggression, reason_always_tired, reason_anger_management, reason_anxious, reason_bullying_bully, reason_bullying_victim, reason_cries_easily, reason_daydreams, reason_disruptive, reason_dramatic_change, reason_early_pregnancy, reason_family_concerns, reason_fighting, reason_grief_loss, reason_homework_completion, reason_impulsive, reason_inattentive, reason_lying, reason_motivation, reason_organization_skills, reason_other, reason_peer_relationships, reason_personal_hygiene, reason_public_display_affection, reason_sadness, reason_scared, reason_self_image, reason_self_injury, reason_sexual_acting_out, reason_social_skills, reason_stealing, reason_study_skills, reason_withdrawn, reason_worried, recommendation, referred_by_name, student, student_id, subject, to_counselor_name, updated_at
+ERROR 2025-03-31 22:44:08,032 basehttp "GET /counselor/counseling-referrals/1/edit/ HTTP/1.1" 500 135389
+ERROR 2025-03-31 22:44:11,211 log Internal Server Error: /counselor/counseling-referrals/3/edit/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\counselor_views.py", line 398, in edit_counseling_referral
+    referral = get_object_or_404(CounselingReferral, id=referral_id, to_counselor=counselor)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\shortcuts.py", line 86, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'to_counselor' into field. Choices are: contact_number, created_at, date, id, reason_absenteeism, reason_academics, reason_aggression, reason_always_tired, reason_anger_management, reason_anxious, reason_bullying_bully, reason_bullying_victim, reason_cries_easily, reason_daydreams, reason_disruptive, reason_dramatic_change, reason_early_pregnancy, reason_family_concerns, reason_fighting, reason_grief_loss, reason_homework_completion, reason_impulsive, reason_inattentive, reason_lying, reason_motivation, reason_organization_skills, reason_other, reason_peer_relationships, reason_personal_hygiene, reason_public_display_affection, reason_sadness, reason_scared, reason_self_image, reason_self_injury, reason_sexual_acting_out, reason_social_skills, reason_stealing, reason_study_skills, reason_withdrawn, reason_worried, recommendation, referred_by_name, student, student_id, subject, to_counselor_name, updated_at
+ERROR 2025-03-31 22:44:11,214 basehttp "GET /counselor/counseling-referrals/3/edit/ HTTP/1.1" 500 135389
+INFO 2025-03-31 22:44:14,319 basehttp "GET /counselor/counseling-referrals/1/print/ HTTP/1.1" 200 16094
+INFO 2025-03-31 22:45:51,523 basehttp "GET /counselor/counseling-referrals/1/print/ HTTP/1.1" 200 16094
+INFO 2025-03-31 22:47:00,514 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 17924
+INFO 2025-03-31 22:50:34,781 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:50:47,367 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 17924
+INFO 2025-03-31 22:50:55,517 basehttp "GET /counselor/counseling-referrals/2/print/ HTTP/1.1" 200 19073
+INFO 2025-03-31 22:55:18,061 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:55:25,733 basehttp "GET /counselor/counseling-referrals/2/print/ HTTP/1.1" 200 19212
+INFO 2025-03-31 22:56:02,962 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 17924
+ERROR 2025-03-31 22:56:05,726 log Internal Server Error: /counselor/counseling-referrals/3/edit/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\counselor_views.py", line 398, in edit_counseling_referral
+    referral = get_object_or_404(CounselingReferral, id=referral_id, to_counselor=counselor)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\shortcuts.py", line 86, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'to_counselor' into field. Choices are: contact_number, created_at, date, id, reason_absenteeism, reason_academics, reason_aggression, reason_always_tired, reason_anger_management, reason_anxious, reason_bullying_bully, reason_bullying_victim, reason_cries_easily, reason_daydreams, reason_disruptive, reason_dramatic_change, reason_early_pregnancy, reason_family_concerns, reason_fighting, reason_grief_loss, reason_homework_completion, reason_impulsive, reason_inattentive, reason_lying, reason_motivation, reason_organization_skills, reason_other, reason_peer_relationships, reason_personal_hygiene, reason_public_display_affection, reason_sadness, reason_scared, reason_self_image, reason_self_injury, reason_sexual_acting_out, reason_social_skills, reason_stealing, reason_study_skills, reason_withdrawn, reason_worried, recommendation, referred_by_name, student, student_id, subject, to_counselor_name, updated_at
+ERROR 2025-03-31 22:56:05,730 basehttp "GET /counselor/counseling-referrals/3/edit/ HTTP/1.1" 500 135389
+ERROR 2025-03-31 22:56:21,951 log Internal Server Error: /counselor/counseling-referrals/3/edit/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\counselor_views.py", line 398, in edit_counseling_referral
+    referral = get_object_or_404(CounselingReferral, id=referral_id, to_counselor=counselor)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\shortcuts.py", line 86, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'to_counselor' into field. Choices are: contact_number, created_at, date, id, reason_absenteeism, reason_academics, reason_aggression, reason_always_tired, reason_anger_management, reason_anxious, reason_bullying_bully, reason_bullying_victim, reason_cries_easily, reason_daydreams, reason_disruptive, reason_dramatic_change, reason_early_pregnancy, reason_family_concerns, reason_fighting, reason_grief_loss, reason_homework_completion, reason_impulsive, reason_inattentive, reason_lying, reason_motivation, reason_organization_skills, reason_other, reason_peer_relationships, reason_personal_hygiene, reason_public_display_affection, reason_sadness, reason_scared, reason_self_image, reason_self_injury, reason_sexual_acting_out, reason_social_skills, reason_stealing, reason_study_skills, reason_withdrawn, reason_worried, recommendation, referred_by_name, student, student_id, subject, to_counselor_name, updated_at
+ERROR 2025-03-31 22:56:21,955 basehttp "GET /counselor/counseling-referrals/3/edit/ HTTP/1.1" 500 135389
+ERROR 2025-03-31 22:56:24,632 log Internal Server Error: /counselor/counseling-referrals/1/edit/
+Traceback (most recent call last):
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\gerla\devlabs\counseling\core\counselor_views.py", line 398, in edit_counseling_referral
+    referral = get_object_or_404(CounselingReferral, id=referral_id, to_counselor=counselor)
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\shortcuts.py", line 86, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gerla\devlabs\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'to_counselor' into field. Choices are: contact_number, created_at, date, id, reason_absenteeism, reason_academics, reason_aggression, reason_always_tired, reason_anger_management, reason_anxious, reason_bullying_bully, reason_bullying_victim, reason_cries_easily, reason_daydreams, reason_disruptive, reason_dramatic_change, reason_early_pregnancy, reason_family_concerns, reason_fighting, reason_grief_loss, reason_homework_completion, reason_impulsive, reason_inattentive, reason_lying, reason_motivation, reason_organization_skills, reason_other, reason_peer_relationships, reason_personal_hygiene, reason_public_display_affection, reason_sadness, reason_scared, reason_self_image, reason_self_injury, reason_sexual_acting_out, reason_social_skills, reason_stealing, reason_study_skills, reason_withdrawn, reason_worried, recommendation, referred_by_name, student, student_id, subject, to_counselor_name, updated_at
+ERROR 2025-03-31 22:56:24,636 basehttp "GET /counselor/counseling-referrals/1/edit/ HTTP/1.1" 500 135389
+INFO 2025-03-31 22:56:29,808 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 15248
+INFO 2025-03-31 22:56:31,442 basehttp "GET /counselor/psychological-reports/1/edit/ HTTP/1.1" 200 18784
+INFO 2025-03-31 22:56:33,859 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:56:34,324 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 22:56:34,478 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:56:34,942 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:57:59,641 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 22:58:13,987 basehttp "GET /counselor/counseling-referrals/3/edit/ HTTP/1.1" 200 33370
+INFO 2025-03-31 22:58:43,353 basehttp "POST /counselor/counseling-referrals/3/edit/ HTTP/1.1" 302 0
+INFO 2025-03-31 22:58:43,372 basehttp "GET /counselor/counseling-referrals/3/print/ HTTP/1.1" 200 19225
+INFO 2025-03-31 22:59:38,137 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19039
+INFO 2025-03-31 23:01:19,774 autoreload C:\Users\gerla\devlabs\counseling\core\models.py changed, reloading.
+INFO 2025-03-31 23:01:19,929 autoreload C:\Users\gerla\devlabs\counseling\core\models.py changed, reloading.
+INFO 2025-03-31 23:01:20,575 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:01:20,692 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:01:39,432 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 23:01:39,514 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 23:01:40,129 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:01:40,243 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:02:21,523 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 23:02:21,595 autoreload C:\Users\gerla\devlabs\counseling\core\forms.py changed, reloading.
+INFO 2025-03-31 23:02:22,169 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:02:22,242 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:02:43,096 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 23:02:43,199 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 23:02:43,887 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:02:43,998 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:03:10,881 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 23:03:10,997 autoreload C:\Users\gerla\devlabs\counseling\core\counselor_views.py changed, reloading.
+INFO 2025-03-31 23:03:11,635 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:03:11,776 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:03:33,551 autoreload C:\Users\gerla\devlabs\counseling\core\urls.py changed, reloading.
+INFO 2025-03-31 23:03:33,652 autoreload C:\Users\gerla\devlabs\counseling\core\urls.py changed, reloading.
+INFO 2025-03-31 23:03:34,296 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:03:34,385 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:07:45,674 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:08:01,674 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 14792
+INFO 2025-03-31 23:08:05,778 basehttp "GET /counselor/session-certificates/create/ HTTP/1.1" 200 18783
+INFO 2025-03-31 23:08:39,416 basehttp "POST /counselor/session-certificates/create/ HTTP/1.1" 302 0
+INFO 2025-03-31 23:08:39,433 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 7999
+WARNING 2025-03-31 23:08:39,595 basehttp "GET /static/images/certificate_bg.png HTTP/1.1" 404 2002
+INFO 2025-03-31 23:11:59,935 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:12:10,597 basehttp "GET /counselor/session-certificates/create/ HTTP/1.1" 200 19901
+INFO 2025-03-31 23:12:23,086 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16280
+INFO 2025-03-31 23:12:26,285 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11495
+INFO 2025-03-31 23:15:58,927 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:16:10,563 basehttp "GET /counselor/session-certificates/create/ HTTP/1.1" 200 18783
+INFO 2025-03-31 23:16:26,888 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 23:16:28,045 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16280
+INFO 2025-03-31 23:16:30,278 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11147
+INFO 2025-03-31 23:18:37,561 basehttp "GET / HTTP/1.1" 200 9329
+INFO 2025-03-31 23:18:37,635 basehttp "GET /static/images/jhcsc_cover.jpg HTTP/1.1" 200 97246
+WARNING 2025-03-31 23:18:38,416 log Not Found: /favicon.ico
+WARNING 2025-03-31 23:18:38,416 basehttp "GET /favicon.ico HTTP/1.1" 404 21361
+INFO 2025-03-31 23:18:39,983 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-31 23:18:49,582 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-31 23:18:49,604 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 21124
+WARNING 2025-03-31 23:18:49,954 log Not Found: /favicon.ico
+WARNING 2025-03-31 23:18:49,954 basehttp "GET /favicon.ico HTTP/1.1" 404 21361
+INFO 2025-03-31 23:18:52,351 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16280
+INFO 2025-03-31 23:18:54,591 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11151
+INFO 2025-03-31 23:19:20,350 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11151
+INFO 2025-03-31 23:20:08,270 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11152
+INFO 2025-03-31 23:20:31,791 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16280

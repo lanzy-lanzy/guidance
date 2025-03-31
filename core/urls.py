@@ -11,7 +11,7 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),  # Keep this as a fallback
     path('schedule-session/', views.schedule_session, name='schedule_session'),
-   
+
     # Student URLs
     path('student/dashboard/', student_views.student_dashboard, name='student_dashboard'),
     path('student/appointments/', student_views.student_appointment_list, name='student_appointment_list'),
@@ -39,12 +39,30 @@ urlpatterns = [
     path('counselor/profile/', counselor_views.counselor_profile, name='counselor_profile'),
     path('counselor/interview/<int:interview_id>/print/', views.print_interview, name='print_interview'),
     path('counselor/appointments/<int:appointment_id>/complete/', views.complete_appointment, name='complete_appointment'),
-    
+
     # Interview URLs
     path('counselor/student/<int:student_id>/interview/', views.simple_interview_form, name='simple_interview_form'),
     path('counselor/interview/<int:interview_id>/view/', views.view_interview, name='view_interview'),
     path('counselor/interview/<int:interview_id>/view-form/', admin_views.view_interview_form, name='view_interview_form'),
     path('counselor/interview/<int:session_id>/completed/', views.view_completed_interview, name='view_completed_interview'),
+
+    # Psychological Report URLs
+    path('counselor/psychological-reports/', counselor_views.psychological_report_list, name='psychological_report_list'),
+    path('counselor/psychological-reports/create/', counselor_views.create_psychological_report, name='create_psychological_report'),
+    path('counselor/psychological-reports/<int:report_id>/edit/', counselor_views.edit_psychological_report, name='edit_psychological_report'),
+    path('counselor/psychological-reports/<int:report_id>/print/', counselor_views.print_psychological_report, name='print_psychological_report'),
+
+    # Counseling Referral URLs
+    path('counselor/counseling-referrals/', counselor_views.counseling_referral_list, name='counseling_referral_list'),
+    path('counselor/counseling-referrals/create/', counselor_views.create_counseling_referral, name='create_counseling_referral'),
+    path('counselor/counseling-referrals/<int:referral_id>/edit/', counselor_views.edit_counseling_referral, name='edit_counseling_referral'),
+    path('counselor/counseling-referrals/<int:referral_id>/print/', counselor_views.print_counseling_referral, name='print_counseling_referral'),
+
+    # Counseling Session Certificate URLs
+    path('counselor/session-certificates/', counselor_views.session_certificate_list, name='session_certificate_list'),
+    path('counselor/session-certificates/create/', counselor_views.create_session_certificate, name='create_session_certificate'),
+    path('counselor/session-certificates/<int:certificate_id>/edit/', counselor_views.edit_session_certificate, name='edit_session_certificate'),
+    path('counselor/session-certificates/<int:certificate_id>/print/', counselor_views.print_session_certificate, name='print_session_certificate'),
 
     # Admin URLs
     path('admin-panel/dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),

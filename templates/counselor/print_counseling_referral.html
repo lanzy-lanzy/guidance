@@ -1,0 +1,354 @@
+{% extends 'base_print.html' %}
+{% load static %}
+
+{% block title %}Counseling Referral{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        body {
+            font-size: 12pt;
+        }
+        .print-header {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .no-print {
+            display: none !important;
+        }
+        .checkbox {
+            border: 2px solid #047857;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        .checkbox.checked {
+            background-color: #047857;
+            position: relative;
+        }
+        .checkbox.checked:after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+            width: 16px;
+        }
+    }
+
+    .checkbox {
+        border: 2px solid #047857;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 8px;
+        border-radius: 3px;
+        position: relative;
+    }
+    .checkbox.checked {
+        background-color: #047857;
+    }
+    .checkbox.checked:after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+        width: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="print-container min-h-screen bg-gray-50 flex justify-center py-8">
+    <div class="w-[210mm] bg-white shadow-sm">
+        <div class="overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white p-4 relative overflow-hidden print-header">
+                <div class="absolute inset-0 bg-black opacity-10 pattern-dots"></div>
+                <div class="relative">
+                    <div class="flex items-center justify-between">
+                        <div class="w-20">
+                            <img src="{% static 'images/jhcsc_logo.png' %}" alt="JHCSC Logo" class="w-full">
+                        </div>
+                        <div class="text-center flex-1 px-4">
+                            <h4 class="text-lg font-semibold">J.H. CERILLES STATE COLLEGE</h4>
+                            <h5 class="text-md">DUMINGAG CAMPUS</h5>
+                            <p class="text-sm">Dumingag, Zamboanga del Sur, 7028</p>
+                            <p class="text-sm">Email: gco.dumingag@jhcsc.edu.ph</p>
+                        </div>
+                        <div class="w-20">
+                            <img src="{% static 'images/counseling_logo.png' %}" alt="Guidance Logo" class="w-full">
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <span class="text-xs opacity-75">JHCSC-DUM-GCO-002/01July2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="text-center my-6">
+                <h1 class="text-2xl font-bold text-gray-900">CONFIDENTIAL COUNSELING REFERRAL FORM</h1>
+            </div>
+
+            <!-- Content -->
+            <div class="px-8 space-y-6">
+                <!-- Student Info Section with improved styling -->
+                <div class="mb-8 border border-gray-200 rounded-lg p-6 bg-gray-50">
+                    <!-- To Counselor -->
+                    <div class="mb-6">
+                        <div class="flex items-center mb-1">
+                            <p class="text-sm font-medium text-gray-600 w-24">To:</p>
+                            <span class="font-medium bg-white px-3 py-1 rounded-md border border-emerald-200 flex-1">{{ referral.to_counselor_name }}</span>
+                        </div>
+                        <p class="ml-24 text-sm text-gray-500 italic">Guidance Counselor</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Student Name:</p>
+                            <p class="bg-white px-3 py-1 rounded-md border border-emerald-200 font-medium">{{ referral.student.user.get_full_name }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Contact No:</p>
+                            <p class="bg-white px-3 py-1 rounded-md border border-emerald-200 font-medium">{{ referral.contact_number|default:"N/A" }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="text-sm font-medium text-gray-600 mb-1">Course/Year:</p>
+                        <p class="bg-white px-3 py-1 rounded-md border border-emerald-200 font-medium">{{ referral.student.course }} - {{ referral.student.year }}</p>
+                    </div>
+                </div>
+
+                <!-- Reason for Referral with improved styling -->
+                <div class="mb-8 border border-gray-200 rounded-lg p-6 bg-gray-50">
+                    <h2 class="text-xl font-bold mb-6 text-center text-emerald-700 border-b-2 border-emerald-500 pb-2">Reason for Referral</h2>
+
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                        <!-- Left Column -->
+                        <div class="space-y-2">
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_aggression %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_aggression %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_aggression %}font-medium{% endif %}">Aggression</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_dramatic_change %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_dramatic_change %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_dramatic_change %}font-medium{% endif %}">Dramatic Change in Behavior</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_bullying_victim %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_bullying_victim %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_bullying_victim %}font-medium{% endif %}">Bullying – Victim</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_bullying_bully %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_bullying_bully %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_bullying_bully %}font-medium{% endif %}">Bullying – Bully</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_self_injury %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_self_injury %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_self_injury %}font-medium{% endif %}">Self – injury (i.e. cutting)</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_daydreams %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_daydreams %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_daydreams %}font-medium{% endif %}">Daydreams/ Fantasizes</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_anger_management %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_anger_management %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_anger_management %}font-medium{% endif %}">Anger Management</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_fighting %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_fighting %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_fighting %}font-medium{% endif %}">Fighting</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_stealing %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_stealing %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_stealing %}font-medium{% endif %}">Stealing</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_sexual_acting_out %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_sexual_acting_out %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_sexual_acting_out %}font-medium{% endif %}">Sexual Acting Out</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_peer_relationships %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_peer_relationships %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_peer_relationships %}font-medium{% endif %}">Peer Relationships</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_social_skills %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_social_skills %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_social_skills %}font-medium{% endif %}">Social Skills</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_family_concerns %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_family_concerns %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_family_concerns %}font-medium{% endif %}">Family Concerns</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_cries_easily %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_cries_easily %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_cries_easily %}font-medium{% endif %}">Cries Easily/ Often for Age</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_self_image %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_self_image %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_self_image %}font-medium{% endif %}">Self-image/ Self-Confidence</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_personal_hygiene %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_personal_hygiene %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_personal_hygiene %}font-medium{% endif %}">Personal Hygiene</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_lying %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_lying %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_lying %}font-medium{% endif %}">Lying</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_grief_loss %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_grief_loss %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_grief_loss %}font-medium{% endif %}">Grief and Loss</span>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-2">
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_impulsive %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_impulsive %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_impulsive %}font-medium{% endif %}">Impulsive</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_always_tired %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_always_tired %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_always_tired %}font-medium{% endif %}">Always tired</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_worried %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_worried %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_worried %}font-medium{% endif %}">Worried</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_sadness %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_sadness %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_sadness %}font-medium{% endif %}">Sadness</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_scared %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_scared %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_scared %}font-medium{% endif %}">Scared</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_absenteeism %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_absenteeism %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_absenteeism %}font-medium{% endif %}">Absenteeism</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_inattentive %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_inattentive %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_inattentive %}font-medium{% endif %}">Inattentive</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_disruptive %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_disruptive %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_disruptive %}font-medium{% endif %}">Disruptive</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_withdrawn %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_withdrawn %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_withdrawn %}font-medium{% endif %}">Withdrawn</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_anxious %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_anxious %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_anxious %}font-medium{% endif %}">Nervous/ Anxious</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_motivation %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_motivation %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_motivation %}font-medium{% endif %}">Motivation</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_academics %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_academics %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_academics %}font-medium{% endif %}">Academics</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_study_skills %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_study_skills %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_study_skills %}font-medium{% endif %}">Study Skills</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_homework_completion %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_homework_completion %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_homework_completion %}font-medium{% endif %}">Homework Completion</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_organization_skills %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_organization_skills %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_organization_skills %}font-medium{% endif %}">Organization Skills</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_early_pregnancy %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_early_pregnancy %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_early_pregnancy %}font-medium{% endif %}">Early Pregnancy</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_public_display_affection %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_public_display_affection %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_public_display_affection %}font-medium{% endif %}">Public display of affection</span>
+                            </div>
+                            <div class="flex items-center bg-white p-2 rounded-md {% if referral.reason_other %}border-l-4 border-emerald-500 shadow-sm{% endif %}">
+                                <div class="checkbox {% if referral.reason_other %}checked{% endif %}"></div>
+                                <span class="ml-2 {% if referral.reason_other %}font-medium{% endif %}">Others: <span class="text-emerald-700">{{ referral.reason_other }}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendation with improved styling -->
+                <div class="mb-8 border border-gray-200 rounded-lg p-6 bg-gray-50">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4 text-center border-b-2 border-emerald-500 pb-2">Recommendation</h3>
+                    <div class="bg-white p-4 rounded-md shadow-sm min-h-[100px] border-l-4 border-emerald-500">
+                        <p class="whitespace-pre-line text-gray-800">{{ referral.recommendation|default:"No specific recommendations provided." }}</p>
+                    </div>
+                </div>
+
+                <!-- Signature with improved styling -->
+                <div class="mt-16 border border-gray-200 rounded-lg p-6 bg-gray-50">
+                    <h3 class="text-lg font-medium text-gray-900 mb-6 text-center">Authentication</h3>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="flex flex-col items-center">
+                            <div class="bg-white px-3 py-2 rounded-md border border-emerald-200 w-full text-center">
+                                <p class="font-medium">{{ referral.referred_by_name }}</p>
+                            </div>
+                            <p class="text-center text-sm text-gray-600 font-medium mt-2">Referred by</p>
+                            <p class="text-center text-xs text-gray-500 italic">(Signature over Printed Name)</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="bg-white px-3 py-2 rounded-md border border-emerald-200 w-full text-center">
+                                <p class="font-medium">{{ referral.subject|default:"" }}</p>
+                                <p class="text-xs text-gray-500 italic">(Department/Subject Area)</p>
+                            </div>
+                            <p class="text-center text-sm text-gray-600 font-medium mt-2">Subject</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex flex-col items-center">
+                        <p class="text-center font-medium py-1 px-3 bg-emerald-50 rounded-md border border-emerald-100">{{ referral.date|date:"F d, Y" }}</p>
+                        <p class="text-center text-sm text-gray-600 font-medium mt-2">Date</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="print-footer text-center text-xs text-gray-500 py-2 mt-8">
+                <div class="border-t border-gray-200 mt-8 pt-2">
+                    <p>J.H. Cerilles State College - Guidance & Counseling Office</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Controls -->
+<div class="fixed bottom-4 right-4 no-print">
+    <div class="flex space-x-2">
+        <a href="{% url 'counseling_referral_list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition-colors">
+            Back to List
+        </a>
+        <a href="{% url 'edit_counseling_referral' referral.id %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors">
+            Edit
+        </a>
+        <button onclick="window.print()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg shadow hover:bg-emerald-700 transition-colors">
+            Print
+        </button>
+    </div>
+</div>
+
+{% if print_mode %}
+<script>
+    window.onload = function() {
+        window.print();
+    }
+</script>
+{% endif %}
+{% endblock %}

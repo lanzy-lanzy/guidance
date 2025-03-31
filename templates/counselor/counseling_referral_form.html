@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block navigation %}
+    {% include 'includes/top_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="flex h-screen bg-gray-50">
+    {% include 'includes/counselor_sidebar.html' %}
+
+    <div class="flex-1 ml-64 pt-2 overflow-y-auto">
+        <div class="p-8">
+            <!-- Header Section -->
+            <div class="bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-xl shadow-lg mb-8 p-6 text-white">
+                <div class="flex items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold">{{ title }}</h1>
+                        <p class="mt-2 text-emerald-100">Fill in the details for the confidential counseling referral</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <form method="post" class="p-6 space-y-6">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">Please correct the following errors:</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        {% for field in form %}
+                                            {% if field.errors %}
+                                                {% for error in field.errors %}
+                                                    <li>{{ field.label }}: {{ error }}</li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.to_counselor_name.id_for_label }}" class="block text-sm font-medium text-gray-700">To Guidance Counselor</label>
+                            {{ form.to_counselor_name }}
+                        </div>
+                        <div>
+                            <label for="{{ form.date.id_for_label }}" class="block text-sm font-medium text-gray-700">Date</label>
+                            {{ form.date }}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.student.id_for_label }}" class="block text-sm font-medium text-gray-700">Student</label>
+                            {{ form.student }}
+                        </div>
+                        <div>
+                            <label for="{{ form.contact_number.id_for_label }}" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                            {{ form.contact_number }}
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-lg font-medium text-gray-900">Reason for Referral</h3>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                            <!-- Left Column -->
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    {{ form.reason_aggression }}
+                                    <label for="{{ form.reason_aggression.id_for_label }}" class="ml-2 block text-sm text-gray-700">Aggression</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_dramatic_change }}
+                                    <label for="{{ form.reason_dramatic_change.id_for_label }}" class="ml-2 block text-sm text-gray-700">Dramatic Change in Behavior</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_bullying_victim }}
+                                    <label for="{{ form.reason_bullying_victim.id_for_label }}" class="ml-2 block text-sm text-gray-700">Bullying - Victim</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_bullying_bully }}
+                                    <label for="{{ form.reason_bullying_bully.id_for_label }}" class="ml-2 block text-sm text-gray-700">Bullying - Bully</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_self_injury }}
+                                    <label for="{{ form.reason_self_injury.id_for_label }}" class="ml-2 block text-sm text-gray-700">Self-injury (i.e. cutting)</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_daydreams }}
+                                    <label for="{{ form.reason_daydreams.id_for_label }}" class="ml-2 block text-sm text-gray-700">Daydreams/Fantasizes</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_anger_management }}
+                                    <label for="{{ form.reason_anger_management.id_for_label }}" class="ml-2 block text-sm text-gray-700">Anger Management</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_fighting }}
+                                    <label for="{{ form.reason_fighting.id_for_label }}" class="ml-2 block text-sm text-gray-700">Fighting</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_stealing }}
+                                    <label for="{{ form.reason_stealing.id_for_label }}" class="ml-2 block text-sm text-gray-700">Stealing</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_sexual_acting_out }}
+                                    <label for="{{ form.reason_sexual_acting_out.id_for_label }}" class="ml-2 block text-sm text-gray-700">Sexual Acting Out</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_peer_relationships }}
+                                    <label for="{{ form.reason_peer_relationships.id_for_label }}" class="ml-2 block text-sm text-gray-700">Peer Relationships</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_social_skills }}
+                                    <label for="{{ form.reason_social_skills.id_for_label }}" class="ml-2 block text-sm text-gray-700">Social Skills</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_family_concerns }}
+                                    <label for="{{ form.reason_family_concerns.id_for_label }}" class="ml-2 block text-sm text-gray-700">Family Concerns</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_cries_easily }}
+                                    <label for="{{ form.reason_cries_easily.id_for_label }}" class="ml-2 block text-sm text-gray-700">Cries Easily/Often for Age</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_self_image }}
+                                    <label for="{{ form.reason_self_image.id_for_label }}" class="ml-2 block text-sm text-gray-700">Self-image/Self-Confidence</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_personal_hygiene }}
+                                    <label for="{{ form.reason_personal_hygiene.id_for_label }}" class="ml-2 block text-sm text-gray-700">Personal Hygiene</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_lying }}
+                                    <label for="{{ form.reason_lying.id_for_label }}" class="ml-2 block text-sm text-gray-700">Lying</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_grief_loss }}
+                                    <label for="{{ form.reason_grief_loss.id_for_label }}" class="ml-2 block text-sm text-gray-700">Grief and Loss</label>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    {{ form.reason_impulsive }}
+                                    <label for="{{ form.reason_impulsive.id_for_label }}" class="ml-2 block text-sm text-gray-700">Impulsive</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_always_tired }}
+                                    <label for="{{ form.reason_always_tired.id_for_label }}" class="ml-2 block text-sm text-gray-700">Always tired</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_worried }}
+                                    <label for="{{ form.reason_worried.id_for_label }}" class="ml-2 block text-sm text-gray-700">Worried</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_sadness }}
+                                    <label for="{{ form.reason_sadness.id_for_label }}" class="ml-2 block text-sm text-gray-700">Sadness</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_scared }}
+                                    <label for="{{ form.reason_scared.id_for_label }}" class="ml-2 block text-sm text-gray-700">Scared</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_absenteeism }}
+                                    <label for="{{ form.reason_absenteeism.id_for_label }}" class="ml-2 block text-sm text-gray-700">Absenteeism</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_inattentive }}
+                                    <label for="{{ form.reason_inattentive.id_for_label }}" class="ml-2 block text-sm text-gray-700">Inattentive</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_disruptive }}
+                                    <label for="{{ form.reason_disruptive.id_for_label }}" class="ml-2 block text-sm text-gray-700">Disruptive</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_withdrawn }}
+                                    <label for="{{ form.reason_withdrawn.id_for_label }}" class="ml-2 block text-sm text-gray-700">Withdrawn</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_anxious }}
+                                    <label for="{{ form.reason_anxious.id_for_label }}" class="ml-2 block text-sm text-gray-700">Nervous/Anxious</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_motivation }}
+                                    <label for="{{ form.reason_motivation.id_for_label }}" class="ml-2 block text-sm text-gray-700">Motivation</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_academics }}
+                                    <label for="{{ form.reason_academics.id_for_label }}" class="ml-2 block text-sm text-gray-700">Academics</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_study_skills }}
+                                    <label for="{{ form.reason_study_skills.id_for_label }}" class="ml-2 block text-sm text-gray-700">Study Skills</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_homework_completion }}
+                                    <label for="{{ form.reason_homework_completion.id_for_label }}" class="ml-2 block text-sm text-gray-700">Homework Completion</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_organization_skills }}
+                                    <label for="{{ form.reason_organization_skills.id_for_label }}" class="ml-2 block text-sm text-gray-700">Organization Skills</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_early_pregnancy }}
+                                    <label for="{{ form.reason_early_pregnancy.id_for_label }}" class="ml-2 block text-sm text-gray-700">Early Pregnancy</label>
+                                </div>
+                                <div class="flex items-center">
+                                    {{ form.reason_public_display_affection }}
+                                    <label for="{{ form.reason_public_display_affection.id_for_label }}" class="ml-2 block text-sm text-gray-700">Public display of affection</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="flex-1">
+                                        <label for="{{ form.reason_other.id_for_label }}" class="block text-sm text-gray-700">Others:</label>
+                                        {{ form.reason_other }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-lg font-medium text-gray-900">Recommendation</h3>
+                        <div class="mt-4">
+                            {{ form.recommendation }}
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-lg font-medium text-gray-900">Referrer Information</h3>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="{{ form.referred_by_name.id_for_label }}" class="block text-sm font-medium text-gray-700">Referred by (Name)</label>
+                                {{ form.referred_by_name }}
+                            </div>
+                            <div>
+                                <label for="{{ form.subject.id_for_label }}" class="block text-sm font-medium text-gray-700">Subject</label>
+                                {{ form.subject }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                        <a href="{% url 'counseling_referral_list' %}" class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                            Cancel
+                        </a>
+                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                            Save Referral
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
