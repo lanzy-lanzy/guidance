@@ -45,7 +45,41 @@ def admin_dashboard(request):
 @user_passes_test(is_admin)
 def admin_users(request):
     users = User.objects.all().order_by('-date_joined')
-    return render(request, 'admin/users.html', {'users': users})
+    
+    # Get filter parameters
+    search_query = request.GET.get('search', '')
+    role_filter = request.GET.get('role', '')
+    status_filter = request.GET.get('status', '')
+    
+    # Apply filters
+    if search_query:
+        users = users.filter(
+            Q(first_name__icontains=search_query) |
+            Q(last_name__icontains=search_query) |
+            Q(email__icontains=search_query)
+        )
+    
+    if role_filter:
+        users = users.filter(role=role_filter)
+        
+    if status_filter:
+        if status_filter == 'pending':
+            users = users.filter(approval_status='pending')
+        elif status_filter == 'approved':
+            users = users.filter(approval_status='approved')
+        elif status_filter == 'inactive':
+            users = users.filter(is_active=False)
+    
+    context = {
+        'users': users,
+        'current_filters': {
+            'search': search_query,
+            'role': role_filter,
+            'status': status_filter
+        }
+    }
+    
+    return render(request, 'admin/users.html', context)
 
 @login_required
 @user_passes_test(is_admin)
@@ -103,7 +137,48 @@ def admin_approve_user(request, user_id):
 @user_passes_test(is_admin)
 def admin_students(request):
     students = Student.objects.select_related('user').all()
-    return render(request, 'admin/students.html', {'students': students})
+    
+    # Get filter parameters
+    search_query = request.GET.get('search', '')
+    course_filter = request.GET.get('course', '')
+    year_filter = request.GET.get('year', '')
+    status_filter = request.GET.get('status', '')
+
+    # Apply filters
+    if search_query:
+        students = students.filter(
+            Q(user__first_name__icontains=search_query) |
+            Q(user__last_name__icontains=search_query) |
+            Q(user__email__icontains=search_query)
+        )
+
+    if course_filter:
+        students = students.filter(course=course_filter)
+
+    if year_filter:
+        students = students.filter(year=year_filter)
+
+    if status_filter:
+        if status_filter == 'active':
+            students = students.filter(user__is_active=True)
+        elif status_filter == 'inactive':
+            students = students.filter(user__is_active=False)
+
+    # Get unique courses for the filter dropdown
+    courses = Student.objects.values_list('course', flat=True).distinct()
+
+    context = {
+        'students': students,
+        'courses': courses,
+        'current_filters': {
+            'search': search_query,
+            'course': course_filter,
+            'year': year_filter,
+            'status': status_filter
+        }
+    }
+    
+    return render(request, 'admin/students.html', context)
 
 @login_required
 @user_passes_test(is_admin)
@@ -353,3 +428,5 @@ def view_interview_form(request, interview_id):
     except Exception as e:
         messages.error(request, f'Error viewing interview form: {str(e)}')
         return redirect('admin_students')
+
+

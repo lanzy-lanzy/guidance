@@ -2354,3 +2354,161 @@ INFO 2025-03-24 13:58:10,155 basehttp "POST /login/ HTTP/1.1" 200 7610
 INFO 2025-03-24 14:13:12,368 autoreload Watching for file changes with StatReloader
 INFO 2025-03-24 14:14:34,578 autoreload C:\Users\dttsi\dev\counseling\guidance_counseling\settings.py changed, reloading.
 INFO 2025-03-24 14:14:35,576 autoreload Watching for file changes with StatReloader
+INFO 2025-03-24 14:29:05,368 autoreload Watching for file changes with StatReloader
+ERROR 2025-03-24 14:29:16,740 basehttp "POST /login/ HTTP/1.1" 500 59
+ERROR 2025-03-24 14:31:12,345 basehttp "GET /login/ HTTP/1.1" 500 59
+INFO 2025-03-24 14:32:02,024 autoreload Watching for file changes with StatReloader
+INFO 2025-03-24 14:32:16,723 basehttp "GET / HTTP/1.1" 200 9329
+INFO 2025-03-24 14:32:16,828 basehttp "GET /static/images/jhcsc_cover.jpg HTTP/1.1" 304 0
+WARNING 2025-03-24 14:32:17,956 log Not Found: /favicon.ico
+WARNING 2025-03-24 14:32:17,958 basehttp "GET /favicon.ico HTTP/1.1" 404 17580
+INFO 2025-03-24 14:32:20,347 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:32:28,687 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:32:28,792 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 18478
+INFO 2025-03-24 14:32:28,857 basehttp "GET /media/profile_pictures/protection.png HTTP/1.1" 304 0
+INFO 2025-03-24 14:32:48,920 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 17382
+INFO 2025-03-24 14:32:57,963 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 27672
+INFO 2025-03-24 14:33:03,834 basehttp "GET /counselor/students/ HTTP/1.1" 200 23117
+INFO 2025-03-24 14:33:07,896 basehttp "GET /counselor/student/7/interview/ HTTP/1.1" 200 16536
+INFO 2025-03-24 14:33:21,535 basehttp "GET /counselor/reports/ HTTP/1.1" 200 17047
+INFO 2025-03-24 14:33:42,934 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:33:42,941 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:33:51,371 basehttp "GET /register/ HTTP/1.1" 200 11952
+INFO 2025-03-24 14:35:54,393 basehttp "POST /register/ HTTP/1.1" 200 13610
+INFO 2025-03-24 14:37:09,151 basehttp "POST /register/ HTTP/1.1" 200 13652
+INFO 2025-03-24 14:38:31,526 basehttp "POST /register/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:38:31,533 basehttp "GET /login/ HTTP/1.1" 200 7614
+INFO 2025-03-24 14:38:51,652 basehttp "POST /login/ HTTP/1.1" 200 7610
+INFO 2025-03-24 14:39:01,985 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:39:02,058 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 31114
+INFO 2025-03-24 14:39:02,087 basehttp "GET /static/images/default-profile.png HTTP/1.1" 304 0
+INFO 2025-03-24 14:39:14,585 basehttp "GET /admin-panel/users/12/approve/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:39:14,636 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 29317
+INFO 2025-03-24 14:39:14,938 basehttp "GET /media/profile_pictures/software-engineer.png HTTP/1.1" 200 32600
+INFO 2025-03-24 14:39:26,636 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:39:26,642 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:39:39,649 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:39:39,712 basehttp "GET /student/dashboard/ HTTP/1.1" 200 15514
+INFO 2025-03-24 14:39:44,436 basehttp "GET /student/appointments/ HTTP/1.1" 200 26973
+INFO 2025-03-24 14:39:55,562 basehttp "GET /student/profile/ HTTP/1.1" 200 26638
+INFO 2025-03-24 14:42:34,015 basehttp "POST /student/profile/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:42:34,060 basehttp "GET /student/profile/ HTTP/1.1" 200 27806
+INFO 2025-03-24 14:42:40,344 basehttp "GET /student/appointments/ HTTP/1.1" 200 26516
+INFO 2025-03-24 14:43:51,522 basehttp "POST /student/appointments/request/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:43:51,574 basehttp "GET /student/appointments/ HTTP/1.1" 200 31152
+INFO 2025-03-24 14:43:58,749 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:43:58,758 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:44:07,629 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:44:07,678 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 21164
+INFO 2025-03-24 14:44:18,227 basehttp "GET /counselor/appointments/23/approve/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:44:18,292 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 33112
+INFO 2025-03-24 14:44:50,688 basehttp "POST /reschedule-appointment/23/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:44:50,747 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 33118
+INFO 2025-03-24 14:45:02,395 basehttp "GET /counselor/students/ HTTP/1.1" 200 29828
+INFO 2025-03-24 14:45:04,581 basehttp "GET /counselor/student/8/ HTTP/1.1" 200 24061
+INFO 2025-03-24 14:45:11,060 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32015
+INFO 2025-03-24 14:45:15,324 basehttp "GET /counselor/students/ HTTP/1.1" 200 29828
+INFO 2025-03-24 14:45:17,579 basehttp "GET /counselor/student/7/ HTTP/1.1" 200 26225
+INFO 2025-03-24 14:45:25,137 basehttp "GET /counselor/sessions/36/ HTTP/1.1" 200 14591
+INFO 2025-03-24 14:45:25,180 basehttp "GET /static/images/counseling_logo.png HTTP/1.1" 304 0
+INFO 2025-03-24 14:45:25,182 basehttp "GET /static/images/jhcsc_logo.png HTTP/1.1" 304 0
+INFO 2025-03-24 14:45:31,611 basehttp "GET /counselor/sessions/36/print/ HTTP/1.1" 200 7470
+INFO 2025-03-24 14:45:41,996 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32015
+INFO 2025-03-24 14:45:44,630 basehttp "GET /counselor/student/8/interview/ HTTP/1.1" 200 15371
+INFO 2025-03-24 14:46:04,281 basehttp "GET / HTTP/1.1" 200 9329
+INFO 2025-03-24 14:46:18,888 basehttp "POST /counselor/student/8/interview/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:46:18,950 basehttp "GET /counselor/interview/19/print/ HTTP/1.1" 200 10638
+ERROR 2025-03-24 14:46:23,427 log Internal Server Error: /counselor/appointments/23/complete/
+Traceback (most recent call last):
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\counseling\core\views.py", line 1608, in complete_appointment
+    return JsonResponse({'status': 'success'})
+           ^^^^^^^^^^^^
+NameError: name 'JsonResponse' is not defined. Did you mean: 'HttpResponse'?
+ERROR 2025-03-24 14:46:23,443 basehttp "POST /counselor/appointments/23/complete/ HTTP/1.1" 500 78944
+INFO 2025-03-24 14:47:06,228 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 19414
+INFO 2025-03-24 14:47:09,438 basehttp "GET /counselor/students/ HTTP/1.1" 200 29836
+INFO 2025-03-24 14:47:28,070 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:47:28,077 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:47:42,330 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:47:42,387 basehttp "GET /student/dashboard/ HTTP/1.1" 200 19899
+INFO 2025-03-24 14:47:51,322 basehttp "GET /student/appointments/ HTTP/1.1" 200 26516
+INFO 2025-03-24 14:47:54,682 basehttp "GET /student/sessions/history/ HTTP/1.1" 200 14834
+INFO 2025-03-24 14:47:57,014 basehttp "GET /student/dashboard/ HTTP/1.1" 200 18802
+INFO 2025-03-24 14:48:00,230 basehttp "GET /student/appointments/ HTTP/1.1" 200 26516
+INFO 2025-03-24 14:48:02,454 basehttp "GET /student/sessions/history/ HTTP/1.1" 200 14834
+INFO 2025-03-24 14:48:05,360 basehttp "GET /student/appointments/ HTTP/1.1" 200 26516
+INFO 2025-03-24 14:48:07,197 basehttp "GET /student/dashboard/ HTTP/1.1" 200 18802
+INFO 2025-03-24 14:48:08,886 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:48:08,893 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:48:22,337 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:48:22,398 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 31414
+INFO 2025-03-24 14:48:33,933 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 28220
+INFO 2025-03-24 14:48:39,860 basehttp "GET /admin-panel/users/?role=student&status=&search= HTTP/1.1" 200 28220
+INFO 2025-03-24 14:48:50,883 basehttp "GET /admin-panel/users/?role=&status=pending&search= HTTP/1.1" 200 28220
+INFO 2025-03-24 14:49:05,220 basehttp "GET /admin-panel/users/?role=&status=&search=patricia HTTP/1.1" 200 28220
+INFO 2025-03-24 14:49:09,877 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 20701
+INFO 2025-03-24 14:49:13,225 basehttp "GET /admin-panel/counselors/ HTTP/1.1" 200 16668
+INFO 2025-03-24 14:49:19,570 basehttp "GET /admin-panel/counselors/?status=&search=wila HTTP/1.1" 200 16672
+INFO 2025-03-24 14:49:22,506 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 20701
+INFO 2025-03-24 14:49:25,354 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 30322
+INFO 2025-03-24 14:49:30,012 basehttp "GET /admin-panel/appointments/ HTTP/1.1" 200 18075
+INFO 2025-03-24 14:49:47,123 basehttp "GET /admin-panel/appointments/?status=&date_from=&date_to=&search=so+kapoy HTTP/1.1" 200 18083
+INFO 2025-03-24 14:51:20,404 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 30322
+INFO 2025-03-24 14:51:23,771 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 28220
+INFO 2025-03-24 14:51:26,756 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 20701
+INFO 2025-03-24 14:51:31,098 basehttp "GET /admin-panel/counselors/ HTTP/1.1" 200 16668
+INFO 2025-03-24 14:51:34,883 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 20701
+INFO 2025-03-24 14:51:39,211 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 28220
+INFO 2025-03-24 14:52:51,048 autoreload C:\Users\dttsi\dev\counseling\core\admin_views.py changed, reloading.
+INFO 2025-03-24 14:52:52,432 autoreload Watching for file changes with StatReloader
+INFO 2025-03-24 14:52:55,835 autoreload C:\Users\dttsi\dev\counseling\core\admin_views.py changed, reloading.
+INFO 2025-03-24 14:52:56,691 autoreload Watching for file changes with StatReloader
+INFO 2025-03-24 14:53:07,474 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 28415
+INFO 2025-03-24 14:53:17,948 basehttp "GET /admin-panel/users/?role=&status=&search=STUDENT HTTP/1.1" 200 12386
+INFO 2025-03-24 14:53:21,160 basehttp "GET /admin-panel/users/?role=&status=&search= HTTP/1.1" 200 28415
+INFO 2025-03-24 14:53:28,279 basehttp "GET /admin-panel/users/?role=student&status=&search= HTTP/1.1" 200 23836
+INFO 2025-03-24 14:53:34,322 basehttp "GET /admin-panel/users/?role=counselor&status=&search= HTTP/1.1" 200 14311
+INFO 2025-03-24 14:53:38,529 basehttp "GET /admin-panel/users/?role=&status=&search= HTTP/1.1" 200 28415
+INFO 2025-03-24 14:53:47,327 basehttp "GET /admin-panel/users/?role=&status=&search=PATRICIA HTTP/1.1" 200 14464
+INFO 2025-03-24 14:53:52,234 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 20701
+INFO 2025-03-24 14:54:05,502 basehttp "GET /admin-panel/users/ HTTP/1.1" 200 28415
+INFO 2025-03-24 14:54:11,400 basehttp "GET /admin-panel/users/?role=student&status=&search= HTTP/1.1" 200 23836
+INFO 2025-03-24 14:54:14,574 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 30322
+INFO 2025-03-24 14:54:16,911 basehttp "GET /admin-panel/counselors/ HTTP/1.1" 200 16668
+INFO 2025-03-24 14:54:20,308 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 20701
+INFO 2025-03-24 14:55:23,850 autoreload C:\Users\dttsi\dev\counseling\core\admin_views.py changed, reloading.
+INFO 2025-03-24 14:55:24,893 autoreload Watching for file changes with StatReloader
+INFO 2025-03-24 14:55:36,776 basehttp "GET /admin-panel/students/ HTTP/1.1" 200 21727
+INFO 2025-03-24 14:55:43,767 basehttp "GET /admin-panel/students/?course=BSIT&year=&status=&search= HTTP/1.1" 200 21735
+INFO 2025-03-24 14:55:55,267 basehttp "GET /admin-panel/students/?course=&year=&status=&search=diane HTTP/1.1" 200 18969
+INFO 2025-03-24 14:56:00,286 basehttp "GET /admin-panel/dashboard/ HTTP/1.1" 200 30322
+INFO 2025-03-24 14:56:07,408 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:56:07,413 basehttp "GET /login/ HTTP/1.1" 200 6112
+INFO 2025-03-24 14:56:22,644 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-03-24 14:56:22,694 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 20510
+INFO 2025-03-24 14:56:26,663 basehttp "GET /counselor/students/ HTTP/1.1" 200 29836
+INFO 2025-03-24 14:56:30,759 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 29819
+INFO 2025-03-31 19:46:27,127 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 19:46:45,177 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 19:46:58,214 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 19:47:32,558 autoreload Watching for file changes with StatReloader
+INFO 2025-03-31 19:47:39,511 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 302 0
+INFO 2025-03-31 19:47:39,556 basehttp "GET /login/?next=/counselor/sessions/history/ HTTP/1.1" 200 6112
+INFO 2025-03-31 19:47:49,159 basehttp "POST /login/?next=/counselor/sessions/history/ HTTP/1.1" 302 0
+INFO 2025-03-31 19:47:49,217 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 20511
+INFO 2025-03-31 19:47:52,214 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 30372
+INFO 2025-03-31 19:47:53,679 basehttp "GET /counselor/students/ HTTP/1.1" 200 29837
+INFO 2025-03-31 19:47:55,630 basehttp "GET /counselor/student/8/ HTTP/1.1" 200 25019
+INFO 2025-03-31 19:47:55,690 basehttp "GET /static/images/default-profile.png HTTP/1.1" 200 2006
+INFO 2025-03-31 19:47:57,915 basehttp "GET /counselor/sessions/38/ HTTP/1.1" 200 14591
+INFO 2025-03-31 19:47:57,942 basehttp "GET /static/images/counseling_logo.png HTTP/1.1" 200 545692
+INFO 2025-03-31 19:47:57,944 basehttp "GET /static/images/jhcsc_logo.png HTTP/1.1" 200 856181
+INFO 2025-03-31 19:48:00,577 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 29820

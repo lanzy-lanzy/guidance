@@ -1,2 +1,0 @@
-Remove-Item -Recurse -Force .git
-Remove-Item .gitignore
