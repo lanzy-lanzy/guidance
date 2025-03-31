@@ -1,0 +1,25 @@
+<nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+                <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="{% url 'counselor_dashboard' %}" class="{% if request.resolver_match.url_name == 'counselor_dashboard' %}border-emerald-500 text-gray-900{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Dashboard
+                    </a>
+                    <a href="{% url 'counselor_appointment_list' %}" class="{% if request.resolver_match.url_name == 'counselor_appointment_list' %}border-emerald-500 text-gray-900{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Appointments
+                    </a>
+                    <a href="{% url 'counselor_student_list' %}" class="{% if request.resolver_match.url_name == 'counselor_student_list' %}border-emerald-500 text-gray-900{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Students
+                    </a>
+                    <a href="{% url 'counselor_session_history' %}" class="{% if request.resolver_match.url_name == 'counselor_session_history' %}border-emerald-500 text-gray-900{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Session History
+                    </a>
+                    <a href="{% url 'reports_dashboard' %}" class="{% if request.resolver_match.url_name == 'reports_dashboard' %}border-emerald-500 text-gray-900{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Reports
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

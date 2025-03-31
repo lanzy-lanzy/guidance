@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %} - Guidance Counseling System</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            @media print {
+                @page {
+                    size: A4;
+                    margin: 2cm;
+                }
+                body {
+                    font-size: 12pt;
+                    line-height: 1.5;
+                }
+                .print-container {
+                    max-width: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+                .no-print {
+                    display: none !important;
+                }
+            }
+            .print-container {
+                background: white;
+            }
+        </style>
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body class="bg-gray-100">
+        {% block content %}{% endblock %}
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navigation %}{% endblock %}
+
+{% block content %}
+<div class="flex h-screen bg-emerald-50">
+    {% include 'includes/counselor_sidebar.html' %}
+
+    <div class="flex-1 flex flex-col ml-64">
+        {% include 'includes/topbar.html' %}
+
+        <main class="flex-1 overflow-y-auto p-6 bg-emerald-50">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white p-6 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black opacity-10 pattern-dots"></div>
+                        <div class="relative">
+                            <div class="flex items-center justify-between">
+                                <div class="w-20">
+                                    <img src="{% static 'images/jhcsc_logo.png' %}" alt="JHCSC Logo" class="w-full">
+                                </div>
+                                <div class="text-center flex-1">
+                                    <h4 class="text-lg font-semibold">Session Details</h4>
+                                    <p class="text-sm opacity-75">Guidance & Counseling Office</p>
+                                </div>
+                                <div class="w-20">
+                                    <img src="{% static 'images/counseling_logo.png' %}" alt="Guidance Logo" class="w-full">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6">
+                        <!-- Student Information -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">Student Information</h3>
+                            <div class="grid grid-cols-2 gap-4 mt-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Name of Student</label>
+                                    <div class="mt-1 text-sm text-gray-900">{{ session.student.user.get_full_name }}</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Course/Year</label>
+                                    <div class="mt-1 text-sm text-gray-900">{{ session.student.course }} - Year {{ session.student.year_level }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Session Details -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">Session Details</h3>
+                            <div class="grid grid-cols-2 gap-4 mt-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date</label>
+                                    <div class="mt-1 text-sm text-gray-900">{{ session.date|date:"F d, Y" }}</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Time</label>
+                                    <div class="mt-1 text-sm text-gray-900">
+                                        {{ session.time_started|time:"g:i A" }} - {{ session.time_ended|time:"g:i A"|default:"Ongoing" }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Session Type</label>
+                                    <div class="mt-1 text-sm text-gray-900">{{ session.get_session_type_display }}</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Status</label>
+                                    <div class="mt-1 text-sm text-gray-900">{{ session.get_status_display }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="mt-8 flex justify-end space-x-4">
+                            <a href="{% url 'counselor_session_history' %}" 
+                               class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                                Back to Sessions
+                            </a>
+                            {% if session.status == 'completed' %}
+                            <a href="{% url 'print_session' session.id %}" 
+                               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                                <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                                </svg>
+                                Print Session
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

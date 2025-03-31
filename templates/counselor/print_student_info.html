@@ -1,0 +1,203 @@
+{% extends 'base_print.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="print-container">
+    <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold">J.H. Cerilles State College</h1>
+            <p class="text-lg">Guidance and Counseling Office</p>
+            <p class="text-lg font-semibold mt-4">Student Information Sheet</p>
+        </div>
+
+    <!-- Basic Information -->
+        <div class="flex items-start mb-8">
+            <div class="flex-1">
+                <table class="w-full">
+                    <tr>
+                        <td class="py-2 font-semibold" style="width: 200px;">Name:</td>
+                        <td class="py-2">{{ student.user.get_full_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Course & Year:</td>
+                        <td class="py-2">{{ student.course }} - {{ student.year }} Year</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Contact Number:</td>
+                        <td class="py-2">{{ student.contact_number }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Email:</td>
+                        <td class="py-2">{{ student.user.email }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="w-32">
+                {% if student.user.profile_picture %}
+                    <img src="{{ student.user.profile_picture.url }}" alt="Profile Picture" class="w-32 h-32 object-cover border-2 border-gray-300">
+                {% else %}
+                    <img src="{% static 'images/default-profile.png' %}" alt="Default Profile" class="w-32 h-32 object-cover border-2 border-gray-300">
+                {% endif %}
+            </div>
+        </div>
+
+    <!-- Personal Information -->
+        <div class="mb-8">
+            <h2 class="text-lg font-bold mb-4 border-b-2 border-gray-800">Personal Information</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <table class="w-full">
+                    <tr>
+                        <td class="py-2 font-semibold" style="width: 150px;">Birth Date:</td>
+                        <td class="py-2">{{ student.birth_date|date:"F d, Y" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Birth Place:</td>
+                        <td class="py-2">{{ student.birth_place }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Age:</td>
+                        <td class="py-2">{{ student.get_age }}</td>
+                    </tr>
+                </table>
+                <table class="w-full">
+                    <tr>
+                        <td class="py-2 font-semibold" style="width: 150px;">Civil Status:</td>
+                        <td class="py-2">{{ student.get_civil_status_display }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Religion:</td>
+                        <td class="py-2">{{ student.religion }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-semibold">Address:</td>
+                        <td class="py-2">{{ student.address }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    <!-- Family Background -->
+        <div class="mb-8">
+            <h2 class="text-lg font-bold mb-4 border-b-2 border-gray-800">Family Background</h2>
+            <div class="grid grid-cols-2 gap-8">
+            <!-- Father's Information -->
+                <div>
+                    <h3 class="font-semibold mb-2">Father's Information</h3>
+                    <table class="w-full">
+                        <tr>
+                            <td class="py-2 font-semibold" style="width: 150px;">Name:</td>
+                            <td class="py-2">{{ student.father_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-semibold">Occupation:</td>
+                            <td class="py-2">{{ student.father_occupation }}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-semibold">Education:</td>
+                            <td class="py-2">{{ student.father_education }}</td>
+                        </tr>
+                    </table>
+                </div>
+            <!-- Mother's Information -->
+                <div>
+                    <h3 class="font-semibold mb-2">Mother's Information</h3>
+                    <table class="w-full">
+                        <tr>
+                            <td class="py-2 font-semibold" style="width: 150px;">Name:</td>
+                            <td class="py-2">{{ student.mother_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-semibold">Occupation:</td>
+                            <td class="py-2">{{ student.mother_occupation }}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-semibold">Education:</td>
+                            <td class="py-2">{{ student.mother_education }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-4">
+                <table class="w-full">
+                    <tr>
+                        <td class="py-2 font-semibold" style="width: 200px;">Parents' Marital Status:</td>
+                        <td class="py-2">{{ student.get_parents_marital_status_display }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    <!-- Educational Background -->
+        <div class="mb-8">
+            <h2 class="text-lg font-bold mb-4 border-b-2 border-gray-800">Educational Background</h2>
+            <div class="grid grid-cols-2 gap-8">
+            <!-- Elementary -->
+                <div>
+                    <h3 class="font-semibold mb-2">Elementary Education</h3>
+                    <table class="w-full">
+                        <tr>
+                            <td class="py-2 font-semibold" style="width: 150px;">School:</td>
+                            <td class="py-2">{{ student.elementary_school }}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-semibold">Year Graduated:</td>
+                            <td class="py-2">{{ student.elementary_year_graduated }}</td>
+                        </tr>
+                    </table>
+                </div>
+            <!-- High School -->
+                <div>
+                    <h3 class="font-semibold mb-2">High School Education</h3>
+                    <table class="w-full">
+                        <tr>
+                            <td class="py-2 font-semibold" style="width: 150px;">School:</td>
+                            <td class="py-2">{{ student.high_school }}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-semibold">Year Graduated:</td>
+                            <td class="py-2">{{ student.high_school_year_graduated }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    <!-- Footer -->
+        <div class="mt-16">
+            <div class="grid grid-cols-2 gap-8">
+                <div>
+                    <p class="font-semibold">Printed by:</p>
+                    <p class="mt-8 border-t border-gray-400 pt-1" style="width: 200px;">{{ request.user.get_full_name }}</p>
+                    <p class="text-sm">Guidance Counselor</p>
+                </div>
+                <div>
+                    <p class="font-semibold">Date Printed:</p>
+                    <p class="mt-8 border-t border-gray-400 pt-1" style="width: 200px;">{{ now|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @media print {
+            .print-container {
+                padding: 2cm;
+            }
+            body {
+                font-size: 12pt;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+            h1 {
+                font-size: 18pt;
+            }
+            h2 {
+                font-size: 14pt;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}

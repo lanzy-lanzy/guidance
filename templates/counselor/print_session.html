@@ -1,0 +1,172 @@
+{% extends 'base_print.html' %}
+{% load static %}
+
+{% block content %}
+<div class="print-container min-h-screen bg-gray-50 flex justify-center py-8">
+    <div class="w-[210mm] bg-white shadow-sm">
+        <div class="overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white p-4 relative overflow-hidden print-header">
+                <div class="absolute inset-0 bg-black opacity-10 pattern-dots"></div>
+                <div class="relative">
+                    <div class="flex items-center justify-between">
+                        <div class="w-20">
+                            <img src="{% static 'images/jhcsc_logo.png' %}" alt="JHCSC Logo" class="w-full">
+                        </div>
+                        <div class="text-center flex-1 px-4">
+                            <h4 class="text-lg font-semibold">J.H. CERILLES STATE COLLEGE</h4>
+                            <h5 class="text-md">DUMINGAG CAMPUS</h5>
+                            <p class="text-sm">Dumingag, Zamboanga del Sur</p>
+                        </div>
+                        <div class="w-20">
+                            <img src="{% static 'images/counseling_logo.png' %}" alt="Counseling Logo" class="w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <h4 class="text-xl font-semibold text-gray-800">GUIDANCE SESSION REPORT</h4>
+                    <p class="text-gray-600">(Counseling Documentation)</p>
+                </div>
+
+                <!-- Student Information -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">Student Information</h3>
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Name:</span> 
+                                {{ session.student.user.get_full_name }}
+                            </p>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Course:</span> 
+                                {{ session.student.course }}
+                            </p>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Year:</span> 
+                                {{ session.student.year }}
+                            </p>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Contact Number:</span> 
+                                {{ session.student.contact_number|default:"Not provided" }}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Email:</span> 
+                                {{ session.student.user.email }}
+                            </p>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Date:</span> 
+                                {{ session.date|date:"F d, Y" }}
+                            </p>
+                            <p class="text-sm mb-2">
+                                <span class="font-medium">Time:</span> 
+                                {{ session.time_started|time:"g:i A" }} - {{ session.time_ended|time:"g:i A"|default:"Ongoing" }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Details -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">Session Details</h3>
+                    <div class="mt-4">
+                        <p class="text-sm mb-2">
+                            <span class="font-medium">Session Type:</span> 
+                            {{ session.get_session_type_display }}
+                        </p>
+                        <p class="text-sm mb-2">
+                            <span class="font-medium">Purpose/Concern:</span>
+                            <span class="block mt-1">{{ session.purpose|default:"No purpose specified" }}</span>
+                        </p>
+                        <p class="text-sm mb-2">
+                            <span class="font-medium">Action Taken:</span>
+                            <span class="block mt-1">{{ session.action_taken|default:"No action specified" }}</span>
+                        </p>
+                        <p class="text-sm mb-2">
+                            <span class="font-medium">Remarks:</span>
+                            <span class="block mt-1">{{ session.remarks|default:"No remarks" }}</span>
+                        </p>
+                        <p class="text-sm mb-2">
+                            <span class="font-medium">Status:</span> 
+                            {{ session.get_status_display }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Follow-up Information -->
+                {% if session.requires_followup %}
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">Follow-up Information</h3>
+                    <div class="mt-4">
+                        <p class="text-sm"><span class="font-medium">Follow-up Required:</span> Yes</p>
+                        {% if session.followup %}
+                        <p class="text-sm"><span class="font-medium">Scheduled Date:</span> {{ session.followup.scheduled_date|date:"F d, Y" }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Signatures -->
+                <div class="mt-12">
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="text-center">
+                            <div class="border-t border-gray-400 mt-16 pt-2">
+                                <p class="text-sm font-medium">{{ student.user.get_full_name }}</p>
+                                <p class="text-sm text-gray-600">Student</p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="border-t border-gray-400 mt-16 pt-2">
+                                <p class="text-sm font-medium">{{ counselor.user.get_full_name }}</p>
+                                <p class="text-sm text-gray-600">Guidance Counselor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="print-footer text-center text-xs text-gray-500 py-2">
+                <div class="border-t border-gray-200 mt-8 pt-2">
+                    <p>J.H. Cerilles State College - Guidance & Counseling Office</p>
+                    <p>Generated on: {{ now|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            margin: 2cm;
+        }
+        .print-container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+        .no-print {
+            display: none !important;
+        }
+    }
+</style>
+
+{% if print_mode %}
+<script>
+    window.onload = function() {
+        window.print();
+    }
+</script>
+{% endif %}
+{% endblock %}

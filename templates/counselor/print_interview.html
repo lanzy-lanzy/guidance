@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navigation %}{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="min-h-screen bg-white py-8 print:py-0">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white">
+            <!-- Header -->
+                <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white p-6 relative overflow-hidden print:bg-emerald-700">
+                    <div class="absolute inset-0 bg-black opacity-10 pattern-dots"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between">
+                            <div class="w-24">
+                                <img src="{% static 'images/jhcsc_logo.png' %}" alt="JHCSC Logo" class="w-full">
+                            </div>
+                            <div class="text-center flex-1">
+                                <h4 class="text-lg font-semibold">J.H. CERILLES STATE COLLEGE</h4>
+                                <h5 class="text-md">DUMINGAG CAMPUS</h5>
+                                <p class="text-sm">Dumingag, Zamboanga del Sur, 7028</p>
+                                <p class="text-sm">Email: gco.dumingag@jhcsc.edu.ph</p>
+                                <h5 class="text-md mt-2">GUIDANCE & COUNSELING OFFICE</h5>
+                            </div>
+                            <div class="w-24">
+                                <img src="{% static 'images/counseling_logo.png' %}" alt="Guidance Logo" class="w-full">
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <span class="text-xs opacity-75">JHCSC-DUM-GCO-002/01July2024</span>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Title -->
+                <div class="text-center my-8">
+                    <h1 class="text-2xl font-bold text-gray-900">GUIDANCE COUNSELOR INTERVIEW REPORT</h1>
+                </div>
+            <!-- Content -->
+                <div class="px-8 space-y-6">
+                <!-- Personal Information Card -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h2 class="text-xl font-semibold text-emerald-800 mb-4">PERSONAL INFORMATION</h2>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Student Name:</p>
+                                <p class="text-lg">{{ interview.student.user.get_full_name|title }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Course/Year:</p>
+                                <p class="text-lg">{{ interview.student.course|upper }} - Year {{ interview.student.year }}</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6 mt-4">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Address:</p>
+                                <p class="text-lg">{{ interview.address|capfirst }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Contact Number:</p>
+                                <p class="text-lg">{{ interview.contact_number }}</p>
+                            </div>
+                        </div>
+
+                    <!-- Other personal info fields... -->
+                    </div>
+
+                <!-- Interview Details Card -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h2 class="text-xl font-semibold text-emerald-800 mb-4">INTERVIEW DETAILS</h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Reason for Interview</h3>
+                                <p class="mt-3 text-gray-800 whitespace-pre-wrap">{{ interview.reason_for_interview|capfirst }}</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Presenting Problem</h3>
+                                <p class="mt-3 text-gray-800 whitespace-pre-wrap">{{ interview.presenting_problem|capfirst }}</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Background of Problem</h3>
+                                <p class="mt-3 text-gray-800 whitespace-pre-wrap">{{ interview.background_of_problem|capfirst }}</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Counselor Notes</h3>
+                                <p class="mt-3 text-gray-800 whitespace-pre-wrap">{{ interview.counselor_notes|capfirst }}</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Recommendations</h3>
+                                <p class="mt-3 text-gray-800 whitespace-pre-wrap">{{ interview.recommendations|capfirst }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Signatures -->
+                    <div class="grid grid-cols-2 gap-12 pt-12">
+                        <div class="text-center">
+                            <div class="border-t border-gray-300 mt-16 pt-2">
+                                <p class="font-medium">{{ interview.student.user.get_full_name|title }}</p>
+                                <p class="text-sm text-gray-600">Student</p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="border-t border-gray-300 mt-16 pt-2">
+                                <p class="font-medium">{{ interview.counselor.user.get_full_name|title }}</p>
+                                <p class="text-sm text-gray-600">Guidance Counselor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- Print Button (hidden when printing) -->
+                <div class="mt-8 flex justify-end gap-4 px-8 print:hidden">
+                    <a href="{% url 'counselor_dashboard' %}" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                        </svg>
+                        Back to Dashboard
+                    </a>
+                    <button onclick="completeAndPrint()" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        Print Report
+                    </button>
+                </div>
+
+                <script>
+                    function completeAndPrint() {
+                        // Get the appointment ID from the interview data
+                        const appointmentId = {{ interview.session.appointment.id|default:'null' }};
+                        
+                        // If there's an appointment, mark it as completed
+                        if (appointmentId) {
+                            fetch(`/counselor/appointments/${appointmentId}/complete/`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    // After marking as completed, trigger the print
+                                    window.print();
+                                } else {
+                                    console.error('Failed to mark appointment as completed');
+                                    window.print();
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                window.print();
+                            });
+                        } else {
+                            // If no appointment, just print
+                            window.print();
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @media print {
+            body {
+                background-color: white;
+            }
+            .print\:hidden {
+                display: none !important;
+            }
+            .print\:py-0 {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+            .print\:bg-emerald-700 {
+                background: #047857 !important;
+                background-image: none !important;
+            }
+        }
+    </style>
+{% endblock %}

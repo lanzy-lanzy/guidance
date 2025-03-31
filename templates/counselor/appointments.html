@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Appointments - Counselor Dashboard{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/top_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<style>
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+    }
+    .animate-marquee {
+        display: inline-block;
+        animation: marquee 20s linear infinite;
+    }
+    @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    [x-cloak] { display: none !important; }
+</style>
+<div class="flex h-screen bg-gray-50">
+    {% include 'includes/counselor_sidebar.html' %}
+
+    <div class="flex-1 pl-64 pt-2">
+        <div class="p-8">
+            <!-- Header Section -->
+             <!-- Header Section -->
+             <div class="mb-8 flex justify-between items-center bg-white p-6 rounded-lg shadow-sm">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Appointments</h1>
+                    <p class="mt-1 text-sm text-gray-600">Manage and track your counseling sessions</p>
+                </div>
+                <!-- Notification Bell Section -->
+                <div class="relative flex items-center" x-data="{ showNotification: false }">
+                    <div class="relative cursor-pointer" @click="showNotification = !showNotification">
+                        <div class="relative">
+                            <svg class="w-6 h-6 text-gray-600 hover:text-emerald-600 transition-colors duration-200" 
+                                :class="{'animate-bounce': hasAppointmentsToday}"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            </svg>
+                            {% if has_appointments_today %}
+                                <span class="absolute -top-1 -right-1 bg-red-500 rounded-full w-2 h-2"></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Notification Dropdown -->
+                    <div x-show="showNotification" 
+                         @click.away="showNotification = false"
+                         class="absolute right-0 mt-2 top-full w-72 bg-white rounded-lg shadow-lg border border-gray-100 z-50"
+                         x-cloak>
+                        <div class="p-4">
+                            <h3 class="text-sm font-semibold text-gray-900 mb-2">Today's Appointments</h3>
+                            {% if has_appointments_today %}
+                                <div class="overflow-hidden">
+                                    <div class="marquee-container">
+                                        <p class="text-sm text-gray-600 whitespace-nowrap animate-marquee">
+                                            {% for appointment in todays_appointments %}
+                                                {{ appointment.student.user.get_full_name }} at {{ appointment.scheduled_time|time:"g:i A" }} •
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p class="text-sm text-gray-600">No appointments scheduled for today</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Filters Section -->
+            <form method="GET" action="" class="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4" x-ref="form">
+                <div class="relative">
+                    <input type="text" name="search" value="{{ current_filters.search }}" 
+                           placeholder="Search by name, course, or purpose..." 
+                           class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+                
+                <!-- Searchable Status Dropdown -->
+                <div class="relative" x-data="{ 
+                    open: false, 
+                    search: '', 
+                    selected: '{{ current_filters.status }}',
+                    options: [
+                        { value: '', label: 'All Status' },
+                        { value: 'pending', label: 'Pending' },
+                        { value: 'approved', label: 'Approved' },
+                        { value: 'completed', label: 'Completed' },
+                        { value: 'declined', label: 'Declined' }
+                    ],
+                    get filteredOptions() {
+                        return this.options.filter(option => 
+                            option.label.toLowerCase().includes(this.search.toLowerCase())
+                        );
+                    },
+                    get selectedLabel() {
+                        const option = this.options.find(opt => opt.value === this.selected);
+                        return option ? option.label : 'All Status';
+                    },
+                    selectAndSubmit(value) {
+                        this.selected = value;
+                        this.search = '';
+                        this.open = false;
+                        this.$refs.form.submit();
+                    }
+                }" x-ref="dropdown">
+                    <input type="hidden" name="status" :value="selected">
+                    <div class="relative">
+                        <input type="text" 
+                               x-model="search"
+                               @focus="open = true"
+                               @keydown.escape="open = false"
+                               @keydown.arrow-down.prevent="
+                                    if (filteredOptions.length) {
+                                        const values = filteredOptions.map(o => o.value);
+                                        const currentIndex = values.indexOf(selected);
+                                        const nextIndex = currentIndex + 1 < values.length ? currentIndex + 1 : 0;
+                                        selected = values[nextIndex];
+                                    }
+                               "
+                               @keydown.arrow-up.prevent="
+                                    if (filteredOptions.length) {
+                                        const values = filteredOptions.map(o => o.value);
+                                        const currentIndex = values.indexOf(selected);
+                                        const prevIndex = currentIndex > 0 ? currentIndex - 1 : values.length - 1;
+                                        selected = values[prevIndex];
+                                    }
+                               "
+                               @keydown.enter.prevent="
+                                    if (filteredOptions.length === 1) {
+                                        selectAndSubmit(filteredOptions[0].value);
+                                    }
+                               "
+                               :placeholder="selectedLabel"
+                               class="w-full pl-4 pr-10 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                            <button type="button" @click="open = !open" class="p-1">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div x-show="open" 
+                         x-transition
+                         @click.away="open = false"
+                         class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                        <ul class="max-h-60 overflow-y-auto py-1">
+                            <template x-for="option in filteredOptions" :key="option.value">
+                                <li @click="selectAndSubmit(option.value)"
+                                    class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                    :class="{ 'bg-emerald-50': selected === option.value }"
+                                    x-text="option.label">
+                                </li>
+                            </template>
+                            <li x-show="filteredOptions.length === 0" 
+                                class="px-4 py-2 text-gray-500 text-sm">
+                                No matching options
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <input type="date" name="date" value="{{ current_filters.date }}"
+                       class="border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 bg-emerald-600 text-white rounded-lg px-4 py-2 hover:bg-emerald-700 transition-colors duration-200 flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                        </svg>
+                        Apply Filters
+                    </button>
+                    {% if current_filters.search or current_filters.status or current_filters.date %}
+                        <a href="{% url 'appointment_list' %}" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+
+            <!-- Appointments Table -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purpose</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for appointment in appointments %}
+                            <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                <!-- Student Info Column -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        {% if appointment.student.user.profile_picture %}
+                                            <img src="{{ appointment.student.user.profile_picture.url }}" alt="Profile picture" class="h-10 w-10 rounded-full object-cover ring-2 ring-white">
+                                        {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center ring-2 ring-white">
+                                                <span class="text-lg font-medium text-emerald-700">
+                                                    {{ appointment.student.user.first_name|first }}{{ appointment.student.user.last_name|first }}
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name }}</div>
+                                            <div class="text-sm text-gray-500">{{ appointment.student.user.email }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Date & Time Column -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ appointment.date }}</div>
+                                    <div class="text-sm text-gray-500">{{ appointment.time }}</div>
+                                </td>
+
+                                <!-- Purpose Column -->
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900 max-w-xs truncate">{{ appointment.purpose }}</div>
+                                </td>
+
+                                <!-- Status Column -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        {% if appointment.status == 'pending' %}bg-yellow-100 text-yellow-800
+                                        {% elif appointment.status == 'approved' %}bg-emerald-100 text-emerald-800
+                    
+                                        {% elif appointment.status == 'completed' %}bg-purple-100 text-purple-800
+                                        {% elif appointment.status == 'declined' %}bg-red-100 text-red-800
+                                        {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                        {{ appointment.status|title }}
+                                    </span>
+                                </td>
+
+                                <!-- Actions Column -->
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    {% if appointment.status == 'pending' %}
+                                        <div class="flex space-x-2">
+                                            <form method="POST" action="{% url 'approve_appointment' appointment.id %}" class="inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="inline-flex items-center px-3 py-1.5 text-white bg-emerald-600 hover:bg-emerald-700 rounded-md">
+                                                    <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                    </svg>
+                                                    Approve
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="{% url 'decline_appointment' appointment.id %}" class="inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="inline-flex items-center px-3 py-1.5 text-white bg-red-600 hover:bg-red-700 rounded-md">
+                                                    <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                    Decline
+                                                </button>
+                                            </form>
+                                        </div>
+                                    {% elif appointment.status == 'approved' %}
+                                        <div class="flex space-x-2">
+                                            {% with appointment_datetime=appointment.scheduled_date current_datetime=now %}
+                                            <a href="{% url 'simple_interview_form' appointment.student.id %}" 
+                                               class="inline-flex items-center px-3 py-1.5 text-white {% if appointment_datetime > current_datetime %} bg-gray-400 cursor-not-allowed {% else %} bg-emerald-600 hover:bg-emerald-700 {% endif %} rounded-md"
+                                               {% if appointment_datetime > current_datetime %}
+                                               disabled
+                                               title="This interview will be available on {{ appointment.scheduled_date|date:'F d, Y' }} at {{ appointment.scheduled_date|time:'h:i A' }}"
+                                               onclick="return false;"
+                                               {% endif %}>
+                                                <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                                Start Interview
+                                            </a>
+                                            {% endwith %}
+                                            <button onclick="openRescheduleModal('{{appointment.id}}')" class="inline-flex items-center px-3 py-1.5 text-white bg-blue-600 hover:bg-blue-700 rounded-md">
+                                                <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                </svg>
+                                                Reschedule
+                                            </button>
+                                        </div>                                    {% elif appointment.status == 'completed' %}
+                                        <span class="text-gray-500">Interview Completed</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center">
+                                        <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        <h3 class="mt-2 text-sm font-medium text-gray-900">No appointments</h3>
+                                        <p class="mt-1 text-sm text-gray-500">No appointments have been scheduled yet.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Reschedule Modal -->
+<div id="rescheduleModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Reschedule Appointment</h3>
+            <form id="rescheduleForm" method="POST" class="mt-4">
+                {% csrf_token %}
+                <div class="mt-2 px-7 py-3">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Date</label>
+                        <input type="date" name="date" required
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Time</label>
+                        <input type="time" name="time" required
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 px-4 py-3">
+                    <button type="button" onclick="closeRescheduleModal()" 
+                            class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 bg-emerald-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        Confirm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.querySelector('input[name="search"]');
+        const statusSelect = document.querySelector('select[name="status"]');
+        const dateInput = document.querySelector('input[name="date"]');
+        
+        function filterAppointments() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const statusFilter = statusSelect.value;
+            const dateFilter = dateInput.value;
+            
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const status = row.querySelector('.rounded-full')?.textContent.trim().toLowerCase() || '';
+                const date = row.querySelector('td:nth-child(2)')?.textContent.trim() || '';
+                
+                const matchesSearch = text.includes(searchTerm);
+                const matchesStatus = !statusFilter || status.includes(statusFilter);
+                const matchesDate = !dateFilter || date.includes(dateFilter);
+                
+                row.style.display = matchesSearch && matchesStatus && matchesDate ? '' : 'none';
+            });
+        }
+        
+        searchInput.addEventListener('input', filterAppointments);
+        statusSelect.addEventListener('change', filterAppointments);
+        dateInput.addEventListener('change', filterAppointments);
+    });
+
+    function openRescheduleModal(appointmentId) {
+        const modal = document.getElementById('rescheduleModal');
+        const form = document.getElementById('rescheduleForm');
+        form.action = `/reschedule-appointment/${appointmentId}/`;
+        modal.classList.remove('hidden');
+    }
+
+    function closeRescheduleModal() {
+        const modal = document.getElementById('rescheduleModal');
+        modal.classList.add('hidden');
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('rescheduleModal');
+        if (event.target == modal) {
+            closeRescheduleModal();
+        }
+    }
+</script>
+<!-- Make sure Alpine.js is loaded -->
+<script src="//unpkg.com/alpinejs" defer></script>
+
+{% endblock %}

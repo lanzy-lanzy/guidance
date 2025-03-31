@@ -1,0 +1,53 @@
+<!-- End Session Modal -->
+<div id="endSessionModal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <form id="endSessionForm" method="POST" action="{% url 'end_session' %}" class="divide-y divide-gray-200">
+                {% csrf_token %}
+                <input type="hidden" id="sessionId" name="session_id">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="mb-4">
+                        <label for="problem_statement" class="block text-sm font-medium text-gray-700 mb-2">Problem Statement</label>
+                        <textarea id="problem_statement" name="problem_statement" rows="3"
+                                  class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  placeholder="Describe the main problem or concern discussed"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="recommendations" class="block text-sm font-medium text-gray-700 mb-2">Recommendations</label>
+                        <textarea id="recommendations" name="recommendations" rows="3"
+                                  class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  placeholder="Provide recommendations for the student"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Session Notes</label>
+                        <textarea id="notes" name="notes" rows="3"
+                                  class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  placeholder="Add any additional notes about the session"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="action_items" class="block text-sm font-medium text-gray-700 mb-2">Action Items</label>
+                        <textarea id="action_items" name="action_items" rows="2"
+                                  class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  placeholder="List specific actions to be taken"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="next_steps" class="block text-sm font-medium text-gray-700 mb-2">Next Steps</label>
+                        <textarea id="next_steps" name="next_steps" rows="2"
+                                  class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  placeholder="Outline the next steps or follow-up actions"></textarea>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        End Session
+                    </button>
+                    <button type="button" onclick="closeEndSessionModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

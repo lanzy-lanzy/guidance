@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Session History{% endblock %}
+{% block navigation %}
+    {% include 'includes/top_nav.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="flex h-screen bg-gray-50">
+        {% include 'includes/counselor_sidebar.html' %}
+
+        <div class="flex-1 ml-64 pt-2">
+            <div class="p-8">
+                <!-- Header Section -->
+                <div class="bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-xl shadow-lg mb-8 p-6 text-white">
+                    <div class="flex items-center">
+                        <div>
+                            <h1 class="text-3xl font-bold">Session History</h1>
+                            <p class="mt-2 text-emerald-100">View and manage your counseling sessions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters Section -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Search by student name..."
+                                   class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <select id="statusFilter" class="border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <option value="">All Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <input type="date" id="dateFilter" class="border border-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <button id="resetFilters" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+                            Reset Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Session History Table -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Appointment Details</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for session in sessions %}
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">{{ session.date|date:"F d, Y" }}</div>
+                                            {% if session.appointment %}
+                                                <div class="text-sm text-gray-500">{{ session.appointment.time|time:"g:i A" }}</div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                {% if session.student.user.profile_picture %}
+                                                    <img src="{{ session.student.user.profile_picture.url }}"
+                                                         alt="Profile picture"
+                                                         class="h-10 w-10 rounded-full object-cover ring-2 ring-white">
+                                                {% else %}
+                                                    <div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center ring-2 ring-white">
+                                                        <span class="text-lg font-medium text-emerald-700">
+                                                            {{ session.student.user.first_name|first }}{{ session.student.user.last_name|first }}
+                                                        </span>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">{{ session.student.user.get_full_name }}</div>
+                                                    <div class="text-sm text-gray-500">{{ session.student.course }} - {{ session.student.get_year_display }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {% if session.appointment %}
+                                                <div class="text-sm text-gray-900">{{ session.appointment.purpose }}</div>
+                                                <div class="flex space-x-2 mt-1">
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
+                                                        {% if session.appointment.counseling_type == 'ACADEMIC' %}bg-blue-100 text-blue-800
+                                                        {% elif session.appointment.counseling_type == 'CAREER' %}bg-purple-100 text-purple-800
+                                                        {% elif session.appointment.counseling_type == 'PERSONAL' %}bg-yellow-100 text-yellow-800
+                                                        {% elif session.appointment.counseling_type == 'MENTAL' %}bg-red-100 text-red-800{% endif %}">
+                                                        {{ session.appointment.get_counseling_type_display }}
+                                                    </span>
+                                                    {% if session.appointment.is_urgent %}
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-xs font-medium">
+                                                            Urgent
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            {% else %}
+                                                <div class="text-sm text-gray-500">Direct Session</div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex flex-col space-y-1">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                    {% if session.status == 'completed' %}bg-emerald-100 text-emerald-800
+                                                    {% elif session.status == 'ongoing' %}bg-blue-100 text-blue-800
+                                                    {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                                    {{ session.status|title }}
+                                                </span>
+                                                {% if session.interview %}
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                                        Interview Completed
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex flex-col space-y-2">
+                                                {% if session.status == 'completed' and session.interview %}
+                                                    <a href="{% url 'print_interview' session.interview.id %}"
+                                                       class="inline-flex items-center px-3 py-1.5 text-xs border border-transparent font-medium rounded text-white bg-emerald-600 hover:bg-emerald-700">
+                                                        <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                                                        </svg>
+                                                        View/Print Report
+                                                    </a>
+                                                {% endif %}
+                                                {% if session.status == 'ongoing' %}
+                                                    <a href="{% url 'simple_interview_form' session.student.id %}"
+                                                       class="inline-flex items-center px-3 py-1.5 text-xs border border-transparent font-medium rounded text-white bg-blue-600 hover:bg-blue-700">
+                                                        <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                        </svg>
+                                                        Continue Session
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="px-6 py-12 text-center">
+                                            <div class="flex flex-col items-center">
+                                                <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                                </svg>
+                                                <h3 class="mt-2 text-sm font-medium text-gray-900">No sessions found</h3>
+                                                <p class="mt-1 text-sm text-gray-500">Get started by creating a new session.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('#searchInput');
+            const statusFilter = document.querySelector('#statusFilter');
+            const dateFilter = document.querySelector('#dateFilter');
+            const resetButton = document.querySelector('#resetFilters');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const statusTerm = statusFilter.value.toLowerCase();
+                const dateTerm = dateFilter.value;
+
+                tableRows.forEach(row => {
+                    const studentName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    const status = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+                    const date = row.querySelector('td:nth-child(1)').textContent;
+
+                    const matchesSearch = !searchTerm || studentName.includes(searchTerm);
+                    const matchesStatus = !statusTerm || status.includes(statusTerm);
+                    const matchesDate = !dateTerm || date.includes(dateTerm);
+
+                    row.style.display = matchesSearch && matchesStatus && matchesDate ? '' : 'none';
+                });
+            }
+
+            searchInput.addEventListener('input', filterTable);
+            statusFilter.addEventListener('change', filterTable);
+            dateFilter.addEventListener('input', filterTable);
+
+            resetButton.addEventListener('click', function() {
+                searchInput.value = '';
+                statusFilter.value = '';
+                dateFilter.value = '';
+                filterTable();
+            });
+        });
+    </script>
+{% endblock %}

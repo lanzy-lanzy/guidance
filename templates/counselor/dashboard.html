@@ -1,0 +1,169 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Counselor Dashboard{% endblock %}
+{% block navigation %}
+    {% include 'includes/top_nav.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="flex h-screen bg-gray-50">
+        {% include 'includes/counselor_sidebar.html' %}
+
+        <div class="flex-1 ml-64 pt-2">
+            <div class="p-8">
+            <!-- Welcome Section -->
+                <div class="bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-xl shadow-lg mb-8 p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold">👋 Welcome back, {{ request.user.get_full_name|title }}! ✨</h1>
+                            <p class="mt-2 text-emerald-100">Here's what's happening with your appointments today</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-emerald-100">Today's Date</p>
+                            <p class="text-2xl font-semibold">{{ today|date:"F d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Pending Appointments Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-amber-100 text-amber-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h2 class="text-sm font-medium text-gray-600">Pending Appointments</h2>
+                                <div class="flex items-baseline">
+                                    <p class="text-2xl font-bold text-gray-900">{{ pending_appointments_count }}</p>
+                                    <span class="ml-2 text-sm text-gray-500">requests</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Total Students Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h2 class="text-sm font-medium text-gray-600">Total Students</h2>
+                                <div class="flex items-baseline">
+                                    <p class="text-2xl font-bold text-gray-900">{{ total_students }}</p>
+                                    <span class="ml-2 text-sm text-gray-500">students</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Completed Sessions Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h2 class="text-sm font-medium text-gray-600">Completed Sessions</h2>
+                                <div class="flex items-baseline">
+                                    <p class="text-2xl font-bold text-gray-900">{{ completed_sessions }}</p>
+                                    <span class="ml-2 text-sm text-gray-500">sessions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Upcoming Appointments Section -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-gray-900">Upcoming Appointments</h2>
+                            <a href="{% url 'counselor_appointment_list' %}"
+                               class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                                </svg>
+                                View All
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purpose</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for appointment in upcoming_appointments %}
+                                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                                                    <span class="text-lg font-medium text-emerald-700">
+                                                        {{ appointment.student.user.first_name|first }}{{ appointment.student.user.last_name|first }}
+                                                    </span>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name }}</div>
+                                                    <div class="text-sm text-gray-500">{{ appointment.student.course }} - Year {{ appointment.student.year }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ appointment.date }}</div>
+                                            <div class="text-sm text-gray-500">{{ appointment.time }}</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900 max-w-xs truncate">{{ appointment.purpose }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                         {% if appointment.status == 'pending' %}bg-yellow-100 text-yellow-800
+                                                         {% elif appointment.status == 'approved' %}bg-green-100 text-green-800
+                                                         {% else %}bg-red-100 text-red-800{% endif %}">
+                                                {{ appointment.status|title }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            {% if appointment.status == 'pending' %}
+                                                <div class="flex space-x-2">
+                                                    <a href="{% url 'approve_appointment' appointment.id %}"
+                                                       class="text-emerald-600 hover:text-emerald-900">Approve</a>
+                                                    <a href="{% url 'decline_appointment' appointment.id %}"
+                                                       class="text-red-600 hover:text-red-900">Decline</a>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                            No upcoming appointments
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
