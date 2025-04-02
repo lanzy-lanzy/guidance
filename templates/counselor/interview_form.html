@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block navigation %}{% endblock %}
 
@@ -63,7 +64,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">Name of Student</label>
-                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm" value="{{ student.user.get_full_name }}" readonly>
+                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm" value="{{ student.user.get_full_name|uppercase_fullname }}" readonly>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">Course/Year</label>

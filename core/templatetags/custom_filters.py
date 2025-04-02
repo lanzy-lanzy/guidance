@@ -28,3 +28,13 @@ def sub(value, arg):
         return int(value) - int(arg)
     except (ValueError, TypeError):
         return value
+
+@register.filter(name='uppercase_fullname')
+def uppercase_fullname(value):
+    """
+    Converts a full name to uppercase.
+    Usage: {{ user.get_full_name|uppercase_fullname }}
+    """
+    if value:
+        return value.upper()
+    return value

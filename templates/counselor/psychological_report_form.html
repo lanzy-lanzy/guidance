@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}{{ title }}{% endblock %}
 {% block navigation %}
@@ -9,7 +10,7 @@
 {% block content %}
 <div class="flex h-screen bg-gray-50">
     {% include 'includes/counselor_sidebar.html' %}
-    
+
     <div class="flex-1 ml-64 pt-2">
         <div class="p-8">
             <!-- Header Section -->
@@ -21,12 +22,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Form Section -->
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <form method="post" class="p-6 space-y-6">
                     {% csrf_token %}
-                    
+
                     {% if form.errors %}
                     <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
                         <div class="flex">
@@ -55,7 +56,7 @@
                         </div>
                     </div>
                     {% endif %}
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="{{ form.student.id_for_label }}" class="block text-sm font-medium text-gray-700">Student</label>
@@ -66,7 +67,7 @@
                             {{ form.date }}
                         </div>
                     </div>
-                    
+
                     <div class="border-t border-gray-200 pt-6">
                         <h3 class="text-lg font-medium text-gray-900">Mental Ability Assessment</h3>
                         <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -88,7 +89,7 @@
                             {{ form.ability_description }}
                         </div>
                     </div>
-                    
+
                     <div class="border-t border-gray-200 pt-6">
                         <h3 class="text-lg font-medium text-gray-900">Personality Assessment</h3>
                         <div class="mt-4">
@@ -101,7 +102,7 @@
                             {{ form.personality_scales }}
                         </div>
                     </div>
-                    
+
                     <div class="border-t border-gray-200 pt-6">
                         <h3 class="text-lg font-medium text-gray-900">Remarks</h3>
                         <div class="mt-4">
@@ -109,7 +110,7 @@
                             {{ form.remarks }}
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
                         <a href="{% url 'psychological_report_list' %}" class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
                             Cancel

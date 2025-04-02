@@ -1,6 +1,7 @@
 
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Counselor Dashboard{% endblock %}
 {% block navigation %}
@@ -17,7 +18,7 @@
                 <div class="bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-xl shadow-lg mb-8 p-6 text-white">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h1 class="text-3xl font-bold">👋 Welcome back, {{ request.user.get_full_name|title }}! ✨</h1>
+                            <h1 class="text-3xl font-bold">👋 Welcome back, {{ request.user.get_full_name|uppercase_fullname }}! ✨</h1>
                             <p class="mt-2 text-emerald-100">Here's what's happening with your appointments today</p>
                         </div>
                         <div class="text-right">

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Counseling Referrals{% endblock %}
 {% block navigation %}
@@ -9,7 +10,7 @@
 {% block content %}
 <div class="flex h-screen bg-gray-50">
     {% include 'includes/counselor_sidebar.html' %}
-    
+
     <div class="flex-1 ml-64 pt-2">
         <div class="p-8">
             <!-- Header Section -->
@@ -29,13 +30,13 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Referrals List -->
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="p-6 border-b border-gray-200">
                     <h2 class="text-xl font-semibold text-gray-800">All Counseling Referrals</h2>
                 </div>
-                
+
                 {% if referrals %}
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -53,7 +54,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ referral.date|date:"F d, Y" }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">{{ referral.student.user.get_full_name }}</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ referral.student.user.get_full_name|uppercase_fullname }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ referral.student.course }} - Year {{ referral.student.year }}

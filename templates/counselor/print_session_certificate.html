@@ -1,5 +1,6 @@
 {% extends 'base_print.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Counseling Session Certificate{% endblock %}
 
@@ -181,7 +182,7 @@
 
                         <div class="text-center mb-8">
                             <p class="text-lg">This is to certify that</p>
-                            <h2 class="text-3xl font-bold text-emerald-800 my-4 gold-text">{{ certificate.student.user.get_full_name|title }}</h2>
+                            <h2 class="text-3xl font-bold text-emerald-800 my-4 gold-text">{{ certificate.student.user.get_full_name|uppercase_fullname }}</h2>
                             <p class="text-lg">a student of <span class="font-semibold">{{ certificate.student.course }}</span>, Year <span class="font-semibold">{{ certificate.student.year }}</span></p>
                         </div>
 
@@ -223,13 +224,13 @@
                         <div class="mt-12 mb-4 flex justify-between px-12">
                             <div class="text-center w-64">
                                 <div class="signature-line pb-1">
-                                    <p class="text-center font-medium mt-1">{{ certificate.student.user.get_full_name|title }}</p>
+                                    <p class="text-center font-medium mt-1">{{ certificate.student.user.get_full_name|uppercase_fullname }}</p>
                                 </div>
                                 <p class="text-center text-sm text-gray-600 mt-2">Student's Signature</p>
                             </div>
                             <div class="text-center w-64">
                                 <div class="signature-line pb-1">
-                                    <p class="text-center font-medium mt-1">{{ certificate.counselor.user.get_full_name|title }}</p>
+                                    <p class="text-center font-medium mt-1">{{ certificate.counselor.user.get_full_name|uppercase_fullname }}</p>
                                 </div>
                                 <p class="text-center text-sm text-gray-600 mt-2">Guidance Counselor</p>
                             </div>

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Counselor Management{% endblock %}
 
@@ -65,14 +66,14 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             {% if counselor.user.profile_picture %}
-                                                <img src="{{ counselor.user.profile_picture.url }}" alt="{{ counselor.user.get_full_name }}" class="h-10 w-10 rounded-full">
+                                                <img src="{{ counselor.user.profile_picture.url }}" alt="{{ counselor.user.get_full_name|uppercase_fullname }}" class="h-10 w-10 rounded-full">
                                             {% else %}
                                                 <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
                                                     <span class="text-gray-500 font-medium">{{ counselor.user.first_name|first|upper }}</span>
                                                 </div>
                                             {% endif %}
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">{{ counselor.user.get_full_name }}</div>
+                                                <div class="text-sm font-medium text-gray-900">{{ counselor.user.get_full_name|uppercase_fullname }}</div>
                                                 <div class="text-sm text-gray-500">Joined {{ counselor.user.date_joined|date:"M d, Y" }}</div>
                                             </div>
                                         </div>

@@ -1,5 +1,6 @@
 {% extends 'base_print.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
     <div class="print-container">
@@ -16,7 +17,7 @@
                 <table class="w-full">
                     <tr>
                         <td class="py-2 font-semibold" style="width: 200px;">Name:</td>
-                        <td class="py-2">{{ student.user.get_full_name }}</td>
+                        <td class="py-2">{{ student.user.get_full_name|uppercase_fullname }}</td>
                     </tr>
                     <tr>
                         <td class="py-2 font-semibold">Course & Year:</td>

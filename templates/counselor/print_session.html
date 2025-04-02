@@ -1,5 +1,6 @@
 {% extends 'base_print.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
 <div class="print-container min-h-screen bg-gray-50 flex justify-center py-8">
@@ -38,33 +39,33 @@
                     <div class="grid grid-cols-2 gap-4 mt-4">
                         <div>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Name:</span> 
-                                {{ session.student.user.get_full_name }}
+                                <span class="font-medium">Name:</span>
+                                {{ session.student.user.get_full_name|uppercase_fullname }}
                             </p>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Course:</span> 
+                                <span class="font-medium">Course:</span>
                                 {{ session.student.course }}
                             </p>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Year:</span> 
+                                <span class="font-medium">Year:</span>
                                 {{ session.student.year }}
                             </p>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Contact Number:</span> 
+                                <span class="font-medium">Contact Number:</span>
                                 {{ session.student.contact_number|default:"Not provided" }}
                             </p>
                         </div>
                         <div>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Email:</span> 
+                                <span class="font-medium">Email:</span>
                                 {{ session.student.user.email }}
                             </p>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Date:</span> 
+                                <span class="font-medium">Date:</span>
                                 {{ session.date|date:"F d, Y" }}
                             </p>
                             <p class="text-sm mb-2">
-                                <span class="font-medium">Time:</span> 
+                                <span class="font-medium">Time:</span>
                                 {{ session.time_started|time:"g:i A" }} - {{ session.time_ended|time:"g:i A"|default:"Ongoing" }}
                             </p>
                         </div>
@@ -76,7 +77,7 @@
                     <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">Session Details</h3>
                     <div class="mt-4">
                         <p class="text-sm mb-2">
-                            <span class="font-medium">Session Type:</span> 
+                            <span class="font-medium">Session Type:</span>
                             {{ session.get_session_type_display }}
                         </p>
                         <p class="text-sm mb-2">
@@ -92,7 +93,7 @@
                             <span class="block mt-1">{{ session.remarks|default:"No remarks" }}</span>
                         </p>
                         <p class="text-sm mb-2">
-                            <span class="font-medium">Status:</span> 
+                            <span class="font-medium">Status:</span>
                             {{ session.get_status_display }}
                         </p>
                     </div>

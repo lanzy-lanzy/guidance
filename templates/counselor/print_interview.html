@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block navigation %}{% endblock %}
 
@@ -45,7 +46,7 @@
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <p class="text-sm font-medium text-gray-600">Student Name:</p>
-                                <p class="text-lg">{{ interview.student.user.get_full_name|title }}</p>
+                                <p class="text-lg">{{ interview.student.user.get_full_name|uppercase_fullname }}</p>
                             </div>
                             <div>
                                 <p class="text-sm font-medium text-gray-600">Course/Year:</p>
@@ -103,13 +104,13 @@
                     <div class="grid grid-cols-2 gap-12 pt-12">
                         <div class="text-center">
                             <div class="border-t border-gray-300 mt-16 pt-2">
-                                <p class="font-medium">{{ interview.student.user.get_full_name|title }}</p>
+                                <p class="font-medium">{{ interview.student.user.get_full_name|uppercase_fullname }}</p>
                                 <p class="text-sm text-gray-600">Student</p>
                             </div>
                         </div>
                         <div class="text-center">
                             <div class="border-t border-gray-300 mt-16 pt-2">
-                                <p class="font-medium">{{ interview.counselor.user.get_full_name|title }}</p>
+                                <p class="font-medium">{{ interview.counselor.user.get_full_name|uppercase_fullname }}</p>
                                 <p class="text-sm text-gray-600">Guidance Counselor</p>
                             </div>
                         </div>
@@ -135,7 +136,7 @@
                     function completeAndPrint() {
                         // Get the appointment ID from the interview data
                         const appointmentId = {{ interview.session.appointment.id|default:'null' }};
-                        
+
                         // If there's an appointment, mark it as completed
                         if (appointmentId) {
                             fetch(`/counselor/appointments/${appointmentId}/complete/`, {

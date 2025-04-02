@@ -142,7 +142,7 @@
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <h3 class="text-lg font-medium text-gray-900">Session with {{ appointment.counselor.user.get_full_name|title }}</h3>
+                                                            <h3 class="text-lg font-medium text-gray-900">Session with {{ appointment.counselor.user.get_full_name|uppercase_fullname }}</h3>
                                                             <div class="mt-1 flex items-center space-x-4 text-sm text-gray-500">
                                                                 <div class="flex items-center">
                                                                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,7 +198,7 @@
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <h3 class="text-lg font-medium text-gray-900">Session with {{ appointment.counselor.user.get_full_name }}</h3>
+                                                            <h3 class="text-lg font-medium text-gray-900">Session with {{ appointment.counselor.user.get_full_name|uppercase_fullname }}</h3>
 
                                                             <div class="mt-1 flex items-center space-x-4 text-sm text-gray-500">
                                                                 <div class="flex items-center">
@@ -572,7 +572,7 @@
                             const profileModal = document.getElementById('profileCompletionModal');
                             const termsModal = document.getElementById('termsModal');
                             const appointmentModal = document.getElementById('newAppointmentModal');
-                            
+
                             if (event.target == profileModal) {
                                 closeProfileCompletionModal();
                             } else if (event.target == termsModal) {

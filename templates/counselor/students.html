@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Students - Counselor Dashboard{% endblock %}
 {% block navigation %}
@@ -98,7 +99,7 @@
                                         </div>
                                     {% endif %}
                                     <div>
-                                        <h3 class="text-lg font-semibold text-gray-900 student-name">{{ student.user.get_full_name }}</h3>
+                                        <h3 class="text-lg font-semibold text-gray-900 student-name">{{ student.user.get_full_name|uppercase_fullname }}</h3>
                                         <p class="text-sm text-gray-500">{{ student.user.email }}</p>
                                     </div>
                                 </div>

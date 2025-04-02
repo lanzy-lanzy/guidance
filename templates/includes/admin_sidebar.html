@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 
 <!-- Fixed Sidebar -->
 <div class="fixed inset-y-0 left-0 w-64 bg-emerald-700 text-white overflow-y-auto">
@@ -19,7 +20,7 @@
                         <img class="h-10 w-10 rounded-full mr-3" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile Picture">
                         <div>
                             <p class="text-sm">Welcome,</p>
-                            <p class="font-semibold">{{ user.get_full_name|default:user.username }}</p>
+                            <p class="font-semibold">{{ user.get_full_name|uppercase_fullname|default:user.username }}</p>
                             <p class="text-xs text-emerald-100">Administrator</p>
                         </div>
                     </div>
@@ -96,7 +97,7 @@
                 Counselors
             </a>
 
-    
+
 
             <!-- Logout -->
             <div class="px-4 py-2 mt-4 border-t border-emerald-600">

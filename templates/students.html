@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block title %}Student Directory - Guidance Counseling System{% endblock %}
 {% block navigation %}{% endblock %}
@@ -142,7 +143,7 @@
                                                         {% if student.user.profile_picture %}
                                                             <img class="h-10 w-10 rounded-full object-cover"
                                                                  src="{{ student.user.profile_picture.url }}"
-                                                                 alt="{{ student.user.get_full_name }}">
+                                                                 alt="{{ student.user.get_full_name|uppercase_fullname }}">
                                                         {% else %}
                                                             <div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
                                                                 <span class="text-lg text-emerald-600">{{ student.user.username|make_list|first|upper }}</span>
@@ -151,7 +152,7 @@
                                                     </div>
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{ student.user.get_full_name }}
+                                                            {{ student.user.get_full_name|uppercase_fullname }}
                                                         </div>
                                                         <div class="text-sm text-gray-500">
                                                             {{ student.user.email }}

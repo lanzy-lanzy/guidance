@@ -1,6 +1,7 @@
 
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block navigation %}
     {% include 'includes/top_nav.html' %}
@@ -47,12 +48,12 @@
                             <div class="text-center">
                                 <div class="w-32 h-32 mx-auto rounded-full bg-gray-200 overflow-hidden mb-4 shadow-lg border-2 border-emerald-200">
                                     {% if student.user.profile_picture %}
-                                        <img src="{{ student.user.profile_picture.url }}" alt="{{ student.user.get_full_name }}'s Profile" class="w-full h-full object-cover">
+                                        <img src="{{ student.user.profile_picture.url }}" alt="{{ student.user.get_full_name|uppercase_fullname }}'s Profile" class="w-full h-full object-cover">
                                     {% else %}
                                         <img src="{% static 'images/default-profile.png' %}" alt="Default Profile" class="w-full h-full object-cover">
                                     {% endif %}
                                 </div>
-                                <h2 class="text-xl font-semibold text-gray-900">{{ student.user.get_full_name }}</h2>
+                                <h2 class="text-xl font-semibold text-gray-900">{{ student.user.get_full_name|uppercase_fullname }}</h2>
                                 <p class="text-emerald-600">{{ student.course }}</p>
                                 <p class="text-gray-500">Year {{ student.year }}</p>
                             </div>

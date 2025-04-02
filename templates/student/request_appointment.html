@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Request Appointment{% endblock %}
 {% block navigation %}
@@ -38,7 +39,7 @@
                                         <option value="">Choose a counselor</option>
                                         {% for counselor in counselors %}
                                             <option value="{{ counselor.id }}" {% if request.GET.counselor|stringformat:"s" == counselor.id|stringformat:"s" %}selected{% endif %}>
-                                                {{ counselor.user.get_full_name|title }}
+                                                {{ counselor.user.get_full_name|uppercase_fullname }}
                                             </option>
                                         {% endfor %}
                                     </select>

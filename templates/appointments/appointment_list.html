@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}
     {% if current_status %}
@@ -137,7 +138,7 @@
                                                             </div>
                                                         {% endif %}
                                                         <div>
-                                                            <div class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name|default:appointment.student.user.username }}</div>
+                                                            <div class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name|uppercase_fullname|default:appointment.student.user.username }}</div>
                                                             <div class="text-sm text-gray-500">{{ appointment.student.course }} - Year {{ appointment.student.year }}</div>
                                                         </div>
                                                     </div>
@@ -154,7 +155,7 @@
                                                                 </svg>
                                                             </div>
                                                         {% endif %}
-                                                        <div class="text-sm font-medium text-gray-900">{{ appointment.counselor.user.get_full_name|default:appointment.counselor.user.username }}</div>
+                                                        <div class="text-sm font-medium text-gray-900">{{ appointment.counselor.user.get_full_name|uppercase_fullname|default:appointment.counselor.user.username }}</div>
                                                     </div>
                                                 </td>
                                             {% endif %}
