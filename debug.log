@@ -3267,3 +3267,347 @@ INFO 2025-04-03 03:16:03,658 basehttp "GET /counselor/counseling-referrals/ HTTP
 INFO 2025-04-03 03:16:43,550 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 18431
 INFO 2025-04-03 03:16:47,092 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 19093
 INFO 2025-04-03 03:17:00,234 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32082
+INFO 2025-04-03 06:55:01,489 basehttp "GET /counselor/students/ HTTP/1.1" 302 0
+INFO 2025-04-03 06:55:01,501 basehttp "GET /login/?next=/counselor/students/ HTTP/1.1" 200 6753
+INFO 2025-04-03 06:55:01,848 basehttp "GET /static/css/loading-styles.css HTTP/1.1" 200 1236
+INFO 2025-04-03 06:55:01,867 basehttp "GET /static/js/image-optimizer.js HTTP/1.1" 200 1600
+INFO 2025-04-03 06:55:01,874 basehttp "GET /static/js/resource-optimizer.js HTTP/1.1" 200 2008
+INFO 2025-04-03 06:55:01,874 basehttp "GET /static/js/loading-optimizer.js HTTP/1.1" 200 3016
+INFO 2025-04-03 06:55:09,676 basehttp "POST /login/?next=/counselor/students/ HTTP/1.1" 302 0
+INFO 2025-04-03 06:55:09,793 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 20831
+INFO 2025-04-03 06:55:14,061 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20344
+INFO 2025-04-03 06:55:16,278 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 16389
+INFO 2025-04-03 06:55:18,185 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 06:55:31,396 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19073
+INFO 2025-04-03 06:55:33,847 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 16389
+INFO 2025-04-03 06:55:35,912 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 06:55:38,135 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19073
+INFO 2025-04-03 06:55:42,969 basehttp "GET /counselor/students/ HTTP/1.1" 200 38895
+INFO 2025-04-03 06:55:48,688 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 06:55:51,081 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 06:55:53,050 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 06:55:54,250 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 06:55:55,564 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 06:55:57,088 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 06:56:00,210 basehttp "GET /counselor/students/ HTTP/1.1" 200 38895
+INFO 2025-04-03 06:56:02,592 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-04-03 06:56:02,597 basehttp "GET /login/ HTTP/1.1" 200 6753
+INFO 2025-04-03 06:56:12,573 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-04-03 06:56:12,594 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 20831
+INFO 2025-04-03 06:56:15,536 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20344
+INFO 2025-04-03 06:56:17,543 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 16389
+INFO 2025-04-03 06:56:19,515 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19073
+INFO 2025-04-03 06:56:34,757 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 06:56:40,252 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11805
+INFO 2025-04-03 06:57:00,763 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11805
+WARNING 2025-04-03 07:00:51,698 log Not Found: /counselor
+WARNING 2025-04-03 07:00:51,701 basehttp "GET /counselor HTTP/1.1" 404 21355
+INFO 2025-04-03 07:00:57,969 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-04-03 07:00:57,990 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 19735
+INFO 2025-04-03 07:01:48,653 autoreload Watching for file changes with StatReloader
+INFO 2025-04-03 07:02:29,814 autoreload Watching for file changes with StatReloader
+INFO 2025-04-03 07:02:46,928 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-04-03 07:02:46,952 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 19735
+INFO 2025-04-03 07:03:02,526 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 32172
+INFO 2025-04-03 07:03:06,463 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20344
+INFO 2025-04-03 07:03:08,693 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 16389
+INFO 2025-04-03 07:03:10,690 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19073
+INFO 2025-04-03 07:03:13,625 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:03:16,346 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19073
+INFO 2025-04-03 07:03:32,320 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:03:35,479 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11805
+INFO 2025-04-03 07:03:42,080 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11805
+INFO 2025-04-03 07:04:01,952 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:04:04,695 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11805
+INFO 2025-04-03 07:04:12,819 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:04:16,059 basehttp "GET /counselor/session-certificates/1/print/ HTTP/1.1" 200 11805
+INFO 2025-04-03 07:04:43,692 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:04:46,967 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19073
+INFO 2025-04-03 07:06:07,626 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20344
+INFO 2025-04-03 07:06:20,385 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 32172
+INFO 2025-04-03 07:07:31,954 autoreload Watching for file changes with StatReloader
+INFO 2025-04-03 07:08:02,684 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19103
+INFO 2025-04-03 07:08:11,748 basehttp "GET /counselor/counseling-referrals/1/print/ HTTP/1.1" 200 19986
+INFO 2025-04-03 07:11:00,193 basehttp "GET /counselor/counseling-referrals/1/print/ HTTP/1.1" 200 20006
+INFO 2025-04-03 07:11:25,857 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19103
+INFO 2025-04-03 07:11:42,037 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19103
+INFO 2025-04-03 07:12:44,718 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:12:50,243 basehttp "GET /counselor/session-certificates/1/edit/ HTTP/1.1" 200 19446
+INFO 2025-04-03 07:13:08,155 basehttp "GET /counselor/psychological-reports/ HTTP/1.1" 200 16389
+INFO 2025-04-03 07:13:12,090 basehttp "GET /counselor/psychological-reports/1/edit/ HTTP/1.1" 200 19821
+INFO 2025-04-03 07:13:24,107 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16891
+INFO 2025-04-03 07:13:32,401 basehttp "GET /counselor/students/ HTTP/1.1" 200 38895
+INFO 2025-04-03 07:13:36,677 basehttp "GET /counselor/student/8/ HTTP/1.1" 200 27371
+INFO 2025-04-03 07:13:51,673 basehttp "GET /counselor/sessions/38/ HTTP/1.1" 200 16943
+INFO 2025-04-03 07:13:57,748 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 32172
+INFO 2025-04-03 07:14:00,841 basehttp "GET /counselor/students/ HTTP/1.1" 200 38895
+INFO 2025-04-03 07:14:06,709 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+INFO 2025-04-03 07:15:27,935 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19133
+INFO 2025-04-03 07:18:16,817 basehttp "GET /counselor/session-certificates/ HTTP/1.1" 200 16922
+INFO 2025-04-03 07:18:16,862 basehttp "GET /static/js/loading-optimizer.js HTTP/1.1" 304 0
+INFO 2025-04-03 07:18:16,862 basehttp "GET /static/css/loading-styles.css HTTP/1.1" 304 0
+INFO 2025-04-03 07:18:16,867 basehttp "GET /static/js/resource-optimizer.js HTTP/1.1" 304 0
+INFO 2025-04-03 07:18:16,867 basehttp "GET /static/js/image-optimizer.js HTTP/1.1" 304 0
+INFO 2025-04-03 07:18:22,567 basehttp "GET /counselor/counseling-referrals/ HTTP/1.1" 200 19133
+INFO 2025-04-03 07:18:26,837 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20344
+INFO 2025-04-03 07:18:36,182 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32724
+ERROR 2025-04-03 07:20:48,480 log Internal Server Error: /counselor/appointments/
+Traceback (most recent call last):
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\counseling\core\counselor_views.py", line 60, in counselor_appointment_list
+    return render(request, 'counselor/appointments.html', context)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 605, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 701, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 611, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'uppercase_fullname'
+ERROR 2025-04-03 07:20:48,495 basehttp "GET /counselor/appointments/ HTTP/1.1" 500 338600
+ERROR 2025-04-03 07:21:32,702 log Internal Server Error: /counselor/appointments/
+Traceback (most recent call last):
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\counseling\core\counselor_views.py", line 60, in counselor_appointment_list
+    return render(request, 'counselor/appointments.html', context)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 605, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 701, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 611, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'uppercase_fullname'
+ERROR 2025-04-03 07:21:32,707 basehttp "GET /counselor/appointments/ HTTP/1.1" 500 338737
+ERROR 2025-04-03 07:21:42,275 log Internal Server Error: /counselor/appointments/
+Traceback (most recent call last):
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\dttsi\dev\counseling\core\counselor_views.py", line 60, in counselor_appointment_list
+    return render(request, 'counselor/appointments.html', context)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 605, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 701, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\dttsi\dev\.venv\Lib\site-packages\django\template\base.py", line 611, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'uppercase_fullname'
+ERROR 2025-04-03 07:21:42,290 basehttp "GET /counselor/appointments/ HTTP/1.1" 500 338907
+INFO 2025-04-03 07:22:11,662 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32635
+INFO 2025-04-03 07:23:20,039 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32635
+INFO 2025-04-03 07:23:53,372 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32635
+INFO 2025-04-03 07:29:57,688 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 32172
+INFO 2025-04-03 07:29:57,718 basehttp "GET /static/css/loading-styles.css HTTP/1.1" 304 0
+INFO 2025-04-03 07:29:57,720 basehttp "GET /static/js/loading-optimizer.js HTTP/1.1" 304 0
+INFO 2025-04-03 07:29:57,728 basehttp "GET /static/js/resource-optimizer.js HTTP/1.1" 304 0
+INFO 2025-04-03 07:29:57,731 basehttp "GET /static/js/image-optimizer.js HTTP/1.1" 304 0
+INFO 2025-04-03 07:30:03,774 basehttp "GET /counselor/interview/19/print/ HTTP/1.1" 200 11255
+INFO 2025-04-03 07:30:13,175 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 19735
+INFO 2025-04-03 07:30:20,563 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 32172
+WARNING 2025-04-03 07:32:39,041 log Not Found: /counselor/session-history/
+WARNING 2025-04-03 07:32:39,042 basehttp "GET /counselor/session-history/ HTTP/1.1" 404 21406
+INFO 2025-04-03 07:32:47,949 basehttp "GET /counselor/sessions/history/ HTTP/1.1" 200 32295
+INFO 2025-04-03 07:33:09,480 basehttp "GET /counselor/students/ HTTP/1.1" 200 38925
+INFO 2025-04-03 07:33:14,532 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32635
+INFO 2025-04-03 07:33:21,281 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20344
+INFO 2025-04-03 07:36:26,194 basehttp "GET /counselor/reports/ HTTP/1.1" 200 20374
+INFO 2025-04-03 07:42:59,773 basehttp "GET /counselor/appointments/ HTTP/1.1" 200 32635
+INFO 2025-04-03 07:43:03,927 basehttp "GET /counselor/dashboard/ HTTP/1.1" 200 19735

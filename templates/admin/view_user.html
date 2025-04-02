@@ -98,7 +98,7 @@
                             {% for session in profile.sessions.all|slice:":5" %}
                                 <div class="activity-item">
                                     <span class="text-primary">{{ session.date|date:"F d, Y" }}</span> -
-                                    {{ session.session_type }} session with {{ session.counselor.user.get_full_name }}
+                                    {{ session.session_type }} session with <span class="text-uppercase">{{ session.counselor.user.get_full_name }}</span>
                                 </div>
                             {% empty %}
                                 <p>No recent sessions found.</p>

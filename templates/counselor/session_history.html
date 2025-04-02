@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Session History{% endblock %}
 {% block navigation %}
@@ -81,8 +82,8 @@
                                                     </div>
                                                 {% endif %}
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ session.student.user.get_full_name }}</div>
-                                                    <div class="text-sm text-gray-500">{{ session.student.course }} - {{ session.student.get_year_display }}</div>
+                                                    <div class="text-sm font-medium text-gray-900 uppercase">{{ session.student.user.get_full_name }}</div>
+                                                    <div class="text-sm text-gray-500"><span class="uppercase">{{ session.student.course }}</span> - {{ session.student.get_year_display }}</div>
                                                 </div>
                                             </div>
                                         </td>

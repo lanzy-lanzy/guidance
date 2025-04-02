@@ -78,8 +78,8 @@
                                                 </div>
                                             {% endif %}
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name }}</div>
-                                                <div class="text-sm text-gray-500">{{ appointment.student.course }} - Year {{ appointment.student.year }}</div>
+                                                <div class="text-sm font-medium text-gray-900 uppercase">{{ appointment.student.user.get_full_name }}</div>
+                                                <div class="text-sm text-gray-500"><span class="uppercase">{{ appointment.student.course }}</span> - Year {{ appointment.student.year }}</div>
                                             </div>
                                         </div>
                                     </td>

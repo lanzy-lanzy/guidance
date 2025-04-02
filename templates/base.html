@@ -1,13 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Guidance Counseling System{% endblock %}</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com" defer></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script src="https://unpkg.com/@heroicons/v2/24/outline/esm/index.js"></script>
+        <script src="https://unpkg.com/@heroicons/v2/24/outline/esm/index.js" defer></script>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/loading-styles.css' %}">
         <style>
             body {
                 font-family: 'Inter', sans-serif;
@@ -15,6 +17,13 @@
         </style>
     </head>
     <body class="bg-gray-50">
+        <!-- Loading Overlay -->
+        <div id="loading-overlay">
+            <div class="flex flex-col items-center">
+                <div class="spinner"></div>
+                <div class="loading-text">Loading...</div>
+            </div>
+        </div>
         {% block navigation %}
             {% if request.path != '/dashboard/' %}
     <!-- Navigation only shows on non-dashboard pages -->
@@ -69,7 +78,9 @@
             {% endif %}
         {% endblock %}
 
-        {% block content %}{% endblock %}
+        <div class="content-container">
+            {% block content %}{% endblock %}
+        </div>
 
         {% if messages %}
             <div class="fixed bottom-0 right-0 m-8">
@@ -97,5 +108,9 @@
                 {% endfor %}
             </div>
         {% endif %}
+        <!-- Optimization Scripts -->
+        <script src="{% static 'js/loading-optimizer.js' %}"></script>
+        <script src="{% static 'js/image-optimizer.js' %}" defer></script>
+        <script src="{% static 'js/resource-optimizer.js' %}" defer></script>
     </body>
 </html>

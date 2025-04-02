@@ -40,7 +40,7 @@
                                 </div>
                                 <div>
                                     <h1 class="text-2xl font-bold text-gray-900">{{ student.user.get_full_name|uppercase_fullname }}</h1>
-                                    <p class="text-gray-600">{{ student.course }} - Year {{ student.year }}</p>
+                                    <p class="text-gray-600"><span class="uppercase">{{ student.course }}</span> - Year {{ student.year }}</p>
                                     <div class="mt-3 flex space-x-3">
                                         <a href="{% url 'simple_interview_form' student.id %}"
                                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 shadow-sm transition-colors duration-200">

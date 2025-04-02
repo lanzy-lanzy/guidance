@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Admin Dashboard{% endblock %}
 {% block navigation %}{% endblock %}
@@ -121,7 +122,7 @@
                                                     </div>
                                                 {% endif %}
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ user.get_full_name }}</div>
+                                                    <div class="text-sm font-medium text-gray-900 uppercase">{{ user.get_full_name }}</div>
                                                     <div class="text-sm text-gray-500">{{ user.email }}</div>
                                                 </div>
                                             </div>
@@ -170,8 +171,8 @@
                             {% for appointment in upcoming_appointments %}
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name }}</p>
-                                        <p class="text-sm text-gray-500">with {{ appointment.counselor.user.get_full_name }}</p>
+                                        <p class="text-sm font-medium text-gray-900 uppercase">{{ appointment.student.user.get_full_name }}</p>
+                                        <p class="text-sm text-gray-500">with <span class="uppercase">{{ appointment.counselor.user.get_full_name }}</span></p>
                                     </div>
                                     <div class="text-sm text-gray-500">
                                         {{ appointment.date|date:"M d, Y" }} at {{ appointment.time|time:"g:i A" }}

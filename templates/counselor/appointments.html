@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Appointments - Counselor Dashboard{% endblock %}
 
@@ -39,10 +40,10 @@
                 <div class="relative flex items-center" x-data="{ showNotification: false }">
                     <div class="relative cursor-pointer" @click="showNotification = !showNotification">
                         <div class="relative">
-                            <svg class="w-6 h-6 text-gray-600 hover:text-emerald-600 transition-colors duration-200" 
+                            <svg class="w-6 h-6 text-gray-600 hover:text-emerald-600 transition-colors duration-200"
                                 :class="{'animate-bounce': hasAppointmentsToday}"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                             </svg>
                             {% if has_appointments_today %}
@@ -51,7 +52,7 @@
                         </div>
                     </div>
                     <!-- Notification Dropdown -->
-                    <div x-show="showNotification" 
+                    <div x-show="showNotification"
                          @click.away="showNotification = false"
                          class="absolute right-0 mt-2 top-full w-72 bg-white rounded-lg shadow-lg border border-gray-100 z-50"
                          x-cloak>
@@ -62,7 +63,7 @@
                                     <div class="marquee-container">
                                         <p class="text-sm text-gray-600 whitespace-nowrap animate-marquee">
                                             {% for appointment in todays_appointments %}
-                                                {{ appointment.student.user.get_full_name }} at {{ appointment.scheduled_time|time:"g:i A" }} •
+                                                <span class="uppercase">{{ appointment.student.user.get_full_name }}</span> at {{ appointment.scheduled_time|time:"g:i A" }} •
                                             {% endfor %}
                                         </p>
                                     </div>
@@ -77,18 +78,18 @@
             <!-- Filters Section -->
             <form method="GET" action="" class="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4" x-ref="form">
                 <div class="relative">
-                    <input type="text" name="search" value="{{ current_filters.search }}" 
-                           placeholder="Search by name, course, or purpose..." 
+                    <input type="text" name="search" value="{{ current_filters.search }}"
+                           placeholder="Search by name, course, or purpose..."
                            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                     <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </div>
-                
+
                 <!-- Searchable Status Dropdown -->
-                <div class="relative" x-data="{ 
-                    open: false, 
-                    search: '', 
+                <div class="relative" x-data="{
+                    open: false,
+                    search: '',
                     selected: '{{ current_filters.status }}',
                     options: [
                         { value: '', label: 'All Status' },
@@ -98,7 +99,7 @@
                         { value: 'declined', label: 'Declined' }
                     ],
                     get filteredOptions() {
-                        return this.options.filter(option => 
+                        return this.options.filter(option =>
                             option.label.toLowerCase().includes(this.search.toLowerCase())
                         );
                     },
@@ -115,7 +116,7 @@
                 }" x-ref="dropdown">
                     <input type="hidden" name="status" :value="selected">
                     <div class="relative">
-                        <input type="text" 
+                        <input type="text"
                                x-model="search"
                                @focus="open = true"
                                @keydown.escape="open = false"
@@ -150,8 +151,8 @@
                             </button>
                         </div>
                     </div>
-                    
-                    <div x-show="open" 
+
+                    <div x-show="open"
                          x-transition
                          @click.away="open = false"
                          class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
@@ -163,7 +164,7 @@
                                     x-text="option.label">
                                 </li>
                             </template>
-                            <li x-show="filteredOptions.length === 0" 
+                            <li x-show="filteredOptions.length === 0"
                                 class="px-4 py-2 text-gray-500 text-sm">
                                 No matching options
                             </li>
@@ -218,7 +219,7 @@
                                             </div>
                                         {% endif %}
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">{{ appointment.student.user.get_full_name }}</div>
+                                            <div class="text-sm font-medium text-gray-900 uppercase">{{ appointment.student.user.get_full_name }}</div>
                                             <div class="text-sm text-gray-500">{{ appointment.student.user.email }}</div>
                                         </div>
                                     </div>
@@ -240,7 +241,7 @@
                                     <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
                                         {% if appointment.status == 'pending' %}bg-yellow-100 text-yellow-800
                                         {% elif appointment.status == 'approved' %}bg-emerald-100 text-emerald-800
-                    
+
                                         {% elif appointment.status == 'completed' %}bg-purple-100 text-purple-800
                                         {% elif appointment.status == 'declined' %}bg-red-100 text-red-800
                                         {% else %}bg-gray-100 text-gray-800{% endif %}">
@@ -274,7 +275,7 @@
                                     {% elif appointment.status == 'approved' %}
                                         <div class="flex space-x-2">
                                             {% with appointment_datetime=appointment.scheduled_date current_datetime=now %}
-                                            <a href="{% url 'simple_interview_form' appointment.student.id %}" 
+                                            <a href="{% url 'simple_interview_form' appointment.student.id %}"
                                                class="inline-flex items-center px-3 py-1.5 text-white {% if appointment_datetime > current_datetime %} bg-gray-400 cursor-not-allowed {% else %} bg-emerald-600 hover:bg-emerald-700 {% endif %} rounded-md"
                                                {% if appointment_datetime > current_datetime %}
                                                disabled
@@ -336,7 +337,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 px-4 py-3">
-                    <button type="button" onclick="closeRescheduleModal()" 
+                    <button type="button" onclick="closeRescheduleModal()"
                             class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
                         Cancel
                     </button>
@@ -356,26 +357,26 @@
         const searchInput = document.querySelector('input[name="search"]');
         const statusSelect = document.querySelector('select[name="status"]');
         const dateInput = document.querySelector('input[name="date"]');
-        
+
         function filterAppointments() {
             const searchTerm = searchInput.value.toLowerCase();
             const statusFilter = statusSelect.value;
             const dateFilter = dateInput.value;
-            
+
             const rows = document.querySelectorAll('tbody tr');
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 const status = row.querySelector('.rounded-full')?.textContent.trim().toLowerCase() || '';
                 const date = row.querySelector('td:nth-child(2)')?.textContent.trim() || '';
-                
+
                 const matchesSearch = text.includes(searchTerm);
                 const matchesStatus = !statusFilter || status.includes(statusFilter);
                 const matchesDate = !dateFilter || date.includes(dateFilter);
-                
+
                 row.style.display = matchesSearch && matchesStatus && matchesDate ? '' : 'none';
             });
         }
-        
+
         searchInput.addEventListener('input', filterAppointments);
         statusSelect.addEventListener('change', filterAppointments);
         dateInput.addEventListener('change', filterAppointments);

@@ -58,7 +58,7 @@
                                 {% for session in recent_sessions %}
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ session.date|date:"M d, Y" }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ session.student.user.get_full_name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 uppercase">{{ session.student.user.get_full_name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ session.session_type }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
