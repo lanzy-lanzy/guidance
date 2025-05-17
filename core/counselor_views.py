@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
-from .models import Appointment, Student, GuidanceSession, Interview, Counselor, FollowUp, PsychologicalReport, CounselingReferral, CounselingSessionCertificate
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
+from .models import Appointment, Student, GuidanceSession, Interview, Counselor, FollowUp, PsychologicalReport, CounselingReferral, CounselingSessionCertificate, Report, User
 from .forms import PsychologicalReportForm, CounselingReferralForm, CounselingSessionCertificateForm
 from django.utils import timezone
 import logging
@@ -15,17 +17,36 @@ def is_counselor(user):
 @user_passes_test(is_counselor)
 def counselor_dashboard(request):
     counselor = get_object_or_404(Counselor, user=request.user)
+    today = timezone.now().date()
+
     pending_appointments = Appointment.objects.filter(counselor=counselor, status='pending').count()
     total_students = Student.objects.count()
     completed_sessions = GuidanceSession.objects.filter(counselor=counselor, status='completed').count()
 
+    # Get upcoming follow-ups
+    upcoming_followups = Interview.objects.filter(
+        counselor=counselor,
+        follow_up_needed=True,
+        follow_up_date__gte=today
+    ).order_by('follow_up_date')[:5]
+
+    # Count follow-ups due today
+    followups_due_today = Interview.objects.filter(
+        counselor=counselor,
+        follow_up_needed=True,
+        follow_up_date=today
+    ).count()
+
     context = {
+        'today': today,
         'pending_appointments': pending_appointments,
         'total_students': total_students,
         'completed_sessions': completed_sessions,
+        'followups_due_today': followups_due_today,
+        'upcoming_followups': upcoming_followups,
         'upcoming_appointments': Appointment.objects.filter(
             counselor=counselor,
-            date__gte=timezone.now().date()
+            date__gte=today
         ).order_by('date', 'time')[:5],
         'recent_interviews': Interview.objects.filter(counselor=counselor).order_by('-date')[:5]
     }
@@ -81,11 +102,36 @@ def counselor_session_history(request):
 @user_passes_test(is_counselor)
 def counselor_reports_dashboard(request):
     counselor = get_object_or_404(Counselor, user=request.user)
+
+    # Handle report deletion
+    delete_report_id = request.GET.get('delete_report')
+    if delete_report_id:
+        try:
+            report = Report.objects.get(id=delete_report_id, generated_by=request.user)
+            report_name = report.name
+            report.delete()
+            messages.success(request, f'Report "{report_name}" has been deleted successfully.')
+        except Report.DoesNotExist:
+            messages.error(request, 'Report not found or you do not have permission to delete it.')
+        except Exception as e:
+            messages.error(request, f'Error deleting report: {str(e)}')
+        return redirect('counselor_reports_dashboard')
+
+    # Get basic stats
     context = {
         'total_sessions': GuidanceSession.objects.filter(counselor=counselor).count(),
         'total_students': Student.objects.count(),
         'recent_sessions': GuidanceSession.objects.filter(counselor=counselor).order_by('-date')[:5]
     }
+
+    # Get saved reports for this counselor
+    try:
+        reports = Report.objects.filter(generated_by=request.user).order_by('-generated_at')[:10]
+        context['reports'] = reports
+    except:
+        # If Report model doesn't exist or there's an error, just continue without reports
+        pass
+
     return render(request, 'counselor/reports.html', context)
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -103,11 +149,47 @@ def approve_appointment(request, appointment_id):
     appointment.status = 'approved'
     appointment.save()
 
-    # Send SMS notification to static number
-    message = f"Your appointment with {counselor.user.get_full_name()} on {appointment.date} at {appointment.time} has been approved."
-    send_appointment_sms('+/', message)
+    # Get student's phone number
+    student_phone = appointment.student.contact_number
 
-    messages.success(request, 'Appointment approved successfully.')
+    # Format the message
+    message = f"Your appointment with {counselor.user.get_full_name()} on {appointment.date} at {appointment.time} has been approved."
+
+    # Send SMS notification if phone number is available
+    if student_phone:
+        # Log the original phone number
+        logger.info(f"Original phone number: {student_phone}")
+
+        # Format the phone number to international format if needed
+        if not student_phone.startswith('+'):
+            # Assuming Philippines phone number format
+            student_phone = '+63' + student_phone[1:] if student_phone.startswith('0') else '+63' + student_phone
+            logger.info(f"Reformatted phone number to {student_phone}")
+
+        # Print debug information before sending
+        print(f"DEBUG: About to send SMS to {student_phone} for appointment approval")
+
+        # Send the SMS
+        sms_sent = send_appointment_sms(student_phone, message)
+
+        if sms_sent:
+            success_msg = f'Appointment approved successfully. SMS notification sent to {student_phone}.'
+            logger.info(success_msg)
+            messages.success(request, success_msg)
+        else:
+            # Check Twilio credentials
+            if not settings.TWILIO_ACCOUNT_SID or not settings.TWILIO_AUTH_TOKEN or not settings.TWILIO_PHONE_NUMBER:
+                error_msg = "Twilio credentials are missing or invalid."
+                logger.error(error_msg)
+                messages.error(request, f'Appointment approved successfully, but SMS notification failed to send. {error_msg}')
+            else:
+                error_msg = f'Appointment approved successfully, but SMS notification failed to send to {student_phone}.'
+                logger.error(error_msg)
+                print(f"ERROR: {error_msg} See console output above for detailed error message.")
+                messages.error(request, f'{error_msg} See server logs for details.')
+    else:
+        messages.success(request, 'Appointment approved successfully. No SMS sent (student phone number not available).')
+
     return redirect('counselor_appointment_list')
 
 @login_required
@@ -117,7 +199,48 @@ def decline_appointment(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id, counselor=counselor)
     appointment.status = 'declined'
     appointment.save()
-    messages.success(request, 'Appointment declined successfully.')
+
+    # Get student's phone number
+    student_phone = appointment.student.contact_number
+
+    # Format the message
+    message = f"Your appointment with {counselor.user.get_full_name()} on {appointment.date} at {appointment.time} has been declined."
+
+    # Send SMS notification if phone number is available
+    if student_phone:
+        # Log the original phone number
+        logger.info(f"Original phone number: {student_phone}")
+
+        # Format the phone number to international format if needed
+        if not student_phone.startswith('+'):
+            # Assuming Philippines phone number format
+            student_phone = '+63' + student_phone[1:] if student_phone.startswith('0') else '+63' + student_phone
+            logger.info(f"Reformatted phone number to {student_phone}")
+
+        # Print debug information before sending
+        print(f"DEBUG: About to send SMS to {student_phone} for appointment decline")
+
+        # Send the SMS
+        sms_sent = send_appointment_sms(student_phone, message)
+
+        if sms_sent:
+            success_msg = f'Appointment declined successfully. SMS notification sent to {student_phone}.'
+            logger.info(success_msg)
+            messages.success(request, success_msg)
+        else:
+            # Check Twilio credentials
+            if not settings.TWILIO_ACCOUNT_SID or not settings.TWILIO_AUTH_TOKEN or not settings.TWILIO_PHONE_NUMBER:
+                error_msg = "Twilio credentials are missing or invalid."
+                logger.error(error_msg)
+                messages.error(request, f'Appointment declined successfully, but SMS notification failed to send. {error_msg}')
+            else:
+                error_msg = f'Appointment declined successfully, but SMS notification failed to send to {student_phone}.'
+                logger.error(error_msg)
+                print(f"ERROR: {error_msg} See console output above for detailed error message.")
+                messages.error(request, f'{error_msg} See server logs for details.')
+    else:
+        messages.success(request, 'Appointment declined successfully. No SMS sent (student phone number not available).')
+
     return redirect('counselor_appointment_list')
 
 @login_required
@@ -179,6 +302,13 @@ def interview_form(request, interview_id):
         interview.counselor_notes = request.POST.get('counselor_notes')
         interview.recommendations = request.POST.get('recommendations')
         interview.follow_up_needed = request.POST.get('follow_up_needed') == 'on'
+
+        # Process follow-up date if follow-up is needed
+        if interview.follow_up_needed and request.POST.get('follow_up_date'):
+            interview.follow_up_date = request.POST.get('follow_up_date')
+        else:
+            interview.follow_up_date = None
+
         interview.save()
 
         return redirect('print_interview', interview_id=interview.id)
@@ -378,8 +508,22 @@ def create_counseling_referral(request):
         form = CounselingReferralForm(request.POST)
         if form.is_valid():
             referral = form.save(commit=False)
-            # Set default values if needed
+
+            # Handle the different referral types
+            referral_type = form.cleaned_data.get('referral_type')
+
+            # Save the referral first to get an ID
             referral.save()
+
+            # For multiple students, we need to save the many-to-many relationship after saving the referral
+            if referral_type == 'multiple':
+                # The form.save_m2m() will handle the many-to-many relationship for students
+                form.save_m2m()
+
+                # Log the number of students selected for debugging
+                student_count = referral.students.count()
+                logger.info(f"Multiple students referral created with {student_count} students")
+
             messages.success(request, 'Counseling referral created successfully.')
             return redirect('print_counseling_referral', referral_id=referral.id)
     else:
@@ -400,7 +544,24 @@ def edit_counseling_referral(request, referral_id):
     if request.method == 'POST':
         form = CounselingReferralForm(request.POST, instance=referral)
         if form.is_valid():
-            form.save()
+            # Save the form but don't commit yet
+            referral = form.save(commit=False)
+
+            # Handle the different referral types
+            referral_type = form.cleaned_data.get('referral_type')
+
+            # Save the referral
+            referral.save()
+
+            # For multiple students, we need to save the many-to-many relationship after saving the referral
+            if referral_type == 'multiple':
+                # The form.save_m2m() will handle the many-to-many relationship for students
+                form.save_m2m()
+
+                # Log the number of students selected for debugging
+                student_count = referral.students.count()
+                logger.info(f"Multiple students referral updated with {student_count} students")
+
             messages.success(request, 'Counseling referral updated successfully.')
             return redirect('print_counseling_referral', referral_id=referral.id)
     else:
@@ -507,6 +668,25 @@ def print_session(request, session_id):
     return render(request, 'counselor/print_session.html', {
         'session': session
     })
+
+@login_required
+@user_passes_test(is_counselor)
+def counselor_approve_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.approval_status = 'approved'
+    user.is_active = True
+    user.save()
+    messages.success(request, f'User {user.username} has been approved')
+    return redirect('counselor_student_list')
+
+@login_required
+@user_passes_test(is_counselor)
+def counselor_reject_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.approval_status = 'rejected'
+    user.save()
+    messages.success(request, f'User {user.username} has been rejected')
+    return redirect('counselor_student_list')
 
 @login_required
 def counselor_profile(request):
@@ -686,3 +866,116 @@ def generate_counselor_report(request):
         logger.error(f"Unexpected error in generate_counselor_report: {str(e)}")
         messages.error(request, f'An error occurred while generating the report: {str(e)}')
         return redirect('counselor_reports_dashboard')
+
+@login_required
+@user_passes_test(is_counselor)
+def view_interview(request, interview_id):
+    interview = get_object_or_404(Interview, id=interview_id)
+    context = {
+        'interview': interview,
+        'view_only': True
+    }
+    return render(request, 'counselor/interview_form.html', context)
+
+@login_required
+@user_passes_test(is_counselor)
+def schedule_followup(request, interview_id):
+    """
+    Convert a follow-up interview into an actual appointment
+    """
+    interview = get_object_or_404(Interview, id=interview_id)
+    counselor = get_object_or_404(Counselor, user=request.user)
+
+    # Verify this is a follow-up interview
+    if not interview.follow_up_needed or not interview.follow_up_date:
+        messages.error(request, "This interview does not require a follow-up.")
+        return redirect('counselor_dashboard')
+
+    if request.method == 'POST':
+        # Create a new appointment based on the follow-up
+        time = request.POST.get('time')
+        purpose = f"Follow-up session for interview on {interview.date.strftime('%Y-%m-%d')}"
+
+        # Create the appointment
+        appointment = Appointment.objects.create(
+            student=interview.student,
+            counselor=counselor,
+            date=interview.follow_up_date,
+            time=time,
+            purpose=purpose,
+            status='approved'  # Auto-approve since counselor is creating it
+        )
+
+        messages.success(request, f"Follow-up appointment scheduled for {interview.student.user.get_full_name} on {interview.follow_up_date.strftime('%Y-%m-%d')} at {time}.")
+        return redirect('counselor_dashboard')
+
+    # If GET request, show the form to select time
+    context = {
+        'interview': interview,
+        'follow_up_date': interview.follow_up_date
+    }
+    return render(request, 'counselor/schedule_followup.html', context)
+
+from django.http import JsonResponse
+
+@login_required
+@user_passes_test(is_counselor)
+def get_student_group_members(request, group_id):
+    """
+    API endpoint to get the members of a student group
+    """
+    try:
+        student_group = get_object_or_404(StudentGroup, id=group_id)
+        members = []
+
+        for student in student_group.students.all():
+            members.append({
+                'id': student.id,
+                'name': student.user.get_full_name(),
+                'course': student.course,
+                'year': student.year
+            })
+
+        return JsonResponse({
+            'success': True,
+            'group_name': student_group.name,
+            'members': members
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)
+
+@login_required
+@user_passes_test(is_counselor)
+def get_student_details(request, student_id):
+    """
+    API endpoint to get details of a student
+    """
+    try:
+        student = get_object_or_404(Student, id=student_id)
+
+        # Get student details
+        details = {
+            'id': student.id,
+            'name': student.user.get_full_name(),
+            'course': student.course,
+            'year': student.year,
+            'gender': student.get_gender_display(),
+            'contact_number': student.contact_number or 'Not provided',
+            'address': student.address or 'Not provided',
+            'birth_date': student.birth_date.strftime('%Y-%m-%d') if student.birth_date else 'Not provided',
+            'age': student.get_age() or 'Not provided',
+            'email': student.user.email or 'Not provided'
+        }
+
+        return JsonResponse({
+            'success': True,
+            'student': details
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)

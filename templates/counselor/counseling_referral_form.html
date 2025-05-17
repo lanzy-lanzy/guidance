@@ -68,14 +68,107 @@
                         </div>
                     </div>
 
+                    <!-- Referral Type Selection -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Referral Type</label>
+                        <div class="flex space-x-6">
+                            <div class="flex items-center">
+                                <input type="radio" id="referral_type_individual" name="referral_type" value="individual"
+                                       class="referral-type-radio h-4 w-4 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                                       {% if not form.referral_type.value or form.referral_type.value == 'individual' %}checked{% endif %}>
+                                <label for="referral_type_individual" class="ml-2 block text-sm text-gray-700 cursor-pointer">Individual Student</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="referral_type_group" name="referral_type" value="group"
+                                       class="referral-type-radio h-4 w-4 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                                       {% if form.referral_type.value == 'group' %}checked{% endif %}>
+                                <label for="referral_type_group" class="ml-2 block text-sm text-gray-700 cursor-pointer">Student Group</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="referral_type_multiple" name="referral_type" value="multiple"
+                                       class="referral-type-radio h-4 w-4 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                                       {% if form.referral_type.value == 'multiple' %}checked{% endif %}>
+                                <label for="referral_type_multiple" class="ml-2 block text-sm text-gray-700 cursor-pointer">Multiple Students</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="{{ form.student.id_for_label }}" class="block text-sm font-medium text-gray-700">Student</label>
-                            {{ form.student }}
+                        <div id="individual-student-container">
+                            <label for="{{ form.student.id_for_label }}" class="block text-sm font-medium text-gray-700">Individual Student</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                {{ form.student|add_class:"pl-10" }}
+                            </div>
+                            <div id="student-info" class="mt-2 p-3 bg-gray-50 rounded-md border border-gray-200 hidden">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="h-5 w-5 text-emerald-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="text-sm text-gray-600" id="student-details">Select a student to see details</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="student-group-container" class="hidden">
+                            <label for="{{ form.student_group.id_for_label }}" class="block text-sm font-medium text-gray-700">Student Group</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                    </svg>
+                                </div>
+                                {{ form.student_group|add_class:"pl-10" }}
+                            </div>
+                            <div id="group-info" class="mt-2 p-3 bg-gray-50 rounded-md border border-gray-200 hidden">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-sm font-medium text-gray-700">Group Members</h4>
+                                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full" id="group-member-count">0 students</span>
+                                </div>
+                                <ul id="group-members-list" class="text-sm text-gray-600 space-y-1 max-h-40 overflow-y-auto">
+                                    <!-- Group members will be populated by JavaScript -->
+                                </ul>
+                            </div>
                         </div>
                         <div>
                             <label for="{{ form.contact_number.id_for_label }}" class="block text-sm font-medium text-gray-700">Contact Number</label>
                             {{ form.contact_number }}
+                        </div>
+                    </div>
+
+                    <!-- Separate section for multiple students to ensure it spans the full width -->
+                    <div id="multiple-students-container" class="hidden mt-6 mb-6">
+                        <div class="border border-gray-300 rounded-md p-4 bg-white">
+                            <div class="flex justify-between items-center mb-2">
+                                <label for="{{ form.students.id_for_label }}" class="block text-sm font-medium text-gray-700">Multiple Students</label>
+                                <span class="text-sm bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">Selected: <span id="selected-count">0</span> students</span>
+                            </div>
+                            <div class="mb-2 flex items-center space-x-2">
+                                <p class="text-xs text-gray-500">Hold Ctrl (or Cmd on Mac) while clicking to select multiple students. Click again to deselect.</p>
+                                <button type="button" id="select-all-students" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded">Select All</button>
+                                <button type="button" id="deselect-all-students" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded">Deselect All</button>
+                            </div>
+                            <div class="relative">
+                                <input type="text" id="student-search" placeholder="Search students..." class="mb-2 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <select name="students" multiple="multiple" id="{{ form.students.id_for_label }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50" size="10" style="min-height: 250px;">
+                                {% for student in form.students.field.queryset %}
+                                    <option value="{{ student.id }}" {% if student in form.students.value %}selected{% endif %}>
+                                        {{ student.user.get_full_name }} ({{ student.course }} - Year {{ student.year }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="mt-2 text-xs text-gray-500 italic">
+                                Tip: You can also search by course or year level
+                            </div>
                         </div>
                     </div>
 
@@ -272,4 +365,289 @@
         </div>
     </div>
 </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all the necessary elements
+            const referralTypeRadios = document.querySelectorAll('input[name="referral_type"]');
+            const individualContainer = document.getElementById('individual-student-container');
+            const groupContainer = document.getElementById('student-group-container');
+            const multipleContainer = document.getElementById('multiple-students-container');
+
+            // Make sure all elements exist
+            if (!individualContainer || !groupContainer || !multipleContainer) {
+                console.error('One or more containers not found');
+                return;
+            }
+
+            // Direct click handlers for each radio button
+            document.getElementById('referral_type_individual').onclick = function() {
+                console.log('Individual radio clicked');
+                individualContainer.classList.remove('hidden');
+                groupContainer.classList.add('hidden');
+                multipleContainer.classList.add('hidden');
+
+                // Trigger change event on student select to load details if a student is already selected
+                const studentSelect = document.getElementById('{{ form.student.id_for_label }}');
+                if (studentSelect && studentSelect.value) {
+                    const event = new Event('change');
+                    studentSelect.dispatchEvent(event);
+                }
+            };
+
+            document.getElementById('referral_type_group').onclick = function() {
+                console.log('Group radio clicked');
+                individualContainer.classList.add('hidden');
+                groupContainer.classList.remove('hidden');
+                multipleContainer.classList.add('hidden');
+
+                // Trigger change event on student group select to load members if a group is already selected
+                const groupSelect = document.getElementById('{{ form.student_group.id_for_label }}');
+                if (groupSelect && groupSelect.value) {
+                    const event = new Event('change');
+                    groupSelect.dispatchEvent(event);
+                }
+            };
+
+            document.getElementById('referral_type_multiple').onclick = function() {
+                console.log('Multiple radio clicked');
+                individualContainer.classList.add('hidden');
+                groupContainer.classList.add('hidden');
+                multipleContainer.classList.remove('hidden');
+            };
+
+            // Handle student group selection
+            const groupSelect = document.getElementById('{{ form.student_group.id_for_label }}');
+            const groupInfo = document.getElementById('group-info');
+            const groupMembersList = document.getElementById('group-members-list');
+            const groupMemberCount = document.getElementById('group-member-count');
+
+            if (groupSelect && groupInfo && groupMembersList) {
+                groupSelect.addEventListener('change', function() {
+                    if (this.value) {
+                        // Show the group info container
+                        groupInfo.classList.remove('hidden');
+
+                        // Fetch group members via AJAX
+                        fetch(`/api/student-group/${this.value}/members/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Clear previous members
+                                groupMembersList.innerHTML = '';
+
+                                // Add each member to the list
+                                if (data.members && data.members.length > 0) {
+                                    data.members.forEach(member => {
+                                        const li = document.createElement('li');
+                                        li.className = 'flex items-center';
+                                        li.innerHTML = `
+                                            <svg class="h-3 w-3 text-emerald-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            ${member.name} (${member.course} - Year ${member.year})
+                                        `;
+                                        groupMembersList.appendChild(li);
+                                    });
+
+                                    // Update the count
+                                    groupMemberCount.textContent = `${data.members.length} students`;
+                                } else {
+                                    // No members
+                                    const li = document.createElement('li');
+                                    li.className = 'text-gray-500 italic';
+                                    li.textContent = 'No members in this group';
+                                    groupMembersList.appendChild(li);
+                                    groupMemberCount.textContent = '0 students';
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching group members:', error);
+                                // Show error message
+                                groupMembersList.innerHTML = '<li class="text-red-500">Error loading group members</li>';
+                                groupMemberCount.textContent = '? students';
+                            });
+                    } else {
+                        // Hide the group info container if no group is selected
+                        groupInfo.classList.add('hidden');
+                    }
+                });
+
+                // If a group is already selected on page load, trigger the change event
+                if (groupSelect.value) {
+                    const event = new Event('change');
+                    groupSelect.dispatchEvent(event);
+                }
+            }
+
+            // Handle individual student selection
+            const studentSelect = document.getElementById('{{ form.student.id_for_label }}');
+            const studentInfo = document.getElementById('student-info');
+            const studentDetails = document.getElementById('student-details');
+
+            if (studentSelect && studentInfo && studentDetails) {
+                studentSelect.addEventListener('change', function() {
+                    if (this.value) {
+                        // Show the student info container
+                        studentInfo.classList.remove('hidden');
+
+                        // Show loading state
+                        studentDetails.innerHTML = '<span class="text-gray-500">Loading student details...</span>';
+
+                        // Fetch student details via AJAX
+                        fetch(`/api/student/${this.value}/details/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success && data.student) {
+                                    const student = data.student;
+                                    // Update the student details with more information
+                                    studentDetails.innerHTML = `
+                                        <div class="space-y-1">
+                                            <p class="font-medium">${student.name}</p>
+                                            <p class="text-xs text-gray-600">${student.course} - Year ${student.year}</p>
+                                            <p class="text-xs text-gray-600">${student.gender} | ${student.age} years old</p>
+                                            <p class="text-xs text-gray-600">Contact: ${student.contact_number}</p>
+                                        </div>
+                                    `;
+
+                                    // Auto-fill contact number if it's available and the field is empty
+                                    const contactField = document.getElementById('{{ form.contact_number.id_for_label }}');
+                                    if (contactField && !contactField.value && student.contact_number && student.contact_number !== 'Not provided') {
+                                        contactField.value = student.contact_number;
+                                    }
+                                } else {
+                                    // Fallback to basic info if API fails
+                                    const selectedOption = this.options[this.selectedIndex];
+                                    studentDetails.innerHTML = `<strong>${selectedOption.textContent}</strong>`;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching student details:', error);
+                                // Fallback to basic info if API fails
+                                const selectedOption = this.options[this.selectedIndex];
+                                studentDetails.innerHTML = `<strong>${selectedOption.textContent}</strong>`;
+                            });
+                    } else {
+                        // Hide the student info container if no student is selected
+                        studentInfo.classList.add('hidden');
+                        studentDetails.textContent = 'Select a student to see details';
+                    }
+                });
+
+                // If a student is already selected on page load, trigger the change event
+                if (studentSelect.value) {
+                    const event = new Event('change');
+                    studentSelect.dispatchEvent(event);
+                }
+            }
+
+            // Function to set initial state
+            function setInitialState() {
+                // Get the selected radio button
+                const selectedRadio = document.querySelector('input[name="referral_type"]:checked');
+
+                if (!selectedRadio) {
+                    // If no radio is selected, select the individual one by default
+                    document.getElementById('referral_type_individual').checked = true;
+
+                    // Hide all containers first
+                    individualContainer.classList.add('hidden');
+                    groupContainer.classList.add('hidden');
+                    multipleContainer.classList.add('hidden');
+
+                    // Show the individual container
+                    individualContainer.classList.remove('hidden');
+                } else {
+                    const selectedType = selectedRadio.value;
+                    console.log('Initial selected type:', selectedType);
+
+                    // Hide all containers first
+                    individualContainer.classList.add('hidden');
+                    groupContainer.classList.add('hidden');
+                    multipleContainer.classList.add('hidden');
+
+                    // Show the appropriate container based on selection
+                    if (selectedType === 'individual') {
+                        individualContainer.classList.remove('hidden');
+                    } else if (selectedType === 'group') {
+                        groupContainer.classList.remove('hidden');
+                    } else if (selectedType === 'multiple') {
+                        multipleContainer.classList.remove('hidden');
+                    }
+                }
+            }
+
+            // Set initial state
+            setInitialState();
+
+            // Add click event to the labels as well for better UX
+            document.querySelector('label[for="referral_type_individual"]').addEventListener('click', function() {
+                document.getElementById('referral_type_individual').click();
+            });
+
+            document.querySelector('label[for="referral_type_group"]').addEventListener('click', function() {
+                document.getElementById('referral_type_group').click();
+            });
+
+            document.querySelector('label[for="referral_type_multiple"]').addEventListener('click', function() {
+                document.getElementById('referral_type_multiple').click();
+            });
+
+            // Handle multiple students selection functionality
+            const studentsSelect = document.getElementById('{{ form.students.id_for_label }}');
+            const selectedCountElement = document.getElementById('selected-count');
+            const selectAllBtn = document.getElementById('select-all-students');
+            const deselectAllBtn = document.getElementById('deselect-all-students');
+            const studentSearch = document.getElementById('student-search');
+
+            if (studentsSelect && selectedCountElement) {
+                // Update count on page load
+                selectedCountElement.textContent = studentsSelect.selectedOptions.length;
+
+                // Update count when selection changes
+                studentsSelect.addEventListener('change', function() {
+                    selectedCountElement.textContent = this.selectedOptions.length;
+                });
+
+                // Enable multiple selection
+                studentsSelect.multiple = true;
+
+                // Select all students
+                if (selectAllBtn) {
+                    selectAllBtn.addEventListener('click', function() {
+                        Array.from(studentsSelect.options).forEach(option => {
+                            if (option.style.display !== 'none') { // Only select visible options
+                                option.selected = true;
+                            }
+                        });
+                        selectedCountElement.textContent = studentsSelect.selectedOptions.length;
+                    });
+                }
+
+                // Deselect all students
+                if (deselectAllBtn) {
+                    deselectAllBtn.addEventListener('click', function() {
+                        Array.from(studentsSelect.options).forEach(option => {
+                            option.selected = false;
+                        });
+                        selectedCountElement.textContent = '0';
+                    });
+                }
+
+                // Search functionality
+                if (studentSearch) {
+                    studentSearch.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+
+                        Array.from(studentsSelect.options).forEach(option => {
+                            const optionText = option.textContent.toLowerCase();
+                            if (optionText.includes(searchTerm)) {
+                                option.style.display = '';
+                            } else {
+                                option.style.display = 'none';
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    </script>
 {% endblock %}

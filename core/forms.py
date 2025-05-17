@@ -122,7 +122,7 @@ class InterviewForm(forms.ModelForm):
             'elementary_year_graduated', 'high_school', 'high_school_year_graduated',
             'college_school', 'college_course', 'reason_for_interview',
             'presenting_problem', 'background_of_problem', 'counselor_notes',
-            'recommendations', 'follow_up_needed'
+            'recommendations', 'follow_up_needed', 'follow_up_date'
         ]
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -201,7 +201,7 @@ class CounselingReferralForm(forms.ModelForm):
     class Meta:
         model = CounselingReferral
         fields = [
-            'to_counselor_name', 'student', 'contact_number', 'date',
+            'to_counselor_name', 'referral_type', 'student', 'student_group', 'students', 'contact_number', 'date',
             'reason_aggression', 'reason_dramatic_change', 'reason_bullying_victim', 'reason_bullying_bully',
             'reason_self_injury', 'reason_daydreams', 'reason_anger_management', 'reason_fighting',
             'reason_stealing', 'reason_sexual_acting_out', 'reason_peer_relationships', 'reason_social_skills',
@@ -217,7 +217,10 @@ class CounselingReferralForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'to_counselor_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'referral_type': forms.RadioSelect(attrs={'class': 'referral-type-radio'}),
             'student': forms.Select(attrs={'class': 'form-control'}),
+            'student_group': forms.Select(attrs={'class': 'form-control'}),
+            'students': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '8', 'style': 'min-height: 200px;', 'multiple': 'multiple'}),
             'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
             'reason_other': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Specify other reason'}),
             'recommendation': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
@@ -242,10 +245,46 @@ class CounselingReferralForm(forms.ModelForm):
                 field.widget.attrs.update({
                     'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
                 })
-            elif not isinstance(field.widget, forms.CheckboxInput):
+            elif not isinstance(field.widget, forms.CheckboxInput) and not isinstance(field.widget, forms.RadioSelect):
                 field.widget.attrs.update({
                     'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50'
                 })
+
+        # Add data attributes for dynamic showing/hiding
+        self.fields['student'].widget.attrs['data-referral-type'] = 'individual'
+        self.fields['student_group'].widget.attrs['data-referral-type'] = 'group'
+        self.fields['students'].widget.attrs['data-referral-type'] = 'multiple'
+
+        # Set initial state
+        if not self.instance.pk:  # If this is a new form
+            self.fields['student_group'].widget.attrs['class'] += ' hidden'
+            self.fields['students'].widget.attrs['class'] += ' hidden'
+        else:  # If editing an existing form
+            if self.instance.referral_type == 'individual':
+                self.fields['student_group'].widget.attrs['class'] += ' hidden'
+                self.fields['students'].widget.attrs['class'] += ' hidden'
+            elif self.instance.referral_type == 'group':
+                self.fields['student'].widget.attrs['class'] += ' hidden'
+                self.fields['students'].widget.attrs['class'] += ' hidden'
+            elif self.instance.referral_type == 'multiple':
+                self.fields['student'].widget.attrs['class'] += ' hidden'
+                self.fields['student_group'].widget.attrs['class'] += ' hidden'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        referral_type = cleaned_data.get('referral_type')
+        student = cleaned_data.get('student')
+        student_group = cleaned_data.get('student_group')
+        students = cleaned_data.get('students')
+
+        if referral_type == 'individual' and not student:
+            self.add_error('student', 'Please select a student for individual referral.')
+        elif referral_type == 'group' and not student_group:
+            self.add_error('student_group', 'Please select a student group for group referral.')
+        elif referral_type == 'multiple' and (not students or students.count() == 0):
+            self.add_error('students', 'Please select at least one student for multiple student referral.')
+
+        return cleaned_data
 
 class CounselingSessionCertificateForm(forms.ModelForm):
     class Meta:
